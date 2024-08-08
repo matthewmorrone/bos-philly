@@ -13,13 +13,13 @@ id,post_type,post_name,post_title,instagram_link,height,weight,birthday,hometown
 177,model,sidney,Sidney,http://instagram.com/majawnski,"5'11""",170,,"Philadelphia, PA",1
 178,model,trae,Trae,http://instagram.com/trae_the_arrogant89,,,,,1
 179,model,william,William,http://instagram.com/willbrazz_36,"5'11""",165,,"Philadelphia, PA",1
-2444,model,alex,Alex,liddy_mcguire,"6'1""",180,"New Hope, PA",,0
-2449,model,aaron,Aaron,aaron_jordanzz,5’8”,180,"Philadelphia, PA",19700101,0
-2473,model,dwayne,Dwayne,dwayneatownsend,"6' 2""",185,"Philadelphia, PA",,0
-2491,model,louis,Louis,louie.ldg,5’11,200,"Bethlehem PA",19700101,0
-2496,model,palmer,Palmer,palmersome,,,,,1
-2497,model,skyler,Skyler,WheresSkylerNow,"5' 6""",170,"Easton, PA",19700101,0
-2505,model,dan,Dan,danglindan1,"6'0""",180,Delco,19700101,1
-2514,model,damian,Damian,damianwalther,6’2”,190,"Philadelphia, PA",,0
-3595,model,aurmell,Aurmell,Aurmellwatson_,"5'4""",140,"Philadelphia, PA",,0
-4207,model,jared,Jared,jarebareee,,,"Philadelphia, PA",,0
+2444,model,alex,Alex,http://instagram.com/liddy_mcguire,"6'1""",180,,"New Hope, PA",0
+2449,model,aaron,Aaron,http://instagram.com/aaron_jordanzz,5’8”,180,,"Philadelphia, PA",0
+2473,model,dwayne,Dwayne,http://instagram.com/dwayneatownsend,"6'2""",185,,"Philadelphia, PA",0
+2491,model,louis,Louis,http://instagram.com/louie.ldg,5’11,200,,"Bethlehem, PA",0
+2496,model,palmer,Palmer,http://instagram.com/palmersome,,,,,1
+2497,model,skyler,Skyler,http://instagram.com/WheresSkylerNow,"5'6""",170,,"Easton, PA",0
+2505,model,dan,Dan,http://instagram.com/danglindan1,"6'0""",180,,Delco,1
+2514,model,damian,Damian,http://instagram.com/damianwalther,6’2”,190,,"Philadelphia, PA",0
+3595,model,aurmell,Aurmell,http://instagram.com/aurmellwatson_,"5'4""",140,,"Philadelphia, PA",0
+4207,model,jared,Jared,http://instagram.com/jarebareee,,,,"Philadelphia, PA",0

@@ -8,62 +8,43 @@ $pass = "";
 $db   = "bosphill_dev";
 
 $mysqli = new mysqli($host, $user, $pass, $db);
-// $mysqli = mysqli_connect($host, $user, $pass, $db);
+
 function ensureConsistentKeys(array &$array): void {
-    if (empty($array)) {
-        return; // No action needed for an empty array
-    }
+    if (empty($array)) return;
 
-    // Get the keys of the first sub-array
     $referenceKeys = array_keys($array[0]);
-
     foreach ($array as &$item) {
-        // Add missing keys with null values
         foreach ($referenceKeys as $key) {
             if (!array_key_exists($key, $item)) {
                 $item[$key] = null;
             }
         }
     }
-    
-    // Optionally, you might want to ensure no extra keys are present
     foreach ($array as &$item) {
         $item = array_intersect_key($item, array_flip($referenceKeys));
     }
 }
 function arrayToCsvString(array $array): string {
-    if (empty($array)) {
-        return ''; // Return an empty string if the array is empty
-    }
+    if (empty($array)) return '';
 
-    // Initialize an empty CSV string
     $csvString = '';
 
-    // Get the headers from the first sub-array
     $headers = array_keys($array[0]);
     $csvString .= implode(',', $headers) . "\n";
 
-    // Function to properly quote and escape fields
     $quoteField = function($field) {
-        // Check if the field needs quoting
         if (preg_match('/[,"\n]/', $field)) {
-            // Escape double quotes by doubling them
             $field = str_replace('"', '""', $field);
-            // Enclose the field in double quotes
             return '"' . $field . '"';
         }
-        // If the field contains spaces, also quote it
         if (strpos($field, ' ') !== false) {
             return '"' . $field . '"';
         }
         return $field;
     };
 
-    // Iterate through each row and convert it to CSV format
     foreach ($array as $row) {
-        // Apply quoting function to each field
         $quotedRow = array_map($quoteField, $row);
-        // Join the row fields with commas and add it to the CSV string
         $csvString .= implode(',', $quotedRow) . "\n";
     }
 
@@ -71,18 +52,12 @@ function arrayToCsvString(array $array): string {
 }
 
 function saveToFile($filePath, $data) {
-    // Get the directory path from the file path
     $directory = dirname($filePath);
-
-    // Check if the directory exists
     if (!is_dir($directory)) {
-        // Create the directory recursively if it does not exist
         if (!mkdir($directory, 0755, true)) {
             throw new Exception("Failed to create directory: $directory");
         }
     }
-
-    // Write data to the file
     file_put_contents($filePath, $data);
 }
 

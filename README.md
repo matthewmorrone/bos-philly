@@ -7,7 +7,6 @@
 ## To-Do List
 
 + Fix post page appearances
-+ Include descriptions and DJ-to-Event relationships in CSVs
 + Document steps for deployment to server
 
 ### Appearance

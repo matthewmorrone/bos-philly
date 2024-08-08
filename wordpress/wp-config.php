@@ -29,7 +29,7 @@ define( 'DB_USER', 'root' );
 define( 'DB_PASSWORD', '' );
 
 /** Database hostname */
-define( 'DB_HOST', 'localhost' );
+define( 'DB_HOST', '127.0.0.1' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
@@ -82,7 +82,7 @@ $table_prefix = 'wp_';
 
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', false );
-define( 'WP_DEBUG_DISPLAY', true ); // Set to true to display errors directly in the brows er
+define( 'WP_DEBUG_DISPLAY', false ); // Set to true to display errors directly in the brows er
 
 /* Add any custom values between this line and the "stop editing" line. */
 
