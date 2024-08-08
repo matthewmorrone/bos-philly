@@ -1,0 +1,108 @@
+.dj-template .banner {
+    background-color: var(--trim);
+    text-align: center;
+}
+.dj-template .banner img {
+    width: 50%;
+    height: 100px;
+    max-height: 200px;
+    object-fit: scale-down;
+    margin-top: 20px;
+}
+.dj-template .dj-content {
+    position: relative;
+    z-index: 0;
+}
+.dj-template #particle-background canvas {
+    position: absolute;
+    z-index: -1;
+}
+.dj-template .dj-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+.dj-template .dj-content .dj-header {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+.dj-template .dj-content .dj-left {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+.dj-template .dj-content .dj-right {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+.dj-template .dj-content h2 {
+    font-size: 72px;
+    line-height: 72px;
+    margin-top: 36px;
+}
+.dj-template .dj-content h3 {
+    font-size: 26px;
+    margin-bottom: 13px;
+}
+.dj-template .dj-content .featured {
+    width: 500px;
+}
+.dj-template .dj-content .gallery {
+    display: grid;
+    width: 500px;
+    grid-template-columns: repeat(5, 1fr);
+}
+.dj-template .dj-content .gallery img {
+    width: 80px;
+}
+.dj-template .dj-content .description {
+    text-align: justify;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 30px;
+}
+
+.soundcloud {
+    background-color: #ff7700;
+    font-size: 24px;
+}
+
+@media all and (max-width: 600px) {
+    .dj-content {
+        width: 300px;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: repeat(4, 1fr);
+        place-items: center;
+        justify-content: center;
+        gap: 20px 20px;
+    }
+    .dj-template .dj-content .dj-header {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+    .dj-template .dj-content .dj-left {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+    .dj-template .dj-content .dj-right {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+    .dj-template .dj-content .gallery {
+        width: 90%;
+        margin: auto;
+    }
+    .dj-template .dj-content .description p {
+        width: 90%;
+    }
+    .dj-template .dj-content button {
+        width: 90%;
+    }
+    .dj-template .dj-content .more {
+        width: 50%;
+    }
+}

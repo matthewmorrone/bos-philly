@@ -1,0 +1,99 @@
+.event-template {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    background-size: cover;
+    background-position: center;
+}
+.event-template .shade {
+    width: 100% !important;
+    background: linear-gradient(rgb(25 26 58 / 75%), rgb(25 26 58 / 75%));
+    background-position: center top;
+}
+.event-template .images {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-grow: 1;
+    justify-content: space-around;
+    gap: 10px;
+}
+.event-template .feature, .event-template .description {
+    width: 400px;
+}
+.event-template .images h1 {
+    padding-left: 50px;
+    text-align: left;
+}
+.event-template .images h2 {
+    text-align: center;
+    background-color: #191A3A85;
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.event-template .info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.event-template .info > div {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    background-color: var(--fore);
+    margin: 20px;
+    padding: 20px;
+}
+
+.event-template .ticket-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+}
+.event-template .ticket-panel .marker {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+.event-template .ticket-panel .panel {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+.event-template .ticket-panel .ticket-button {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+}
+
+
+.event-template .info .marker {
+    width: 25%;
+    padding: 5px;
+}
+.event-template .info h3, .info .marker i {
+    font-size: 30px;
+}
+.event-template .info button {
+    margin-bottom: 0px;
+    border-radius: 0px;
+    width: 100%;
+    border: 1px solid white;
+    font-family: "Teko", Sans-serif;
+    font-size: 38px;
+}
+.event-template .info p {
+    font-family: 'Work Sans', sans-serif;
+}
+
+
+@media all and (max-width: 600px) {
+    .event-template .images, .event-template .info {
+        flex-flow: column-reverse nowrap !important;
+    }
+    .event-template .feature {
+        width: 100%;
+    }
+    .event-template .description {
+        width: unset;
+    }
+    .event-template .info {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

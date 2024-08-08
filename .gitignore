@@ -1,0 +1,5 @@
+.DS_Store
+img
+wordpress/wp-content/uploads/
+wordpress/wp-content/uploads/*-*x*.*
+wordpress/wp-content/backup-migration-*
