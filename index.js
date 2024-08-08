@@ -225,7 +225,7 @@ async function loadPage(page, name) {
                 full: photo.full_image_url
             }
         }) || [];
-        data.logo = result.fields.logo.url;
+        data.logo = result.fields.logo?.url;
         data.soundcloud_link = result.fields.soundcloud_link;
         data.instagram_link = result.fields.instagram_link;
         if (debug) console.log("data: ", data);

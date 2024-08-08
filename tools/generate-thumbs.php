@@ -1,6 +1,6 @@
 <?php
 
-$photos = glob('img/galleries/**/*.jpg');
+$photos = glob('../img/galleries/**/*.jpg');
 
 $sizes = [
     "small" => ["width" => 150, "height" => 150, "square" => true],
@@ -17,7 +17,7 @@ foreach ($photos as $photo):
     endforeach;
 endforeach;
 
-$photos = glob('img/galleries/**/*.jpg');
+$photos = glob('../img/galleries/**/*.jpg');
 foreach ($photos as $photo):
     $info = pathinfo($photo);
     foreach($sizes as $size=>$area):

@@ -5,10 +5,14 @@
 + Change the database credentials in wpconfig.php
 
 ## To-Do List
-+ Use flex for layout where appropriate
-+ Fix particle animations
+
++ Fix post page appearances
++ Include descriptions and DJ-to-Event relationships in CSVs
++ Document steps for deployment to server
 
 ### Appearance
++ Use flex for layout where appropriate
++ Fix particle animations
 + On mobile, remove hover and put titles under grid cells
 + Sticky header animation doesn't seem worth the trouble
 + Charity animation should be slower and more chaotic

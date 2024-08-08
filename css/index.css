@@ -28,7 +28,7 @@ img {
 }
 header {
     height: 100px;
-    background-image: url("/wordpress/header-background");
+    background-image: url("/wordpress/content-header-background");
     background-position: top;
     background-size: cover;
     border-bottom: 2px solid var(--trim);
@@ -164,7 +164,7 @@ video::-webkit-media-controls {
 #parallax {
     height: 100%;
     width: 100%;
-    background-image: url("/wordpress/charity-parallax");
+    background-image: url("/wordpress/content-charity-parallax");
     background-position: center;
     background-size: cover;
 }
@@ -176,7 +176,7 @@ video::-webkit-media-controls {
     font-size: 19px;
 }
 #events {
-    background-image: url("/wordpress/events-background");
+    background-image: url("/wordpress/content-events-background");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -249,7 +249,7 @@ button {
     width: fit-content;
 }
 #models {
-    background-image: url("/wordpress/models-background");
+    background-image: url("/wordpress/content-models-background");
     text-align: left;
     letter-spacing: 3px;
     background-position: bottom center;
@@ -260,7 +260,7 @@ button {
     color: var(--font);
 }
 #djs {
-    background-image: url("/wordpress/djs-background");
+    background-image: url("/wordpress/content-djs-background");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -307,7 +307,7 @@ button {
 
 
 #partners .title {
-    background-image: url("/wordpress/partners-background");
+    background-image: url("/wordpress/content-partners-background");
     text-align: left;
     letter-spacing: 3px;
     background-position: bottom center;
@@ -345,7 +345,7 @@ button {
 }
 footer {
     height: 50%;
-    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("/wordpress/footer-background");
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("/wordpress/content-footer-background");
     background-position: center;
     background-size: cover;
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .2);

@@ -109,7 +109,6 @@ $query = "select
   , wp_posts.post_type
   , wp_posts.post_name
   , wp_posts.post_title
-  , wp_posts.post_content
 from wp_posts
 where wp_posts.post_type in ('event', 'model', 'dj')
 and wp_posts.post_name NOT LIKE '%__trashed%'
