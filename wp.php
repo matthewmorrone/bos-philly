@@ -80,62 +80,63 @@ if (isset($_["action"])) {
                     $gallery = "http://".$post->fields["gallery_link"];
                     if ($gallery) {
                         $images = file_get_contents($gallery);
-
-                        $dom = new DomDocument();
-                        $dom->loadHTML($images);
-                        foreach ($dom->getElementsByTagName('a') as $item) {
-                            if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])
-                            ) {
-                                $imageList[] = $item->getAttribute('href');
+                        if ($images) {
+                            $dom = new DomDocument();
+                            $dom->loadHTML($images);
+                            foreach ($dom->getElementsByTagName('a') as $item) {
+                                if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])
+                                ) {
+                                    $imageList[] = $item->getAttribute('href');
+                                }
                             }
+                            $imageList = array_map(function($image) use ($gallery) {
+                                $pathinfo = pathinfo("$gallery/$image");
+                                return [
+                                    "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
+                                    "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
+                                    "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
+                                    "original" => "$gallery/$image"
+                                ];
+                            }, $imageList);
+                            $post->images = $imageList;
                         }
-                        $imageList = array_map(function($image) use ($gallery) {
-                            $pathinfo = pathinfo("$gallery/$image");
-                            return [
-                                "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
-                                "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
-                                "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
-                                "original" => "$gallery/$image"
-                            ];
-                        }, $imageList);
-                        $post->images = $imageList;
                     }
                 }
 
                 if (strcmp($_["post_type"], "event") === 0) {
-                    $result = new WP_Query(array(
+                    $primary_dj = new WP_Query(array(
                         'connected_type' => 'primary_dj',
                         'connected_items' => $post->ID,
                         'nopaging' => true,
                     ));
-                    $dj = $result->posts;
-                    if ($dj) {
-                        $dj_main = [
-                            "ID" => $dj[0]->ID,
-                            "post_name" => $dj[0]->post_name,
-                            "post_title" => $dj[0]->post_title,
-                            "post_content" => $dj[0]->post_content,
-                            "post_image" => get_the_post_thumbnail_url($dj[0]->ID)
+                    $primary_dj = $primary_dj->posts;
+                    if ($primary_dj) {
+                        $primary_dj_data = [
+                            "ID" => $primary_dj[0]->ID,
+                            "post_name" => $primary_dj[0]->post_name,
+                            "post_title" => $primary_dj[0]->post_title,
+                            "post_content" => $primary_dj[0]->post_content,
+                            "post_image" => get_the_post_thumbnail_url($primary_dj[0]->ID)
                         ];
                     }
-                    $post->dj = $dj_main;
+                    $post->primary_dj = $primary_dj;
 
-                    $result = new WP_Query(array(
+                    $secondary_djs = new WP_Query(array(
                         'connected_type' => 'secondary_dj',
                         'connected_items' => $post->ID,
                         'nopaging' => true,
                     ));
-                    $result = $result->posts;
-                    foreach($result as $dj):
-                        $djs[] = [
-                            "ID" => $dj->ID,
-                            "post_name" => $dj->post_name,
-                            "post_title" => $dj->post_title,
-                            "post_content" => $dj->post_content,
-                            "post_image" => get_the_post_thumbnail_url($dj->ID)
+                    $secondary_djs = $secondary_djs->posts;
+                    foreach($secondary_djs as $secondary_dj):
+                        $secondary_djs_data[] = [
+                            "ID" => $secondary_dj->ID,
+                            "post_name" => $secondary_dj->post_name,
+                            "post_title" => $secondary_dj->post_title,
+                            "post_content" => $secondary_dj->post_content,
+                            "post_image" => get_the_post_thumbnail_url($secondary_dj->ID)
                         ];
                     endforeach;
-                    $post->djs = $djs;
+                    $post->secondary_djs = $secondary_djs;
                 }
 
             endforeach;
