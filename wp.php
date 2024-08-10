@@ -1,6 +1,17 @@
 <?php
+error_reporting(E_ERROR);
 include ("wordpress/wp-config.php");
 $_ = $_POST ?: $_GET; // extract($_);
+
+function containsAnySubstring($string, $substrings) {
+    foreach ($substrings as $substring) {
+        if (strpos($string, $substring) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+
 if (isset($_["debug"])) {
     echo "<pre>"; print_r($_); echo "</pre>";
 }
@@ -31,16 +42,8 @@ if (isset($_["action"])) {
                 $args['orderby'] = "meta_value_num";
                 $args['meta_query'] = array(
                     'relation' => 'AND',
-                    array(
-                        'key' => 'date_of_event', 
-                        'compare' => '<', 
-                        'value' => date('Ymd')
-                    ),
-                    array(
-                        'key' => 'gallery_link', 
-                        'compare' => '!=', 
-                        'value' => ''
-                    )
+                    array('key' => 'date_of_event', 'compare' => '<',  'value' => date('Ymd')),
+                    array('key' => 'gallery_link',  'compare' => '!=', 'value' => '')
                 );
             }
             $query = new WP_Query($args);
@@ -51,12 +54,8 @@ if (isset($_["action"])) {
             endforeach;
             if ($_["limit"] >= 0) {
                 $post_count = count($posts);
-                if ($_["rest"] === "true") {
-                    $posts = array_slice($posts, $_["limit"]);
-                }
-                else {
-                    $posts = array_slice($posts, 0, $_["limit"]);
-                }
+                if ($_["rest"] === "true")  $posts = array_slice($posts, $_["limit"]);
+                else                        $posts = array_slice($posts, 0, $_["limit"]);
                 $limit = count($posts);
             }
             $result["posts"] = $posts;
@@ -78,26 +77,28 @@ if (isset($_["action"])) {
                 $post->image = get_the_post_thumbnail_url($post->ID);
 
                 if (isset($post->fields["gallery_link"])) {
-                    $gallery = $post->fields["gallery_link"];
+                    $gallery = "http://".$post->fields["gallery_link"];
                     if ($gallery) {
-                        $images = scandir($gallery);
-                        if (count($images) > 2) {
-                            $images = preg_grep('/^([^.])/', $images);
-                            $images = array_filter($images, function($image) {
-                                return !strpos($image, "_");
-                            });
-                            $images = array_values($images);
-                            $images = array_map(function($image) use ($gallery) {
-                                $pathinfo = pathinfo("$gallery/$image");
-                                return [
-                                    "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
-                                    "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
-                                    "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
-                                    "original" => "$gallery/$image"
-                                ];
-                            }, $images);
-                            $post->images = $images;
+                        $images = file_get_contents($gallery);
+
+                        $dom = new DomDocument();
+                        $dom->loadHTML($images);
+                        foreach ($dom->getElementsByTagName('a') as $item) {
+                            if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])
+                            ) {
+                                $imageList[] = $item->getAttribute('href');
+                            }
                         }
+                        $imageList = array_map(function($image) use ($gallery) {
+                            $pathinfo = pathinfo("$gallery/$image");
+                            return [
+                                "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
+                                "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
+                                "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
+                                "original" => "$gallery/$image"
+                            ];
+                        }, $imageList);
+                        $post->images = $imageList;
                     }
                 }
 

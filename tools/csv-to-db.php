@@ -6,9 +6,8 @@ include ("../wordpress/wp-load.php");
 
 function csvStringToAssociativeArray(string $csvString): array {
     $lines = explode("\n", trim($csvString));
-    if (empty($lines)) {
-        return [];
-    }
+    if (empty($lines)) return [];
+    
     $headers = str_getcsv(array_shift($lines));
     $result = [];
     foreach ($lines as $line) {
@@ -25,7 +24,6 @@ function assignValues($posts) {
         $post_id = $post["id"];
         foreach ($post as $key=>$value):
             if (strcmp($key, "id") === 0) continue;
-            // echo $key."\t".$field."\t".$post_id."\n";
             if (update_field($key, $value, $post_id)) {
                 echo $key."\t".$value."\t".$post_id." succeeded\n";
             }
@@ -40,12 +38,12 @@ function assignValues($posts) {
 echo "<pre>";
 
 if (function_exists('update_field')) {
+    $events = csvStringToAssociativeArray(file_get_contents("csv/events.csv"));
+    assignValues($events);
+    $models = csvStringToAssociativeArray(file_get_contents("csv/models.csv"));
+    assignValues($models);
     $djs = csvStringToAssociativeArray(file_get_contents("csv/djs.csv"));
     assignValues($djs);
-    $events = csvStringToAssociativeArray(file_get_contents("csv/events.csv"));
-    assignValues($events);
-    $events = csvStringToAssociativeArray(file_get_contents("csv/events.csv"));
-    assignValues($events);
 } 
 else {
     echo 'ACF is not active.';
