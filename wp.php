@@ -84,8 +84,7 @@ if (isset($_["action"])) {
                             $dom = new DomDocument();
                             $dom->loadHTML($images);
                             foreach ($dom->getElementsByTagName('a') as $item) {
-                                if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])
-                                ) {
+                                if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])) {
                                     $imageList[] = $item->getAttribute('href');
                                 }
                             }
@@ -119,7 +118,7 @@ if (isset($_["action"])) {
                             "post_image" => get_the_post_thumbnail_url($primary_dj[0]->ID)
                         ];
                     }
-                    $post->primary_dj = $primary_dj;
+                    $post->primary_dj = $primary_dj_data;
 
                     $secondary_djs = new WP_Query(array(
                         'connected_type' => 'secondary_dj',
@@ -136,7 +135,7 @@ if (isset($_["action"])) {
                             "post_image" => get_the_post_thumbnail_url($secondary_dj->ID)
                         ];
                     endforeach;
-                    $post->secondary_djs = $secondary_djs;
+                    $post->secondary_djs = $secondary_djs_data;
                 }
 
             endforeach;

@@ -33,10 +33,10 @@ async function loadPage(page, name) {
         data.ticket_link = result.fields.ticket_link ?? "";
         data.date_of_event = result.fields.date_of_event ?? "";
         data.background_image = result.fields.background_image.url ?? result.image;
-        data.dj_name = result?.dj?.post_title ?? "DJ To Be Announced...";
-        data.dj_image = result?.dj?.post_image ?? "";
-        data.dj_url = "djs/"+result?.dj?.post_name ?? "";
-        data.more_djs = result.djs ?? "";
+        data.primary_dj_name = result?.primary_dj?.post_title ?? "DJ To Be Announced...";
+        data.primary_dj_image = result?.primary_dj?.post_image ?? "";
+        data.primary_dj_url = "djs/"+result?.primary_dj?.post_name ?? "";
+        data.secondary_djs = result.secondary_djs ?? "";
         if (debug) console.log("data: ", data);
 
         let event_template = `
@@ -48,10 +48,10 @@ async function loadPage(page, name) {
                 </div>
                 <div class='images'>
                     <div>
-                        ${data.dj_image
-                            ? `<a href="${data.dj_url}">
-                                <img src='${data.dj_image}' class='feature' />
-                                <h2>${data.dj_name} »</h2>
+                        ${data.primary_dj_image
+                            ? `<a href="${data.primary_dj_url}">
+                                <img src='${data.primary_dj_image}' class='feature' />
+                                <h2>${data.primary_dj_name} »</h2>
                             </a>`
                             : '<h2>DJ To Be Announced...</h2>'}
                     </div>
