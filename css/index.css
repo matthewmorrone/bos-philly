@@ -463,6 +463,16 @@ footer span, footer a {
 #djs .grid {
     grid-template-columns: repeat(4, 1fr);
 }
+#models .tile {
+    background-color: rgba(0, 0, 0, .1);
+    filter: drop-shadow(25px 25px 25px #222);
+}
+#board .grid {
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
 #galleries .tile, #galleries .tile img {
     width: 350px;
     height: 231px;
@@ -471,19 +481,10 @@ footer span, footer a {
     width: 178px;
     height: 219px;
 }
-#models .tile {
-    background-color: rgba(0, 0, 0, .1);
-    filter: drop-shadow(25px 25px 25px #222);
-}
 #djs .tile, #djs .tile img {
     width: 278px;
     height: 361px;
 }
-#board .grid {
-    grid-template-rows: repeat(1, 1fr);
-    grid-template-columns: repeat(4, 1fr);
-}
-
 
 .konami {
     transform: rotate(5deg);

@@ -17,26 +17,8 @@ async function loadPage(page, name) {
     let result, data = {};
 
     if (page === "events") {
-        result = await getPageByName("event", name);
-        result = result.posts[0];
-        if (debug) console.log("result: ", result);
-
-        data.post_title = result.post_title;
-        data.post_name = result.post_name;
-        data.post_content = result.post_content;
-        data.image = result.image;
-        data.start_time = result.fields.start_time ?? "";
-        data.end_time = result.fields.end_time ?? "";
-        data.venue_name = result.fields.venue_name ?? "";
-        data.venue_address = result.fields.venue_address ?? "";
-        data.ticket_price = result.fields.ticket_price ?? "";
-        data.ticket_link = result.fields.ticket_link ?? "";
-        data.date_of_event = result.fields.date_of_event ?? "";
-        data.background_image = result.fields.background_image.url ?? result.image;
-        data.primary_dj_name = result?.primary_dj?.post_title ?? "DJ To Be Announced...";
-        data.primary_dj_image = result?.primary_dj?.post_image ?? "";
-        data.primary_dj_url = "djs/"+result?.primary_dj?.post_name ?? "";
-        data.secondary_djs = result.secondary_djs ?? "";
+        data = await getPageByName("event", name);
+        data = data.posts[0];
         if (debug) console.log("data: ", data);
 
         let event_template = `
@@ -48,10 +30,10 @@ async function loadPage(page, name) {
                 </div>
                 <div class='images'>
                     <div>
-                        ${data.primary_dj_image
-                            ? `<a href="${data.primary_dj_url}">
-                                <img src='${data.primary_dj_image}' class='feature' />
-                                <h2>${data.primary_dj_name} »</h2>
+                        ${data.primary_dj
+                            ? `<a href="djs/${data.primary_dj.post_name}">
+                                <img src='${data.primary_dj.post_image}' class='feature' />
+                                <h2>${data.primary_dj.post_title} »</h2>
                             </a>`
                             : '<h2>DJ To Be Announced...</h2>'}
                     </div>
@@ -114,14 +96,8 @@ async function loadPage(page, name) {
         $("title").text(`${data.post_title} - BOS Philly`);
     }
     if (page === "galleries") {
-        result = await getPageByName("gallery", name);
-        result = result.posts[0];
-        if (debug) console.log("result: ", result);
-
-        data.post_title = result.post_title;
-        data.post_name = result.post_name;
-        data.post_content = result.post_content;
-        data.images = result.images;
+        data = await getPageByName("gallery", name);
+        data = data.posts[0];
         if (debug) console.log("data: ", data);
 
         let gallery_template = `
@@ -152,19 +128,10 @@ async function loadPage(page, name) {
         $("title").text(`${data.post_title} - BOS Philly`);
     }
     if (page === "models") {
-        result = await getPageByName("model", name);
-        result = result.posts[0];
-        if (debug) console.log("result: ", result);
+        data = await getPageByName("model", name);
+        data = data.posts[0];
 
-        data.post_title = result.post_title;
-        data.post_name = result.post_name;
-        data.image = result.image;
-        data.post_content = result.post_content;
-        data.hometown = result.fields.hometown;
-        data.instagram_link = result.fields.instagram_link;
-        data.height = result.fields.height;
-        data.weight = result.fields.weight;
-        data.photos = result.fields.photos?.map(photo => {
+        data.photos = data.photos?.map(photo => {
             return {
                 small: photo.media_details.sizes.thumbnail?.source_url,
                 medium: photo.media_details.sizes.medium?.source_url,
@@ -209,15 +176,10 @@ async function loadPage(page, name) {
         particlesJS.load("particle-background", "css/model-particles.json");
     }
     if (page === "djs") {
-        result = await getPageByName("dj", name);
-        result = result.posts[0];
+        data = await getPageByName("dj", name);
+        data = data.posts[0];
 
-        data.post_title = result.post_title;
-        data.post_name = result.post_name;
-        data.image = result.image;
-        data.post_content = result.post_content;
-        data.hometown = result.fields.hometown;
-        data.photos = result.fields.photos?.map(photo => {
+        data.photos = data.photos?.map(photo => {
             return {
                 small: photo.media_details.sizes.thumbnail?.source_url,
                 medium: photo.media_details.sizes.medium?.source_url,
@@ -225,9 +187,7 @@ async function loadPage(page, name) {
                 full: photo.full_image_url
             }
         }) || [];
-        data.logo = result.fields.logo?.url;
-        data.soundcloud_link = result.fields.soundcloud_link;
-        data.instagram_link = result.fields.instagram_link;
+        data.logo = data.logo?.url;
         if (debug) console.log("data: ", data);
 
         let dj_template = `
@@ -255,7 +215,7 @@ async function loadPage(page, name) {
                 <div class='dj-right'>
                     <div class='description'>${data.post_content}</div>
                     ${data.instagram_link ? `<button class='instagram'>
-                        <a href="https://www.instagram.com/${data.instagram_link}/" target="_blank"><i class="fab fa-instagram"></i> ${data.instagram_link.split("/").slice(-2)[0]}</a>
+                        <a href="${data.instagram_link}" target="_blank"><i class="fab fa-instagram"></i> ${data.instagram_link.split("/").slice(-2)[0]}</a>
                     </button>` : ''}
                     ${data.soundcloud_link ? `<button class='soundcloud'>
                         <a href="${data.soundcloud_link}"><i class="fa-brands fa-soundcloud"></i> ${data.post_title}</a>
@@ -312,8 +272,8 @@ async function loadTiles() {
             events = events.map(event => {
                 return {
                     name: event.post_title,
-                    date: event.fields.date_of_event,
-                    timestamp: luxon.DateTime.fromMillis(Date.parse(event.fields.date_of_event)),
+                    date: event.date_of_event,
+                    timestamp: luxon.DateTime.fromMillis(Date.parse(event.date_of_event)),
                     url: `events/${event.post_name}`,
                     image: event.image
                 }
@@ -321,17 +281,16 @@ async function loadTiles() {
             events = events.sort(function(a, b) {
                 return a.timestamp > b.timestamp ? 1 : a.timestamp < b.timestamp ? -1 : 0;
             });
-            let $eventsGrid = $("#events .grid");
-            events.each(event => {
-                $eventsGrid.append(`<div class="tile container">
+            $("#events .grid").append(events.map(event => {
+                return `<div class="tile container">
                     <a href="${event.url}">
                         <img src="${event.image}" loading="lazy" />
                         <h3>${event.name}</h3>
                         <h4>${event.date}</h4>
                         <button class='tickets'>Tickets</button>
                     </a>
-                </div>`);
-            });
+                </div>`;
+            }));
         }
     }
 
@@ -340,8 +299,8 @@ async function loadTiles() {
         galleries = galleries.map(gallery => {
             return {
                 name: gallery.post_title,
-                date: gallery.fields.date_of_event,
-                timestamp: luxon.DateTime.fromMillis(Date.parse(gallery.fields.date_of_event)),
+                date: gallery.date_of_event,
+                timestamp: luxon.DateTime.fromMillis(Date.parse(gallery.date_of_event)),
                 url: `galleries/${gallery.post_name}`,
                 image: gallery.image
             }
@@ -349,15 +308,14 @@ async function loadTiles() {
         galleries = galleries.sort(function(a, b) {
             return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
         });
-        let $galleriesGrid = $("#galleries .grid");
-        galleries.each(gallery => {
-            $galleriesGrid.append(`<div class="tile container">
+        $("#galleries .grid").append(galleries.map(gallery => {
+            return `<div class="tile container">
                 <a href="${gallery.url}">
                     <img src="${gallery.image}" class="hover" loading="lazy" />
                     <div class="overlay"><div class="hover-text">${gallery.name}</div></div>
                 </a>
-            </div>`);
-        });
+            </div>`;
+        }));
     }
 
     if ($("#galleries .tile").length < 1) {
@@ -370,17 +328,14 @@ async function loadTiles() {
             $("#galleries .more").attr("post-limit", result.post_limit);
         }
         let galleries = result.posts;
-        if (galleries.length) {
-            loadGalleries(galleries);
-        }
+        if (galleries.length) loadGalleries(galleries);
+        
     
         $("#galleries .more").click(async function() {
             let offset = $("#galleries .more").attr("post-limit");
             let result = await getPages("gallery", offset, true);
             let galleries = result.posts;
-            if (galleries.length) {
-                loadGalleries(galleries);
-            }
+            if (galleries.length) loadGalleries(galleries);
             $("#galleries .more").hide();
         });
     }
@@ -396,15 +351,14 @@ async function loadTiles() {
                     image: page.image || ''
                 }
             });
-            let $pagesGrid = $(`#${pluralize.plural(url)} .grid`);
-            pages.each(page => {
-                $pagesGrid.append(`<div class="tile container">
+            $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
+                return `<div class="tile container">
                     <a href="${page.url}">
                         <img src="${page.image}" class="hover" loading="lazy" />
                         <div class="overlay"><div class="hover-text">${page.name}</div></div>
                     </a>
-                </div>`);
-            });
+                </div>`;
+            }));
         }
 
         let result = await getPages(url, limit);
@@ -425,9 +379,7 @@ async function loadTiles() {
             let offset = $(`#${pluralize.plural(url)} .more`).attr("post-limit");
             let result = await getPages(url, offset, true);
             let pages = result.posts;
-            if (pages.length) {
-                loadPages(pages, url);
-            }
+            if (pages.length) loadPages(pages, url);
             $(`#${pluralize.plural(url)} .more`).hide();
         });
     }

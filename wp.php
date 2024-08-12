@@ -30,27 +30,39 @@ if (isset($_["action"])) {
             exit();
         case "list":
             $args['post_type'] = $_["post_type"];
-            if (strcmp($_["post_type"], 'event') === 0) {
-                $args['orderby'] = "meta_value_num";
-                $args['meta_query'] = array(
-                    'relation' => 'AND',
-                    array('key' => 'date_of_event', 'compare' => '>=', 'value' => date('Ymd'))
-                );
-            }
-            if (strcmp($_["post_type"], 'gallery') === 0) {
-                $args['post_type'] = "event";
-                $args['orderby'] = "meta_value_num";
-                $args['meta_query'] = array(
-                    'relation' => 'AND',
-                    array('key' => 'date_of_event', 'compare' => '<',  'value' => date('Ymd')),
-                    array('key' => 'gallery_link',  'compare' => '!=', 'value' => '')
-                );
+            switch ($_["post_type"]) {
+                case "event": 
+                    $args['orderby'] = "meta_value_num";
+                    $args['meta_query'] = array(
+                        'relation' => 'AND',
+                        array('key' => 'date_of_event', 'compare' => '>=', 'value' => date('Ymd'))
+                    );
+                break;
+                case "gallery":
+                    $args['post_type'] = "event";
+                    $args['orderby'] = "meta_value_num";
+                    $args['meta_query'] = array(
+                        'relation' => 'AND',
+                        array('key' => 'date_of_event', 'compare' => '<',  'value' => date('Ymd')),
+                        array('key' => 'gallery_link',  'compare' => '!=', 'value' => '')
+                    );
+                break;
             }
             $query = new WP_Query($args);
             $posts = $query->get_posts();
             foreach($posts as &$post):
-                $post->fields = get_fields($post->ID);
-                $post->image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium')[0];
+                $postData = [];
+                $postData["id"] = $post->ID;
+                $postData["post_name"] = $post->post_name;
+                $postData["post_title"] = $post->post_title;
+                $postData["image"] = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
+                switch ($_["post_type"]) {
+                    case "event": 
+                        $post->fields = get_fields($post->ID);
+                        $postData["date_of_event"] = $post->fields["date_of_event"];
+                    break;
+                }
+                $post = $postData;
             endforeach;
             if ($_["limit"] >= 0) {
                 $post_count = count($posts);
@@ -73,71 +85,112 @@ if (isset($_["action"])) {
             $query = new WP_Query($args);
             $posts = $query->get_posts();
             foreach($posts as &$post):
+                $postData = [];
+                $postData["id"] = $post->ID;
+                $postData["post_name"] = $post->post_name;
+                $postData["post_title"] = $post->post_title;
+                $postData["post_content"] = $post->post_content;
+                $postData["image"] = get_the_post_thumbnail_url($post->ID);
+                
                 $post->fields = get_fields($post->ID);
-                $post->image = get_the_post_thumbnail_url($post->ID);
+                switch ($_["post_type"]) {
+                    case "event": 
+                        $postData["date_of_event"] = $post->fields["date_of_event"];
+                        $postData["background_image"] = $post->fields["background_image"]["url"]; // get a smaller image
+                        $postData["start_time"] = $post->fields["start_time"];
+                        $postData["end_time"] = $post->fields["end_time"];
+                        $postData["venue_name"] = $post->fields["venue_name"];
+                        $postData["venue_address"] = $post->fields["venue_address"];
+                        $postData["ticket_link"] = $post->fields["ticket_link"];
+                        $postData["soundcloud_link"] = $post->fields["soundcloud_link"];
 
-                if (isset($post->fields["gallery_link"])) {
-                    $gallery = "http://".$post->fields["gallery_link"];
-                    if ($gallery) {
-                        $images = file_get_contents($gallery);
-                        if ($images) {
-                            $dom = new DomDocument();
-                            $dom->loadHTML($images);
-                            foreach ($dom->getElementsByTagName('a') as $item) {
-                                if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])) {
-                                    $imageList[] = $item->getAttribute('href');
+                        if (strcmp($_["post_type"], "event") === 0) {
+                            $primary_dj = new WP_Query(array(
+                                'connected_type' => 'primary_dj',
+                                'connected_items' => $post->ID,
+                                'nopaging' => true,
+                            ));
+                            $primary_dj = $primary_dj->posts;
+                            if ($primary_dj) {
+                                $primary_dj_data = [
+                                    "ID" => $primary_dj[0]->ID,
+                                    "post_name" => $primary_dj[0]->post_name,
+                                    "post_title" => $primary_dj[0]->post_title,
+                                    "post_content" => $primary_dj[0]->post_content,
+                                    "post_image" => get_the_post_thumbnail_url($primary_dj[0]->ID)
+                                ];
+                            }
+                            $postData["primary_dj"] = $primary_dj_data;
+        
+                            $secondary_djs = new WP_Query(array(
+                                'connected_type' => 'secondary_dj',
+                                'connected_items' => $post->ID,
+                                'nopaging' => true,
+                            ));
+                            $secondary_djs = $secondary_djs->posts;
+                            foreach($secondary_djs as $secondary_dj):
+                                $secondary_djs_data[] = [
+                                    "ID" => $secondary_dj->ID,
+                                    "post_name" => $secondary_dj->post_name,
+                                    "post_title" => $secondary_dj->post_title,
+                                    "post_content" => $secondary_dj->post_content,
+                                    "post_image" => get_the_post_thumbnail_url($secondary_dj->ID)
+                                ];
+                            endforeach;
+                            $postData["secondary_djs"] = $secondary_djs_data;
+                        }
+        
+                    break;
+                    case "gallery": 
+                        $postData["gallery_link"] = $post->fields["gallery_link"];
+                        if (isset($post->fields["gallery_link"])) {
+                            $gallery = "http://".$post->fields["gallery_link"];
+                            if ($gallery) {
+                                $images = file_get_contents($gallery);
+                                if ($images) {
+                                    $dom = new DomDocument();
+                                    $dom->loadHTML($images);
+                                    foreach ($dom->getElementsByTagName('a') as $item) {
+                                        if (strpos($item->getAttribute('href'), ".jpg") and !containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])) {
+                                            $imageList[] = $item->getAttribute('href');
+                                        }
+                                    }
+                                    $imageList = array_map(function($image) use ($gallery) {
+                                        $pathinfo = pathinfo("$gallery/$image");
+                                        return [
+                                            "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
+                                            "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
+                                            "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
+                                            "original" => "$gallery/$image"
+                                        ];
+                                    }, $imageList);
+                                    $postData["images"] = $imageList;
                                 }
                             }
-                            $imageList = array_map(function($image) use ($gallery) {
-                                $pathinfo = pathinfo("$gallery/$image");
-                                return [
-                                    "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
-                                    "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
-                                    "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
-                                    "original" => "$gallery/$image"
-                                ];
-                            }, $imageList);
-                            $post->images = $imageList;
                         }
-                    }
+                    break;
+                    case "model":
+                        $postData["instagram_link"] = $post->fields["instagram_link"];
+                        $postData["height"] = $post->fields["height"];
+                        $postData["weight"] = $post->fields["weight"];
+                        $postData["birthday"] = $post->fields["birthday"];
+                        $postData["hometown"] = $post->fields["hometown"];
+                        $postData["active"] = $post->fields["active"];
+                        $postData["photos"] = $post->fields["photos"];
+                    break;
+                    case "dj":
+                        $postData["soundcloud_link"] = $post->fields["soundcloud_link"];
+                        $postData["instagram_link"] = $post->fields["instagram_link"];
+                        $postData["hometown"] = $post->fields["hometown"];
+                        $postData["active"] = $post->fields["active"];
+                        $postData["logo"] = $post->fields["logo"];
+                        $postData["photos"] = $post->fields["photos"];
+                    break;
                 }
-
-                if (strcmp($_["post_type"], "event") === 0) {
-                    $primary_dj = new WP_Query(array(
-                        'connected_type' => 'primary_dj',
-                        'connected_items' => $post->ID,
-                        'nopaging' => true,
-                    ));
-                    $primary_dj = $primary_dj->posts;
-                    if ($primary_dj) {
-                        $primary_dj_data = [
-                            "ID" => $primary_dj[0]->ID,
-                            "post_name" => $primary_dj[0]->post_name,
-                            "post_title" => $primary_dj[0]->post_title,
-                            "post_content" => $primary_dj[0]->post_content,
-                            "post_image" => get_the_post_thumbnail_url($primary_dj[0]->ID)
-                        ];
-                    }
-                    $post->primary_dj = $primary_dj_data;
-
-                    $secondary_djs = new WP_Query(array(
-                        'connected_type' => 'secondary_dj',
-                        'connected_items' => $post->ID,
-                        'nopaging' => true,
-                    ));
-                    $secondary_djs = $secondary_djs->posts;
-                    foreach($secondary_djs as $secondary_dj):
-                        $secondary_djs_data[] = [
-                            "ID" => $secondary_dj->ID,
-                            "post_name" => $secondary_dj->post_name,
-                            "post_title" => $secondary_dj->post_title,
-                            "post_content" => $secondary_dj->post_content,
-                            "post_image" => get_the_post_thumbnail_url($secondary_dj->ID)
-                        ];
-                    endforeach;
-                    $post->secondary_djs = $secondary_djs_data;
-                }
-
+                
+                
+                
+                $post = $postData;
             endforeach;
             $result["posts"] = $posts;
         break;
