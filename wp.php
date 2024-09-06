@@ -195,7 +195,10 @@ if (isset($_["action"])) {
             $result["posts"] = $posts;
         break;
     }
-         if ($_POST) {echo json_encode($result); }
+        if ($_POST) {
+            ob_start('ob_gzhandler');
+            echo json_encode($result); 
+        }
     else if ($_GET)  {echo "<pre>"; print_r($result); echo "</pre>";}
 }
 

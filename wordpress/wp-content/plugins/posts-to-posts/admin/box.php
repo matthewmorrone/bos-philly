@@ -10,6 +10,8 @@ class P2P_Box {
 
 	private $columns;
 
+	private $labels;
+
 	private static $enqueued_scripts = false;
 
 	private static $admin_box_qv = array(

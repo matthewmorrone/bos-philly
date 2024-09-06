@@ -20,7 +20,6 @@ class P2P_Connection_Type_Factory {
 			'self_connections' => false,
 			'sortable' => false,
 			'title' => array(),
-			'label' => '',
 			'from_labels' => '',
 			'to_labels' => '',
 			'reciprocal' => false,

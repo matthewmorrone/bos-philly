@@ -8,7 +8,6 @@ abstract class P2P_Side {
 
 	abstract function get_title();
 	abstract function get_desc();
-	abstract function get_label();
 	abstract function get_labels();
 
 	abstract function can_edit_connections();

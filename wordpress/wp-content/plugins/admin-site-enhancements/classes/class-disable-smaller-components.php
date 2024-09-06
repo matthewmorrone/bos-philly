@@ -22,6 +22,18 @@ class Disable_Smaller_Components {
         }
         return $src;
     }
+    
+    /** 
+     * Remove generator tag from RSS feed
+     * 
+     * @since 7.3.3
+     */
+    public function remove_feed_generator_tag( $generator_type, $type ) {
+        // e.g. <generator>https://wordpress.org/?v=6.6.1</generator>
+        if ( false !== strpos( $generator_type, '<generator>https://wordpress.org/?v=' ) ) {
+            return '';            
+        }
+    }
 
     /**
      * Disable loading of frontend public assets of dashicons
@@ -141,6 +153,17 @@ class Disable_Smaller_Components {
     public function disable_admin_emojis() {
         remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
         remove_action( 'admin_print_styles', 'print_emoji_styles' );
+    }
+    
+    /**
+     * Add loading="eager" attribute for featured images
+     * 
+     * @link https://plugins.trac.wordpress.org/browser/disable-lazy-loading/tags/2.1/disable-lazy-loading.php
+     * @since 7.3.0
+     */
+    public function eager_load_featured_images( $attr, $attachment = null ) {
+        $attr['loading'] = 'eager';
+        return $attr;
     }
     
 }

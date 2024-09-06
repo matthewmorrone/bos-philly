@@ -49,6 +49,7 @@ class Settings_Sections_Fields {
             $wp_version,
             $wp_roles,
             $wpdb,
+            $asenha_all_post_types,
             $asenha_public_post_types,
             $asenha_nonpublic_post_types,
             $asenha_gutenberg_post_types,
@@ -59,6 +60,15 @@ class Settings_Sections_Fields {
         $options = get_option( ASENHA_SLUG_U, array() );
         $options_extra = get_option( ASENHA_SLUG_U . '_extra', array() );
         $roles = $wp_roles->get_names();
+        // Get array of slugs and plural labels for all post types, e.g. array( 'post' => 'Posts', 'page' => 'Pages' )
+        $asenha_all_post_types = array();
+        $all_post_type_names = get_post_types( array(), 'names' );
+        foreach ( $all_post_type_names as $post_type_name ) {
+            $post_type_object = get_post_type_object( $post_type_name );
+            $asenha_all_post_types[$post_type_name] = $post_type_object->label;
+        }
+        asort( $asenha_all_post_types );
+        // sort by value, ascending
         // Get array of slugs and plural labels for public post types, e.g. array( 'post' => 'Posts', 'page' => 'Pages' )
         $asenha_public_post_types = array();
         $public_post_type_names = get_post_types( array(
@@ -189,9 +199,9 @@ class Settings_Sections_Fields {
         );
         $field_id = 'content_order_for';
         $field_slug = 'content-order-for';
-        if ( is_array( $asenha_public_post_types ) ) {
+        if ( is_array( $asenha_all_post_types ) ) {
             $inapplicable_post_types = array();
-            foreach ( $asenha_public_post_types as $post_type_slug => $post_type_label ) {
+            foreach ( $asenha_all_post_types as $post_type_slug => $post_type_label ) {
                 // e.g. $post_type_slug is post, $post_type_label is Posts
                 $is_hierarchical_label = ( is_post_type_hierarchical( $post_type_slug ) ? ' <span class="faded">- Hierarchical</span>' : '' );
                 if ( (post_type_supports( $post_type_slug, 'page-attributes' ) || is_post_type_hierarchical( $post_type_slug )) && !in_array( $post_type_slug, $inapplicable_post_types ) ) {
@@ -2017,6 +2027,23 @@ class Settings_Sections_Fields {
                 'class'       => 'asenha-checkbox asenha-hide-th disable-components ' . $field_slug,
             )
         );
+        $field_id = 'disable_feed_generator_tag';
+        $field_slug = 'disable-feed-generator-tag';
+        add_settings_field(
+            $field_id,
+            '',
+            // Field title
+            [$render_field, 'render_checkbox_plain'],
+            ASENHA_SLUG,
+            'main-section',
+            array(
+                'option_name' => ASENHA_SLUG_U,
+                'field_id'    => $field_id,
+                'field_name'  => ASENHA_SLUG_U . '[' . $field_id . ']',
+                'field_label' => __( 'Disable the <strong>&lt;generator&gt; tag</strong> in RSS feed &lt;channel&gt;, which discloses the WordPress version number. Older versions(s) might contain unpatched security loophole(s).', 'admin-site-enhancements' ),
+                'class'       => 'asenha-checkbox asenha-hide-th disable-components ' . $field_slug,
+            )
+        );
         $field_id = 'disable_resource_version_number';
         $field_slug = 'disable-resource-version-number';
         add_settings_field(
@@ -2150,6 +2177,23 @@ class Settings_Sections_Fields {
                 'field_id'    => $field_id,
                 'field_name'  => ASENHA_SLUG_U . '[' . $field_id . ']',
                 'field_label' => __( 'Disable <strong>block-based widgets settings screen</strong>. Restores the classic widgets settings screen when using a classic (non-block) theme. This has no effect on block themes.', 'admin-site-enhancements' ),
+                'class'       => 'asenha-checkbox asenha-hide-th disable-components ' . $field_slug,
+            )
+        );
+        $field_id = 'disable_lazy_load';
+        $field_slug = 'disable-lazy-load';
+        add_settings_field(
+            $field_id,
+            '',
+            // Field title
+            [$render_field, 'render_checkbox_plain'],
+            ASENHA_SLUG,
+            'main-section',
+            array(
+                'option_name' => ASENHA_SLUG_U,
+                'field_id'    => $field_id,
+                'field_name'  => ASENHA_SLUG_U . '[' . $field_id . ']',
+                'field_label' => __( 'Disable <strong>lazy loading of images</strong> that was natively added since WordPress v5.5.', 'admin-site-enhancements' ),
                 'class'       => 'asenha-checkbox asenha-hide-th disable-components ' . $field_slug,
             )
         );

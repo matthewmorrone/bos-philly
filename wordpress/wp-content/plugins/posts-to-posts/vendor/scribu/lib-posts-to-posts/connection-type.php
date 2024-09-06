@@ -6,8 +6,6 @@ class P2P_Connection_Type {
 
 	public $cardinality;
 
-	public $label;
-	
 	public $labels;
 
 	protected $title;

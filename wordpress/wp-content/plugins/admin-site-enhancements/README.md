@@ -5,7 +5,7 @@ Donate link: https://bowo.io/asenha-sp-rdm
 Tags: enhancements, tweaks, optimizations, tools  
 Requires at least: 4.6  
 Tested up to: 6.6.1  
-Stable tag: 7.2.1  
+Stable tag: 7.3.3  
 Requires PHP: 5.6  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,13 +20,13 @@ Admin and Site Enhancements (ASE) helps you to **easily enhance** various admin 
 
 **Pro version** with Lifetime Deal (LTD) is available at [www.wpase.com](https://www.wpase.com/rdme-to-web).
 
-Here's a detailed walkthrough of ASE Free t v7.0.3 by Pascal Claro.
+Here's a walkthrough of ASE Free at v7.1.5 by Jakson.
+
+https://www.youtube.com/watch?v=ZEiIKfz2p2Q
+
+Here's a detailed walkthrough of ASE Free at v7.0.3 by Pascal Claro.
 
 https://www.youtube.com/watch?v=bX-2gmpCEMU
-
-Here's a demo of ASE Pro at v6.2.6 by David McCan.
-
-https://www.youtube.com/watch?v=0va_LsaeBfY
 
 [**See more video reviews >>**](https://www.wpase.com/video-reviews/)
 
@@ -43,7 +43,7 @@ _"ASE is an amazing plugin! **Time and money saver**. Thank you!"_ ~[Iulian Baci
 ### FEATURES & MODULES
 
 **63 modules** in total:  
-**54 free modules** (24 has Pro features) | **9 Pro modules**
+**54 free modules** (26 has Pro features) | **9 Pro modules**
 
 [**See all features >>**](https://www.wpase.com/features/)
 
@@ -90,7 +90,7 @@ _"ASE is an amazing plugin! **Time and money saver**. Thank you!"_ ~[Iulian Baci
 * **Site Identity on Login Page**. Use the site icon and URL to replace the default WordPress logo with link to wordpress.org on the login page.
 * **Log In/Out Menu**. Enable log in, log out and dynamic log in/out menu item for addition to any menu.
 * **Last Login Column**. Log when users on the site last logged in and display the date and time in the users list table. [ASE Pro](https://www.wpase.com/rdme-to-web) makes the column sortable.
-* **Redirect After Login / Logout**. Set custom redirect URL for all or some user roles after login / logout.
+* **Redirect After Login / Logout**. Set custom redirect URL for all or some user roles after login / logout. [ASE Pro](https://www.wpase.com/rdme-to-web) adds an option to set separate redirect URL for each role.
 
 ### Custom Code
 
@@ -109,7 +109,7 @@ _"ASE is an amazing plugin! **Time and money saver**. Thank you!"_ ~[Iulian Baci
 * **Disable REST API**. Disable REST API access for non-authenticated users and remove URL traces from &lt;head&gt;, HTTP headers and WP RSD endpoint.
 * **Disable Feeds**. Disable all RSS, Atom and RDF feeds.
 * **Disable All Updates**. Completely disable core, theme and plugin updates and auto-updates. Will also disable update checks, notices and emails.
-* **Disable Smaller Components**. Prevent smaller components from running or loading. e.g. generator &lt;meta&gt; tag, version number, Windows Live Writer (WLW) manifest &lt;link&gt; tag, Really Simple Discovery (RSD) &lt;link&gt; tag, WordPress shortlink &lt;link&gt; tag in &lt;head&gt;, and also dashicons CSS and JS files, emoji support, jQuery Migrate and block-based widgets settings screen.
+* **Disable Smaller Components**. Prevent smaller components from running or loading. Those are generator &lt;meta&gt; tag, version number, Windows Live Writer (WLW) manifest &lt;link&gt; tag, Really Simple Discovery (RSD) &lt;link&gt; tag, WordPress shortlink &lt;link&gt; tag in &lt;head&gt;, and also dashicons CSS and JS files, emoji support, jQuery Migrate, block-based widgets settings screen and native lazy load of images.
 
 ### Security
 
@@ -186,30 +186,30 @@ ASE does not officially support multisite. Please use at your own risk. That sai
 
 ## Changelog
 
-**Admin and Site Enhancements (ASE) v1.0.0** was released on October 17, 2022. Since then, there have been **72 _point_ releases** (e.g. 1.1.0 ) and **108 _patch_ releases** (e.g. 4.9.1). 
+**Admin and Site Enhancements (ASE) v1.0.0** was released on October 17, 2022. Since then, there have been **73 _point_ releases** (e.g. 1.1.0 ) and **111 _patch_ releases** (e.g. 4.9.1). 
 
 Each **_point release_** usually corresponds with the addition of one new module/feature. Each module/feature usually is the equivalent of one (or more) single-purpose plugin. Each **_patch release_** usually contain one or more bugfix or improvements to existing modules/features.
 
 [**Upgrade to ASE Pro**](https://www.wpase.com/chnlg-to-web) now. Lifetime Deal (LTD) available.
 
-### 7.2.1 (2024.08.05) - ASE Free and Pro
+### 7.3.3 (2024.09.02) - ASE Free and Pro
 
-* **[IMPROVED in Free and Pro] Utilities >> Password Protection**: password-protected pages will now be marked with `noindex` to prevent "duplicate – from user not as canonical set up" warning in SEO reports, e.g. by google. Props to Christian S. for [suggesting this](https://wordpress.org/support/topic/how-to-set-passwort-protection-page-noindex/).
+* **[ADDED in Free and Pro] Disable Components >> Disable Smaller Components**: added an option to remove generator tag that contains WordPress version number in RSS feed. Props to [Emmanue ATSÉ](https://wordpress.org/support/users/eatse/) for [suggesting this](https://wordpress.org/support/topic/disable-version-number-version-still-present-in-rss-feed/).
 
-* **[IMPROVED in Pro] Content Management >> Custom Content Types >> Custom Field Groups**: the number field now supports decimal values. Props to Philippe G. for prompting the improvement.
+* **[IMPROVED in Pro] Log In | Log Out >> Redirect After Login and Logout**: add option to redirect to separate URL for each user role.
 
-* **[IMPROVED in Pro] Admin Interface >> Admin Logo**: enable the use of an image URL hosted on another site as the logo image. Props to Bayley S. for suggesting this improvement.
+* **[FIXED in Free and Pro] Log In | Log Out >> Change Login URL**: fix PHP warning as [reported](https://wordpress.org/support/topic/php-warning-undefined-variable-4/#post-17984197) by [@dakotadevelopers](https://wordpress.org/support/users/dakotadevelopers/) and Thibaut V.
 
-* **[FIXED in Free and Pro] Admin Interface >> Hide Admin Notices**: fix for notices coming from "Stock Sync with Google Sheet for WooCommerce" and "Stock Sync with Google Sheet for WooCommerce Ultimate" plugins not being hidden. Props to Manish S. for reporting the issue and facilitating the troubleshooting process.
+* **[FIXED in Free and Pro] Admin Interface >> Hide Admin Notices**: some notices were not properly hidden on Wordfence plugin's dashboard, which is now fixed and will be properly hidden in the notices panel. Props to [@tomislo](https://wordpress.org/support/users/tomislo/) for [reporting the issue](https://wordpress.org/support/topic/hide-admin-notices-2/).
 
-* **[FIXED in Pro] Content Management >> Media Categories**: 
-  * **fix a conflict with WP to Buffer plugin** causing the plugins list page to show hidden modals. Props to Riza A. for reporting the issue in detail.
-  * **fix CSS layout issue with WP 6.6** and greater when viewing the media library. This happens when both "Clean Up Admin Bar >> Remove the Help tab and drawer" and "Enhance List Tables >> Show file size column in media library" are checked. Props to Marcellus J. for reporting the issue.
-  
-* **[TRANSLATION in Free and Pro]** ASE is now translated into 20 languages:
+* **[FIXED in Pro] Admin Interface >> Admin Logo**: when admin logo is shown in the admin menu and the menu is collapsed, the logo will now be hidden instead of shown in the original size, overflowing the collapsed menu. Props to @myleslasco for reporting the issue.
+
+* **[TRANSLATION in Free and Pro]** ASE is now translated into 22 languages:
   * **Added new/improved translation** for:
-    * ASE Free: Hungarian, Korean, Brazilian Portuguese, Slovak, Vietnamese
-    * ASE Pro: Hungarian, Brazilian Portuguese, Slovak, Vietnamese, Chinese
+    * Free: Hungarian, Indonesian, Slovak, Swedish, Vietnamese
+    * Pro: Italian, Vietnamese
+  * **More strings have been internationalized**. @Translators, please visit the respective project pages for the Free and Pro versions to translate the new strings, if you havent' done so already.
+  * **Interested to help translate or improve the translation?** Please go to [https://translate.wpase.com](https://translate.wpase.com) for more info.
   * **Chinese (China)**: ASE Free and Pro (completed). Props to [@bricksvip](https://profiles.wordpress.org/bricksvip/) et al.
   * **Portuguese (Brazil)**: ASE Free and ASE Pro (completed). Props to [Dennis F.](https://profiles.wordpress.org/dnn/), [denisgomesfranco](https://profiles.wordpress.org/denisgomesfranco/), [Denison C.](https://profiles.wordpress.org/denisoncarlos/) and [@ofmarconi](https://profiles.wordpress.org/ofmarconi/).
   * **Hungarian**: ASE Free and Pro (completed). Props to [R. József G.](https://profiles.wordpress.org/radicsjg/) et al.
@@ -224,13 +224,13 @@ Each **_point release_** usually corresponds with the addition of one new module
   * **Czech**: ASE Free and Pro (completed). Props to Jan S. et al.
   * **Spanish**: ASE Free and Pro (completed). Props to [@marcorubiol](https://profiles.wordpress.org/marcorubiol/) et al.
   * **Slovak**: ASE Free and Pro (completed). Props to [Dominik K.](https://profiles.wordpress.org/dominokozmali/) et al.
+  * **Indonesian**: ASE Free and Pro (completed). Props to [@pakacil](https://profiles.wordpress.org/pakacil/), [Wawan S.](https://profiles.wordpress.org/ahmad-rafiansyah/) et al.
   * **Portuguese (Portugal)**: ASE Free (completed) | ASE Pro (partial). Props to [Ricardo C.](https://profiles.wordpress.org/madebyuh/) et al.
   * **Ukrainian**: ASE Free (completed) | ASE Pro (partial). Props to [Irina](https://profiles.wordpress.org/irinashl/) et al.
   * **Urdu**: ASE Free (completed) | ASE Pro (partial). Props to [Ayyaz A.](https://profiles.wordpress.org/ayyazahmad/) et al.
   * **Swedish**: ASE Free (completed) | ASE Pro (partial). Props to [Robert M.](https://profiles.wordpress.org/robertmichalski/) and [Tor-Bjorn F.](https://profiles.wordpress.org/tobifjellner/).
   * **Danish**: ASE Free (completed) | ASE Pro (partial). Props to [Morten E.L.](https://profiles.wordpress.org/ellegaarddk/), [Helgi P.](https://profiles.wordpress.org/helgipetersen/) and [Kurt M.A.](https://profiles.wordpress.org/moskjaer/) et al.
   * **Arabic**: ASE Free (completed) | ASE Pro (partial). Props to [Mohammed J.](https://profiles.wordpress.org/ih4xz/) et al.
-  * **More strings** have been internationalized. @Translators, please visit the respective project pages for the Free and Pro versions to translate the new strings, if you havent' done so already.
-  * **Interested to help translate or improve the translation?** Please go to [https://translate.wpase.com](https://translate.wpase.com) for more info.
+  * **Romanian**: ASE Free (completed) | ASE Pro (partial). Props to [Dan C.](https://profiles.wordpress.org/dancaragea/), [@ravishi](https://profiles.wordpress.org/ravishi/) et al.
 
 [**See the full changelog >>**](https://www.wpase.com/documentation/changelog/)

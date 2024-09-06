@@ -184,6 +184,13 @@ class Admin_Site_Enhancements {
                 10,
                 3
             );
+            add_filter( 'wp_calculate_image_srcset', [$svg_upload, 'disable_svg_srcset'] );
+            add_filter(
+                'wp_calculate_image_sizes',
+                [$svg_upload, 'remove_svg_responsive_image_attr'],
+                10,
+                3
+            );
             add_action( 'wp_ajax_svg_get_attachment_url', [$svg_upload, 'get_svg_attachment_url'] );
             add_filter( 'wp_prepare_attachment_for_js', [$svg_upload, 'get_svg_url_in_media_library'] );
         }
@@ -284,6 +291,7 @@ class Admin_Site_Enhancements {
             $cleanup_admin_bar = new ASENHA\Classes\Cleanup_Admin_Bar();
             // Priority 5 to execute earlier than the normal 10. This is for removing default items.
             add_filter( 'admin_bar_menu', [$cleanup_admin_bar, 'modify_admin_bar_menu'], 5 );
+            add_filter( 'admin_bar_menu', [$cleanup_admin_bar, 'remove_howdy'], PHP_INT_MAX - 100 );
             if ( array_key_exists( 'hide_help_drawer', $options ) && $options['hide_help_drawer'] ) {
                 add_action( 'admin_head', [$cleanup_admin_bar, 'hide_help_drawer'] );
             }
@@ -763,6 +771,14 @@ class Admin_Site_Enhancements {
             if ( array_key_exists( 'disable_head_generator_tag', $options ) && $options['disable_head_generator_tag'] ) {
                 remove_action( 'wp_head', 'wp_generator' );
             }
+            if ( array_key_exists( 'disable_feed_generator_tag', $options ) && $options['disable_feed_generator_tag'] ) {
+                add_filter(
+                    'the_generator',
+                    [$disable_smaller_components, 'remove_feed_generator_tag'],
+                    10,
+                    2
+                );
+            }
             if ( array_key_exists( 'disable_resource_version_number', $options ) && $options['disable_resource_version_number'] ) {
                 add_filter( 'style_loader_src', [$disable_smaller_components, 'remove_resource_version_number'], PHP_INT_MAX );
                 add_filter( 'script_loader_src', [$disable_smaller_components, 'remove_resource_version_number'], PHP_INT_MAX );
@@ -796,6 +812,10 @@ class Admin_Site_Enhancements {
                 add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
                 // Disables the block editor from managing widgets.
                 add_filter( 'use_widgets_block_editor', '__return_false' );
+            }
+            if ( array_key_exists( 'disable_lazy_load', $options ) && $options['disable_lazy_load'] ) {
+                add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+                add_filter( 'wp_get_attachment_image_attributes', [$disable_smaller_components, 'eager_load_featured_images'] );
             }
         }
         // =================================================================
@@ -844,6 +864,7 @@ class Admin_Site_Enhancements {
         if ( array_key_exists( 'obfuscate_email_address', $options ) && $options['obfuscate_email_address'] ) {
             $email_address_obfuscator = new ASENHA\Classes\Email_Address_Obfuscator();
             add_shortcode( 'obfuscate', [$email_address_obfuscator, 'obfuscate_string'] );
+            add_filter( 'safe_style_css', [$email_address_obfuscator, 'add_additional_attributes_to_safe_css'] );
             add_filter( 'widget_text', 'shortcode_unautop' );
             add_filter( 'widget_text', 'do_shortcode' );
             if ( array_key_exists( 'obfuscate_email_address_in_content', $options ) && $options['obfuscate_email_address_in_content'] ) {

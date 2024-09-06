@@ -57,10 +57,6 @@ class P2P_Side_Post extends P2P_Side {
 		return $this->get_labels()->name;
 	}
 
-	function get_label() {
-		return $this->get_label()->name;
-	}
-
 	function get_labels() {
 		try {
 			$labels = $this->get_ptype()->labels;

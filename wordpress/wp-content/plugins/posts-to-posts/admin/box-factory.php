@@ -45,7 +45,7 @@ class P2P_Box_Factory extends P2P_Factory {
 
 		add_meta_box(
 			sprintf( 'p2p-%s-%s', $directed->get_direction(), $directed->name ),
-			"$directed->label $title ", // $title
+			$title,
 			array( $box, 'render' ),
 			$post_type,
 			$box_args->context,
