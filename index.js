@@ -288,7 +288,9 @@ async function loadTiles() {
                             <a href="${event.url}"><img src="${event.image}" loading="lazy" /></a>
                             <a href="${event.url}"><h3>${event.name}</h3></a>
                             <a href="${event.url}"><h4>${event.date}</h4></a>
-                            <a href="${event.url}"><h4>${event.dj}</h4></a>
+                            ${event.dj 
+                                ? `<a href="${event.url}"><h4>${event.dj}</h4></a>` 
+                                : ``}
                             <a href="${event.url}"><button class='tickets'>Tickets</button></a>
                         </div>`;
             }));
