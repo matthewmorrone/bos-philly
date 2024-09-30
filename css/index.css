@@ -589,9 +589,6 @@ footer span, footer a {
         height: unset;
     }
 
-    #models h1 {
-        font-size: 40px;
-    }
     #djs .hover-text {
         font-size: 10px !important;
         overflow-wrap: break-word;
