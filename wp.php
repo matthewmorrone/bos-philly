@@ -60,6 +60,12 @@ if (isset($_["action"])) {
                     case "event": 
                         $post->fields = get_fields($post->ID);
                         $postData["date_of_event"] = $post->fields["date_of_event"];
+                        $primary_dj = new WP_Query(array(
+                            'connected_type' => 'primary_dj',
+                            'connected_items' => $post->ID,
+                            'nopaging' => true,
+                        ));
+                        $postData["dj"] = $primary_dj->posts[0]->post_title;
                     break;
                 }
                 $post = $postData;

@@ -182,6 +182,8 @@ video::-webkit-media-controls {
 }
 #events .tile h3 {
     font-size: 50px;
+    line-height: 50px;
+    padding: 10px;
 }
 #events .tile h4 {
     font-family: "Helvetica", Sans-serif;
@@ -287,8 +289,8 @@ button {
 #partners h1 {
     text-align: left;
     width: 70%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
     margin: auto;
 }
 #partners-grid {
@@ -297,8 +299,8 @@ button {
     grid-template-columns: repeat(4, 1fr);
     width: 80%;
     margin: auto !important;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 #partners-grid div {
     justify-self: center;
@@ -429,7 +431,7 @@ footer span, footer a {
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 80%;
+    width: 90%;
     margin: auto;
 }
 .tile {
@@ -438,8 +440,12 @@ footer span, footer a {
     border-radius: 20px;
     overflow: hidden;
     text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: stretch;
     justify-self: center;
-    align-self: center;
+    align-self: stretch;
 }
 .tile img {
     width: 100%;
@@ -450,7 +456,7 @@ footer span, footer a {
     width: 80%;
     border: 1px solid var(--font);
     margin: 25px;
-    background-color: var(--fore);
+    background-color: #191A3A;
 }
 #events .tile img {
     width: 100%;
@@ -472,20 +478,6 @@ footer span, footer a {
     grid-template-columns: repeat(4, 1fr);
 }
 
-
-#galleries .tile, #galleries .tile img {
-    width: 350px;
-    height: 231px;
-}
-#models .tile, #models .tile img {
-    width: 178px;
-    height: 219px;
-}
-#djs .tile, #djs .tile img {
-    width: 278px;
-    height: 361px;
-}
-
 .konami {
     transform: rotate(5deg);
     filter: invert(1);
@@ -502,6 +494,21 @@ footer span, footer a {
     } 
 }
 
+@media all and (width >= 600px) {
+    #galleries .tile, #galleries .tile img {
+        width: 350px;
+        height: 231px;
+    }
+    #models .tile, #models .tile img {
+        width: 178px;
+        height: 219px;
+    }
+    #djs .tile, #djs .tile img {
+        width: 278px;
+        height: 361px;
+    }
+}
+
 @media all and (600px < width < 800px) {
     html, body {
         max-width: 100%;
@@ -510,6 +517,14 @@ footer span, footer a {
 }
 
 @media all and (width < 600px) {
+    .hover {
+        flex-basis: 100%;
+    }
+    .label {
+        color: white;
+        font-size: 20px;
+        margin: 5px 10px 5px 10px;
+    }
     html, body {
         max-width: 100%;
         overflow-x: hidden;
@@ -583,13 +598,13 @@ footer span, footer a {
     }
     #partners-grid {
         width: 90%;
+        padding-top: 20px;
+        padding-bottom: 0px;
     }
     #partners-grid img {
         width: 100px !important;
     }
     #partners h1 {
-        padding-top: 5px;
-        padding-bottom: 5px;
         text-align: center;
     }
     #board h1 {
@@ -597,15 +612,14 @@ footer span, footer a {
     }
     footer {
         flex-flow: column nowrap;
+        padding-top: 10px;
     }
     footer h3 {
-        font-size: 24px;
-        text-align: center;
+        font-size: 20px;
     }
     footer div {
-        width: 80%;
+        width: 95%;
         margin: auto;
-        margin-top: 20px;
         text-justify: auto;
     }
 
@@ -634,12 +648,17 @@ footer span, footer a {
     }
 
 
-    #galleries .tile, #galleries .tile img {
+    #galleries .tile {
         border-radius: 0px;
         width: 120px;
+    }
+    #galleries .tile img {
         height: 80px;
     }
-    #djs .tile, #djs .tile img {
+    .container {
+        width: unset;
+    }
+    #djs .tile img {
         width: 90px;
         height: 120px;
     }

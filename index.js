@@ -272,6 +272,7 @@ async function loadTiles() {
             events = events.map(event => {
                 return {
                     name: event.post_title,
+                    dj: event.dj,
                     date: event.date_of_event,
                     timestamp: luxon.DateTime.fromMillis(Date.parse(event.date_of_event)),
                     url: `events/${event.post_name}`,
@@ -282,14 +283,14 @@ async function loadTiles() {
                 return a.timestamp > b.timestamp ? 1 : a.timestamp < b.timestamp ? -1 : 0;
             });
             $("#events .grid").append(events.map(event => {
+                console.log(event);
                 return `<div class="tile container">
-                    <a href="${event.url}">
-                        <img src="${event.image}" loading="lazy" />
-                        <h3>${event.name}</h3>
-                        <h4>${event.date}</h4>
-                        <button class='tickets'>Tickets</button>
-                    </a>
-                </div>`;
+                            <a href="${event.url}"><img src="${event.image}" loading="lazy" /></a>
+                            <a href="${event.url}"><h3>${event.name}</h3></a>
+                            <a href="${event.url}"><h4>${event.date}</h4></a>
+                            <a href="${event.url}"><h4>${event.dj}</h4></a>
+                            <a href="${event.url}"><button class='tickets'>Tickets</button></a>
+                        </div>`;
             }));
         }
     }
@@ -308,12 +309,15 @@ async function loadTiles() {
         galleries = galleries.sort(function(a, b) {
             return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
         });
+        const isMobile = window.matchMedia("(width < 600px)").matches;
         $("#galleries .grid").append(galleries.map(gallery => {
             return `<div class="tile container">
-                <a href="${gallery.url}">
+                <a href="${gallery.url}"></a>
                     <img src="${gallery.image}" class="hover" loading="lazy" />
-                    <div class="overlay"><div class="hover-text">${gallery.name}</div></div>
-                </a>
+                    ${isMobile 
+                        ? `<div class='label'>${gallery.name}</div>` 
+                        : `<div class="overlay"><div class="hover-text">${gallery.name}</div></div>`}
+                
             </div>`;
         }));
     }
@@ -351,12 +355,14 @@ async function loadTiles() {
                     image: page.image || ''
                 }
             });
+            const isMobile = window.matchMedia("(width < 600px)").matches;
             $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
                 return `<div class="tile container">
-                    <a href="${page.url}">
-                        <img src="${page.image}" class="hover" loading="lazy" />
-                        <div class="overlay"><div class="hover-text">${page.name}</div></div>
-                    </a>
+                    <a href="${page.url}"></a>
+                    <img src="${page.image}" class="hover" loading="lazy" />
+                    ${isMobile 
+                        ? `<div class='label'>${page.name}</div>` 
+                        : `<div class="overlay"><div class="hover-text">${page.name}</div></div>`}
                 </div>`;
             }));
         }
@@ -524,6 +530,7 @@ async function router(page, name) {
 $(async () => {
     $.ajaxSetup({cache: false});
     $("#splash video").width($("#splash").width());
+
     // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
 
     // hide and show the menu on mobile

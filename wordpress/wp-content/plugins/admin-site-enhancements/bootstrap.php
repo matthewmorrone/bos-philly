@@ -372,6 +372,10 @@ class Admin_Site_Enhancements {
             if ( array_key_exists( 'show_excerpt_column', $options ) && $options['show_excerpt_column'] ) {
                 add_action( 'admin_init', [$enhance_list_tables, 'show_excerpt_column'] );
             }
+            // Show Last Modified Column
+            if ( array_key_exists( 'show_last_modified_column', $options ) && $options['show_last_modified_column'] ) {
+                add_action( 'admin_init', [$enhance_list_tables, 'show_last_modified_column'] );
+            }
             // Show ID Column
             if ( array_key_exists( 'show_id_column', $options ) && $options['show_id_column'] ) {
                 add_action( 'admin_init', [$enhance_list_tables, 'show_id_column'] );
@@ -390,6 +394,10 @@ class Admin_Site_Enhancements {
             // Show ID in Action Row
             if ( array_key_exists( 'show_id_in_action_row', $options ) && $options['show_id_in_action_row'] ) {
                 add_action( 'admin_init', [$enhance_list_tables, 'show_id_in_action_row'] );
+            }
+            // Hide Date Column
+            if ( array_key_exists( 'hide_date_column', $options ) && $options['hide_date_column'] ) {
+                add_action( 'admin_init', [$enhance_list_tables, 'hide_date_column'] );
             }
             // Hide Comments Column
             if ( array_key_exists( 'hide_comments_column', $options ) && $options['hide_comments_column'] ) {
@@ -506,7 +514,13 @@ class Admin_Site_Enhancements {
         // Enable Last Login Column
         if ( array_key_exists( 'enable_last_login_column', $options ) && $options['enable_last_login_column'] ) {
             $last_login_column = new ASENHA\Classes\Last_Login_Column();
-            add_action( 'wp_login', [$last_login_column, 'log_login_datetime'] );
+            add_action(
+                'wp_login',
+                [$last_login_column, 'log_login_datetime'],
+                3,
+                1
+            );
+            // Earlier than Redirect After Login
             add_filter( 'manage_users_columns', [$last_login_column, 'add_last_login_column'] );
             add_filter(
                 'manage_users_custom_column',
