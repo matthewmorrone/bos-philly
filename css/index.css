@@ -247,7 +247,7 @@ button {
     padding-bottom: 50px;
 }
 .contact {
-    padding: 1em;
+    padding: .5em;
 }
 .contact a {
     padding: .5em;
@@ -451,7 +451,9 @@ footer span, footer a {
     width: 100%;
     object-fit: cover;
 }
-
+#board img {
+    margin-bottom: 10px;
+}
 #events .tile {
     width: 80%;
     border: 1px solid var(--font);
@@ -522,8 +524,13 @@ footer span, footer a {
     }
     .label {
         color: white;
-        font-size: 20px;
         margin: 5px 10px 5px 10px;
+    }
+    #galleries .label {
+        font-size: 20px;
+    }
+    #djs .label {
+        font-size: 12px;
     }
     html, body {
         max-width: 100%;
