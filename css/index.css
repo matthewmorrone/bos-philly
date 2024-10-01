@@ -644,24 +644,32 @@ footer span, footer a {
         grid-template-columns: repeat(2, 1fr);
     }
 
-
     #galleries .tile {
+        background-color: unset;
         border-radius: 0px;
         width: 120px;
     }
     #galleries .tile img {
         height: 80px;
+        border-radius: 20px;
     }
     .container {
         width: unset;
     }
+    #djs .tile {
+        background-color: unset;
+    }
     #djs .tile img {
         width: 90px;
         height: 120px;
+        border-radius: 20px;
     }
     #models .tile {
         filter: none;
         width: 120px;
+    }
+    #models .tile img {
+        border-radius: 20px;
     }
     #board .tile {
         width: 99%;
