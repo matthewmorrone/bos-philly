@@ -212,6 +212,7 @@ button {
     padding: 20px;
     border-radius: 10px;
     font-size: 16px;
+    cursor: pointer;
 }
 .more, .tickets {
     font-family: "Teko", Sans-serif;
