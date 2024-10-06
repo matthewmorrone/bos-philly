@@ -453,7 +453,7 @@ footer span, footer a {
     margin-bottom: 10px;
 }
 #events .tile {
-    width: 100%;
+    width: 90%;
     border: 1px solid var(--font);
     margin: 25px;
     background-color: #191A3A;
@@ -648,7 +648,9 @@ footer span, footer a {
         width: unset;
         grid-template-columns: repeat(2, 1fr);
     }
-
+    #events .tile {
+        width: 100%;
+    }
     #galleries .tile {
         background-color: unset;
         border-radius: 0px;
@@ -676,6 +678,7 @@ footer span, footer a {
     #models .tile img {
         border-radius: 20px;
     }
+    
     #board .tile {
         width: 99%;
         height: 100%;
