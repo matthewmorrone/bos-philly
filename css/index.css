@@ -171,9 +171,6 @@ video::-webkit-media-controls {
 #charity p {
     font-size: 19px;
 }
-#events, #galleries, #models, #djs {
-    display: none;
-}
 #events {
     background-image: url("/wordpress/content-events-background");
     background-repeat: no-repeat;

@@ -12,6 +12,7 @@ function adjustParticleBackground() {
     });
 }
 
+
 async function loadPage(page, name) {
     if (!page || !name) return;
     let result, data = {};
@@ -313,12 +314,12 @@ async function loadTiles() {
         const isMobile = window.matchMedia("(width < 600px)").matches;
         $("#galleries .grid").append(galleries.map(gallery => {
             return `<div class="tile container">
-                <a href="${gallery.url}"></a>
+                <a href="${gallery.url}">
                     <img src="${gallery.image}" class="hover" loading="lazy" />
                     ${isMobile 
                         ? `<div class='label'>${gallery.name}</div>` 
                         : `<div class="overlay"><div class="hover-text">${gallery.name}</div></div>`}
-                
+                </a>
             </div>`;
         }));
     }
@@ -359,11 +360,12 @@ async function loadTiles() {
             const isMobile = window.matchMedia("(width < 600px)").matches;
             $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
                 return `<div class="tile container">
-                    <a href="${page.url}"></a>
+                    <a href="${page.url}">
                     <img src="${page.image}" class="hover" loading="lazy" />
                     ${isMobile 
                         ? `<div class='label'>${page.name}</div>` 
                         : `<div class="overlay"><div class="hover-text">${page.name}</div></div>`}
+                    </a>
                 </div>`;
             }));
         }
@@ -398,6 +400,7 @@ async function loadTiles() {
     }
 
 }
+
 
 
 let hasFired = false;
@@ -496,6 +499,7 @@ Math.easeInOutQuad = function(t, b, c, d) {
 function scrollToSection(section, offset) {
     window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
     const target = document.querySelector(`#${section}`);
+    if (!target) return
     const offsetTop = target.offsetTop - $("header").height();
     scrollTo(document.documentElement, offsetTop, 500);
     $("title").text(`${section.toTitleCase()} - BOS Philly`);
