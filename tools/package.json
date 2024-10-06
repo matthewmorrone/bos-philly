@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "html-format": "^1.1.7",
+    "pretty": "^2.0.0",
+    "puppeteer": "^23.5.0"
+  },
+  "name": "bos-philly",
+  "version": "1.0.0",
+  "description": "## Steps for Migration to Dev + Clone or pull in terminal: git clone http://github.com/matthewmorrone/bos-philly dev.bosphilly.com --depth=1 + Change the database credentials in wpconfig.php",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "node scrape.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

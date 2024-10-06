@@ -283,7 +283,6 @@ async function loadTiles() {
                 return a.timestamp > b.timestamp ? 1 : a.timestamp < b.timestamp ? -1 : 0;
             });
             $("#events .grid").append(events.map(event => {
-                console.log(event);
                 return `<div class="tile container">
                             <a href="${event.url}"><img src="${event.image}" loading="lazy" /></a>
                             <a href="${event.url}"><h3>${event.name}</h3></a>
@@ -511,6 +510,8 @@ document.querySelectorAll('.nav').forEach(anchor => {
 
 
 async function router(page, name) {
+    if (typeof loadPage === "undefined") return;
+    if (typeof loadTiles === "undefined") return;
     if (page && name) {
         $("#splash, #charity, #events, #galleries, #models, #djs, #board").hide();
         await loadPage(page, name);

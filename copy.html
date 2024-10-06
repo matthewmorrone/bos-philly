@@ -1,0 +1,390 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=.9, viewport-fit=cover">
+    <base href="/">
+    <title>BOS Philly - Bringing Circuit Back to Philly</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <link rel="icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-75x75.png" sizes="32x32">
+    <link rel="icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+  </head>
+  <body>
+    <header class="fixed">
+      <a href="/" id="home">
+        <img id="logo" src="wordpress/content-bos-logo" alt="BOS Logo">
+      </a>
+      <nav>
+        <ul>
+          <li><a class="nav" href="events">Events</a></li>
+          <li><a class="nav" href="galleries">Galleries</a></li>
+          <li><a class="nav" href="models">Models</a></li>
+          <li><a class="nav" href="djs">DJs</a></li>
+          <li><a class="nav" href="board">Board</a></li>
+        </ul>
+        <span>
+            <a class="social" href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a class="social" href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a class="social" href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a class="social" href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
+            <a class="social" id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
+        </span>
+      </nav>
+    </header>
+    <section id="content" style="display: none;"></section>
+    <section id="splash">
+      <div class="splash-background">
+        <video preload="" autoplay="" loop="" muted="" playsinline="" poster="" style="width: 1200px;">
+          <source src="wordpress/content-splash" type="video/mp4" id="video">
+        </video>
+      </div>
+      <div class="splash-title">
+        <h2>BOS PHILLY</h2>
+        <p>Bringing Circuit back to Philly!</p>
+      </div>
+    </section>
+    <section id="charity">
+      <div class="charity-background">
+        <div id="parallax"></div>
+      </div>
+      <div class="charity-title">
+        <h2><span class="counter" start="0.00" current="0.00" end="75430.37"></span></h2>
+        <p class="counter-title">Donated to local LGBT Charities since 2018</p>
+      </div>
+    </section>
+    <section id="events" style="display: block;">
+      <h1>Events</h1>
+      <div class="grid">
+        <div class="tile container">
+          <a href="events/monster-mash"><img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/458088166_851919737006234_1328084745965258563_n1-819x1024.jpg" loading="lazy"></a>
+          <a href="events/monster-mash">
+            <h3>Monster Mash</h3>
+          </a>
+          <a href="events/monster-mash">
+            <h4>October 26, 2024</h4>
+          </a>
+          <a href="events/monster-mash">
+            <h4>DJ K!RK</h4>
+          </a>
+          <a href="events/monster-mash"><button class="tickets">Tickets</button></a>
+        </div>
+        <div class="tile container">
+          <a href="events/solo"><img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/mccann76_2_skinny_gay_male_models_wearing_a_tank_tops_with_gr_e7f0b96c-4d7f-4ee1-b65d-fc4d9146fd7b_11-771x1024.png" loading="lazy"></a>
+          <a href="events/solo">
+            <h3>SOLO</h3>
+          </a>
+          <a href="events/solo">
+            <h4>November 27, 2024</h4>
+          </a>
+          <a href="events/solo">
+            <h4>DJ Brett Oosterhaus</h4>
+          </a>
+          <a href="events/solo"><button class="tickets">Tickets</button></a>
+        </div>
+        <div class="tile container">
+          <a href="events/naughty-list"><img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/mccann76_older_gay_rugged_male_fitness_model_dressed_as_santa_ac226f14-2e0e-4fd6-acdd-0baab10f3883_11-683x1024.png" loading="lazy"></a>
+          <a href="events/naughty-list">
+            <h3>Naughty List</h3>
+          </a>
+          <a href="events/naughty-list">
+            <h4>December 21, 2024</h4>
+          </a>
+          <a href="events/naughty-list"><button class="tickets">Tickets</button></a>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="more" href="event" style="display: none;">More Events</button>
+      </div>
+    </section>
+    <section id="galleries" style="display: block;">
+      <h1>Galleries</h1>
+      <div class="grid">
+        <div class="tile container">
+          <a href="galleries/sunkiss-2"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-sunkiss-2-1024x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Sunkiss 2</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/sunkiss"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-sunkiss.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Sunkiss</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/opulence"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-opulence-819x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Opulence</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/jungle"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-jungle-819x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Jungle</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/miami-vice"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-miami-vice-819x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Miami Vice</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/candyland"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-candyland-1024x683.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Candyland</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/touchdown"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-touchdown-1024x683.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Touchdown</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/cirque-du-circuit"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-cirque-du-circuit-1024x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Cirque du Circuit</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/sir-kink"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-sir-kink-819x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">SIR.</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/night-swim"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-night-swim-1024x576.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Night Swim</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/eden"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-eden-1024x731.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Eden</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="galleries/pride-2022"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/event-pride-2022-1024x683.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Pride 2022 Festival</div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="more" href="gallery" post-count="28" post-limit="12">More Galleries</button>
+      </div>
+    </section>
+    <section id="models" style="display: block;">
+      <h1>Models</h1>
+      <div class="grid">
+        <div class="tile container">
+          <a href="models/william"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-william-826x1024.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">William</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="models/trae"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-trae-825x1024.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Trae</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="models/sidney"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-sidney-826x1024.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Sidney</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="models/reis"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-reis-823x1024.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Reis</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="models/peter"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-peter-826x1024.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Peter</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="models/paul"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/model-paul.png" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">Paul</div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="more" href="model" post-count="14" post-limit="6">More Models</button>
+      </div>
+    </section>
+    <section id="djs" style="display: block;">
+      <h1>DJs</h1>
+      <div class="grid">
+        <div class="tile container">
+          <a href="djs/dj-twin"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/dj-twin.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">DJ Twin</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="djs/dj-shane-marcus"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/dj-shane-marcus.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">DJ Shane Marcus</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="djs/dj-sandro-monts"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/dj-sandro-monts-1024x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">DJ Sandro Monts</div>
+          </div>
+        </div>
+        <div class="tile container">
+          <a href="djs/dj-sakalem"></a>
+          <img src="https://dev.bosphilly.com/wordpress/wp-content/uploads/dj-sakalem-1024x1024.jpg" class="hover" loading="lazy">
+          <div class="overlay">
+            <div class="hover-text">DJ Sakalem</div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="more" href="dj" post-count="29" post-limit="4">More DJs</button>
+      </div>
+    </section>
+    <section id="board">
+      <h1>Board</h1>
+      <img src="wordpress/content-separator" id="separator">
+      <div class="grid">
+        <div class="tile">
+          <img src="wordpress/board-steve" alt="Steve McCann" loading="lazy">
+          <h3>Steve McCann</h3>
+          <h4>Director of Business</h4>
+          <div class="contact">
+            <a href="https://www.facebook.com/steve.mccann" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:steve@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+            <a href="http://instagram.com/phillygaycalendar" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="wordpress/board-matt" alt="Matt Rowe" loading="lazy">
+          <h3>Matt Rowe</h3>
+          <h4>Director of Logistics</h4>
+          <div class="contact">
+            <a href="https://www.facebook.com/Mr.Breig" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:matt@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+            <a href="https://www.instagram.com/mr_breig/" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="wordpress/board-alex" alt="Alex Ortiz" loading="lazy">
+          <h3>Alex Ortiz</h3>
+          <h4>Director of Outreach</h4>
+          <div class="contact">
+            <a href="https://www.facebook.com/AlexanderJohn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:alex@bosphily.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+            <a href="https://www.instagram.com/alexanderjawn/" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="wordpress/board-justin" alt="Justin Dile" loading="lazy">
+          <h3>Justin Dile</h3>
+          <h4>Director of Coordination</h4>
+          <div class="contact">
+            <a href="https://www.facebook.com/justindile" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:justin@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+            <a href="https://www.instagram.com/justindile/" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <!-- <button class="more" href="board">About Us...</button> -->
+      </div>
+    </section>
+    <section id="partners">
+      <div class="title">
+        <h1>Partners:</h1>
+      </div>
+      <div id="partners-grid">
+        <div><a href="https://circuitmom.com/"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy"></a></div>
+        <div><a href="https://www.waygay.org/"><img src="wordpress/partner-william-way-logo" loading="lazy"></a></div>
+        <div><a href="https://www.andrewchristian.com/"><img src="wordpress/partner-andrew-christian-logo" loading="lazy"></a></div>
+        <div><a href="https://qcareplus.com/"><img src="wordpress/partner-q-care-logo" loading="lazy"></a></div>
+        <div><a href="https://www.instagram.com/alexanderjohnphoto/"><img src="wordpress/partner-alexander-john-logo" loading="lazy"></a></div>
+        <div><a href="https://americanharvestvodka.com/"><img src="wordpress/partner-american-harvest-logo" loading="lazy"></a></div>
+        <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy"></a></div>
+        <div><a href="https://www.sickening.events/"><img src="wordpress/partner-sickening-events-logo" loading="lazy"></a></div>
+      </div>
+    </section>
+    <footer>
+      <div>
+        <h3>Stay Connected</h3>
+        <p>Join the over 8,000 people who receive our regular newsletters about all the greatest events!</p>
+        <span>
+            <a class="social" href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a class="social" href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a class="social" href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a class="social" href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
+        </span>
+        <a href="https://arep.co/m/bosphilly"><button id="signup"><i class="fa-solid fa-envelope-open-text"></i> Subscribe Here</button></a>
+      </div>
+      <div>
+        <h3>Committed To Philadelphia</h3>
+        <p>BOS Philly brings circuit parties to Philadelphia with international DJs and top-notch production while supporting local LGBT charities. Our events are unique and inclusive, creating an unforgettable experience. Join us to make a positive impact on the community while dancing the night away.</p>
+        <p><a class="learn-more" href="https://www.bosphilly.com/board/">Learn more about us &gt;&gt;</a></p>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="wp.js"></script>
+    <script src="index.js"></script>
+    <div id="lightboxOverlay" tabindex="-1" class="lightboxOverlay" style="display: none;"></div>
+    <div id="lightbox" tabindex="-1" class="lightbox" style="display: none;">
+      <div class="lb-outerContainer">
+        <div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="">
+          <div class="lb-nav"><a class="lb-prev" role="button" tabindex="0" aria-label="Previous image" href=""></a><a class="lb-next" role="button" tabindex="0" aria-label="Next image" href=""></a></div>
+          <div class="lb-loader"><a class="lb-cancel" role="button" tabindex="0"></a></div>
+        </div>
+      </div>
+      <div class="lb-dataContainer">
+        <div class="lb-data">
+          <div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div>
+          <div class="lb-closeContainer"><a class="lb-close" role="button" tabindex="0"></a></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
