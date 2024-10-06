@@ -102,7 +102,7 @@ endforeach;
     ?>
     </div>
     <div class="button-container">
-        <button class="more" href="event">More Events</button>
+        <button class="more" href="event" style="display: none;">More Events</button>
     </div>
 </section>
 <section id="galleries">
@@ -176,7 +176,7 @@ endforeach;
 $args = [];
 $args['post_status'] = "publish";
 $args['post_type'] = "dj";
-$args['posts_per_page'] = 4;
+$args['posts_per_page'] = 6;
 $query = new WP_Query($args);
 $posts = $query->get_posts();
 foreach($posts as &$post):
@@ -492,6 +492,10 @@ $(async () => {
 
     // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
 
+    const isMobile = window.matchMedia("(width < 600px)").matches;
+    if (isMobile) {
+        $(".overlay").remove()
+    }
     // hide and show the menu on mobile
     $("#mobileToggle").click(() => $("nav ul").slideToggle());
 
