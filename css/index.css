@@ -252,6 +252,7 @@ button {
 }
 .contact {
     padding: .5em;
+    padding-bottom: 1em;
 }
 .contact a {
     padding: .5em;
@@ -689,5 +690,6 @@ footer span, footer a {
         margin: 1px;
         padding: 10px;
         border-radius: 0;
+        line-height: 1em;
     }
 }

@@ -599,14 +599,14 @@ endforeach;
 <section id="partners">
     <div class="title"><h1>Partners:</h1></div>
     <div id="partners-grid">
-        <div><a href="https://circuitmom.com/"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.waygay.org/"><img src="wordpress/partner-william-way-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.andrewchristian.com/"><img src="wordpress/partner-andrew-christian-logo" loading="lazy" /></a></div>
-        <div><a href="https://qcareplus.com/"><img src="wordpress/partner-q-care-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.instagram.com/alexanderjohnphoto/"><img src="wordpress/partner-alexander-john-logo" loading="lazy" /></a></div>
-        <div><a href="https://americanharvestvodka.com/"><img src="wordpress/partner-american-harvest-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.sickening.events/"><img src="wordpress/partner-sickening-events-logo" loading="lazy" /></a></div>
+        <div><a href="https://circuitmom.com/" target="_blank"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy" /></a></div>
+        <div><a href="https://www.waygay.org/" target="_blank"><img src="wordpress/partner-william-way-logo" loading="lazy" /></a></div>
+        <div><a href="https://www.andrewchristian.com/" target="_blank"><img src="wordpress/partner-andrew-christian-logo" loading="lazy" /></a></div>
+        <div><a href="https://qcareplus.com/" target="_blank"><img src="wordpress/partner-q-care-logo" loading="lazy" /></a></div>
+        <div><a href="https://www.instagram.com/alexanderjohnphoto/" target="_blank"><img src="wordpress/partner-alexander-john-logo" loading="lazy" /></a></div>
+        <div><a href="https://americanharvestvodka.com/" target="_blank"><img src="wordpress/partner-american-harvest-logo" loading="lazy" /></a></div>
+        <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/" target="_blank"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy" /></a></div>
+        <div><a href="https://www.sickening.events/" target="_blank"><img src="wordpress/partner-sickening-events-logo" loading="lazy" /></a></div>
     </div>
 </section>
 <footer>
@@ -662,11 +662,12 @@ async function loadTiles() {
         const isMobile = window.matchMedia("(width < 600px)").matches;
         $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
             return `<div class="tile container">
-                <a href="${page.url}"></a>
+                <a href="${page.url}">
                 <img src="${page.image}" class="hover" loading="lazy" />
                 ${isMobile 
                     ? `<div class='label'>${page.name}</div>` 
                     : `<div class="overlay"><div class="hover-text">${page.name}</div></div>`}
+                </a>
             </div>`;
         }));
     }
@@ -688,12 +689,12 @@ async function loadTiles() {
         const isMobile = window.matchMedia("(width < 600px)").matches;
         $("#galleries .grid").append(galleries.map(gallery => {
             return `<div class="tile container">
-                <a href="${gallery.url}"></a>
+                <a href="${gallery.url}">
                     <img src="${gallery.image}" class="hover" loading="lazy" />
                     ${isMobile 
                         ? `<div class='label'>${gallery.name}</div>` 
                         : `<div class="overlay"><div class="hover-text">${gallery.name}</div></div>`}
-                
+                </a>
             </div>`;
         }));
     }
