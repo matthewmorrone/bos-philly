@@ -15,7 +15,7 @@ function adjustParticleBackground() {
 
 async function loadPage(page, name) {
     if (!page || !name) return;
-    let result, data = {};
+    let data = {};
 
     if (page === "events") {
         data = await getPageByName("event", name);

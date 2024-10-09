@@ -398,7 +398,7 @@ $(window).scroll(() => {
         let end = Math.round(parseFloat($(".counter").attr("end")), 2);
         $(".counter").text(start);
 
-        let interval = setInterval(function () {
+        let interval = setInterval(() => {
             let value = Math.round(parseFloat($(".counter").attr("current")), 2);
             if (value + increment <= end) {
                 value += increment;
