@@ -195,6 +195,7 @@ video::-webkit-media-controls {
 .button-container {
     width: 100%;
     text-align: center;
+    padding-top: 25px;
     padding-bottom: 25px;
 }
 button {
@@ -594,7 +595,9 @@ footer span, footer a {
         object-fit: contain;
         height: unset;
     }
-
+    .button-container {
+        padding-top: unset;
+    }
     #djs .hover-text {
         font-size: 10px !important;
         overflow-wrap: break-word;

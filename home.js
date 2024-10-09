@@ -538,9 +538,6 @@ $(async () => {
     $.ajaxSetup({cache: false});
     $("#splash video").width($("#splash").width());
 
-    // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
-
-    // hide and show the menu on mobile
     $("#mobileToggle").click(() => $("nav ul").slideToggle());
 
     let route = query();

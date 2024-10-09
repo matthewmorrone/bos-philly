@@ -3,6 +3,34 @@ include ("wordpress/wp-config.php");
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
+function containsAnySubstring($string, $substrings) {
+    foreach ($substrings as $substring) {
+        if (strpos($string, $substring) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+function query() {
+    $qs = []; 
+    [$page, $name] = array_slice(explode("/", $_SERVER['REQUEST_URI']), 1); 
+    $qs["page"] = $page; 
+    $qs["name"] = $name;
+    return $qs;
+}
+function request_path() {
+    $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+    $script_name = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
+    $parts = array_diff_assoc($request_uri, $script_name);
+    if (empty($parts)) {
+        return '/';
+    }
+    $path = implode('/', $parts);
+    if (($position = strpos($path, '?')) !== FALSE) {
+        $path = substr($path, 0, $position);
+    }
+    return $path;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +49,7 @@ function isMobile() {
 <link rel="icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png" sizes="192x192">
 <link rel="apple-touch-icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 <header class="fixed">
@@ -44,7 +73,335 @@ function isMobile() {
         </span>
     </nav>
 </header>
-<section id="content"></section>
+<?php if(query()["name"]): ?>
+<section id="content">
+<?php
+switch(query()["page"]) {
+    case "events": 
+        $args['name'] = query()["name"];
+        $args['post_type'] = "event";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $event = $posts[0];
+        $event->fields = get_fields($event->ID);
+        $event->image = get_the_post_thumbnail_url($event->ID);
+
+        $primary_dj = new WP_Query(array(
+            'connected_type' => 'primary_dj',
+            'connected_items' => $event->ID,
+            'nopaging' => true,
+        ));
+
+        $primary_dj = $primary_dj->posts[0];
+        $primary_dj->post_image = get_the_post_thumbnail_url($primary_dj->ID);
+        $event->primary_dj = (array)$primary_dj;
+
+        $secondary_djs = new WP_Query(array(
+            'connected_type' => 'secondary_dj',
+            'connected_items' => $event->ID,
+            'nopaging' => true,
+        ));
+        $secondary_djs = $secondary_djs->posts;
+        foreach($secondary_djs as &$secondary_dj):
+            $secondary_dj = (array)$secondary_dj;
+        endforeach;
+        $event->secondary_djs = $secondary_djs;
+        $event = (array)$event;
+    ?>
+       <div class='event-template'>
+            <link rel="stylesheet" href="css/event.css" />
+            <div class='shade'>
+                <div class='title'>
+                    <h1><?=$event["post_title"]?></h1>
+                </div>
+                <div class='images'>
+                    <div>
+                        <?php if ($event["primary_dj"]): ?>
+                            <a href="djs/<?=$event["primary_dj"]["post_name"]?>">
+                                <img src='<?=$event["primary_dj"]["post_image"]?>' class='feature' />
+                                <h2><?=$event["primary_dj"]["post_title"]?> »</h2>
+                            </a>
+                        <?php else: ?>
+                            <h2>DJ To Be Announced...</h2>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <img src='<?= $event["image"] ?>' class='feature' />
+                        <div class='description'>
+                            <?= $event["post_content"] ?>
+                        </div>
+                    </div>
+                </div>
+                <div class='info'>
+                    <div class='ticket-panel'>
+                        <div class='marker'><i class='fas fa-ticket'></i></div>
+                        <div class='panel'>
+                            <h3>Tickets</h3>
+                        </div>
+                        <div class='ticket-button'>
+                        <?php if ($event["fields"]["ticket_link"]): ?>
+                            <a href='<?=$event["fields"]["ticket_link"]?>'><button>Tickets</button></a>
+                        <?php else: ?>
+                            <button>Coming Soon</button>
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                    <div>
+                        <div class='marker'><i class='far fa-clock'></i></div>
+                        <div class='panel'>
+                            <h3>Time</h3>
+                            <p><?= $event["fields"]["date_of_event"] ?></p>
+                            <p><?= $event["fields"]["start_time"] ?> - <?= $event["fields"]["end_time"] ?></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class='marker'><i class="fas fa-map-marker-alt"></i></div>
+                        <div class='panel'>
+                            <h3>Location</h3>
+                            <h4><?= $event["fields"]["venue_name"] ?></h4>
+                            <p><a href='http://maps.google.com/?q="<?= $event["fields"]["venue_address"] ?>"'><?= $event["fields"]["venue_address"] ?></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class='map-embed'>
+                    <iframe
+                    title="<?= $event["fields"]["venue_address"] ?>"
+                    class='map'
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCFs6ozWaQYHbXaQdd7EaRlJQDrioFxhdg
+                        &q=<?= $event["fields"]["venue_address"] ?>"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="button-container">
+                    <button class="more"><a href="events">More Events</a></button>
+                </div>
+            </div>
+            <script>
+            $(async () => {
+                $("#content .event-template").css("background-image", `url('<?=$event["fields"]["background_image"]["url"]?>')`);
+                $("title").text(`<?=$event["post_title"]?> - BOS Philly`);
+            });
+            </script>
+        </div>
+    <?php
+    break;
+    case "galleries": 
+        $args['name'] = query()["name"];
+        $args['post_type'] = "event";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $gallery = $posts[0];
+        $gallery->fields = get_fields($gallery->ID);
+        $gallery = (array)$gallery;
+        if (isset($gallery["fields"]["gallery_link"])) {
+            $gallery_url = "https://".$gallery["fields"]["gallery_link"];
+            $images = file_get_contents($gallery_url);
+            if ($images) {
+                $dom = new DomDocument();
+                $dom->loadHTML($images);
+                foreach ($dom->getElementsByTagName('a') as $item) {
+                    if (!strpos($item->getAttribute('href'), ".jpg") or containsAnySubstring($item->getAttribute('href'), ["_small", "_medium", "_large"])) {
+                        continue;
+                    }
+                    $imageList[] = $item->getAttribute('href');
+                }
+                $imageList = array_map(function($image) use ($gallery_url) {
+                    $pathinfo = pathinfo("$gallery_url/$image");
+                    return [
+                        "small" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_small.".$pathinfo["extension"],
+                        "medium" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_medium.".$pathinfo["extension"],
+                        "large" => $pathinfo["dirname"]."/".$pathinfo["filename"]."_large.".$pathinfo["extension"],
+                        "original" => "$gallery_url/$image"
+                    ];
+                }, $imageList);
+                $gallery["images"] = $imageList;
+            }
+            // echo "<pre>"; print_r($gallery); echo "</pre>";
+        }
+    ?>
+        <div class='gallery-template'>
+            <link rel="stylesheet" href="css/gallery.css" />
+            <div class='gallery-content'>
+                <h1><?= $gallery["post_title"] ?></h1>
+            </div>
+            <div class='photo-gallery'>
+                <?php foreach($gallery["images"] as $photo): ?>
+                    <div class='photo'>
+                        <a href='<?= $photo["large"] ?>' data-lightbox='<?= $gallery["post_name"] ?>'>
+                            <img src='<?= $photo["medium"] ?>' loading="lazy" />
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="button-container">
+                <button class="more"><a href="galleries">More Galleries</a></button>
+            </div>
+        </div>
+        <script>
+        $(async () => {
+            $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
+        });
+        </script>
+    <?php
+    break;
+    case "models": 
+        $args['name'] = query()["name"];
+        $args['post_type'] = "model";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $model = $posts[0];
+        $model->fields = get_fields(post_id: $model->ID);
+        $model->image = get_the_post_thumbnail_url($model->ID);
+        $model = (array)$model;
+    ?>
+        <div class='model-template'>
+            <link rel="stylesheet" href="css/model.css" />
+            <div id="particle-background"></div>
+            <div class='model-content'>
+                <div class='model-image'>
+                    <img src='<?= $model["image"] ?>' class='featured' />
+                </div>
+                <div class='model-description'>
+                    <h1><?= $model["post_title"] ?></h1>
+                    <h3>Height: <?= $model["fields"]["height"] ?></h3>
+                    <h3>Weight: <?= $model["fields"]["weight"] ?></h3>
+                    <p><?= $model["post_content"] ?></p>
+                    <?php if ($model["fields"]["instagram_link"]): ?>
+                        <button class='instagram'>
+                            <a href="https://www.instagram.com/<?=$model["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i> 
+                                <?= array_slice(explode("/", $model["fields"]["instagram_link"]), -1)[0] ?>
+                            </a>
+                        </button>
+                    <?php endif; ?>
+                </div>
+                <?php if ($model["fields"]["photos"]): ?>
+                    <?php 
+                        $model["fields"]["photos"] = array_map(function($photo) {
+                            return [
+                                "small" => $photo["media_details"]["sizes"]["thumbnail"]["source_url"],
+                                "medium" => $photo["media_details"]["sizes"]["medium"]["source_url"],
+                                "large" => $photo["media_details"]["sizes"]["large"]["source_url"],
+                                "full" => $photo["full_image_url"]
+                            ];
+                        }, $model["fields"]["photos"]);
+                    ?>
+                    <div class='gallery'>
+                    <?php foreach($model["fields"]["photos"] as $photo): ?>
+                        <a href='<?= $photo["large"] ?>' data-lightbox='<?= $model["post_name"] ?>'>
+                            <img src='<?= $photo["small"] ?>' data-lightbox='<?= $model["post_name"] ?>' loading="lazy" />
+                        </a>
+                    <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="button-container">
+                <button class="more"><a href="models">More Models</a></button>
+            </div>
+            <script>
+            $(async () => {
+                $("title").text(`<?=$gallery["post_title"]?> - BOS Philly`);
+                particlesJS.load("particle-background", "css/model-particles.json");
+            });
+            </script>
+        </div>
+    <?php
+    break;
+    case "djs": 
+        $args['name'] = query()["name"];
+        $args['post_type'] = "dj";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $dj = $posts[0];
+        $dj->fields = get_fields(post_id: $dj->ID);
+        $dj->image = get_the_post_thumbnail_url($dj->ID);
+        $dj = (array)$dj;
+    ?>
+        <div class='dj-template'>
+            <link rel="stylesheet" href="css/dj.css" />
+            <?php if ($dj["fields"]["logo"]): ?>
+                <div class='banner'>
+                    <img src='<?= $dj["fields"]["logo"]["url"] ?>' class='logo' />
+                </div>
+            <?php endif; ?>
+            <div id="particle-background"></div>
+            <div class='dj-content'>
+                <div class='dj-header'>
+                    <h2><?= $dj["post_title"] ?></h2>
+                    <h3><?= $dj["fields"]["hometown"] ?></h3>
+                </div>
+                <div class='dj-left'>
+                    <img src='<?= $dj["image"] ?>' class='featured' />
+                    <?php if ($dj["fields"]["photos"]): ?>
+                    <?php 
+                        $dj["fields"]["photos"] = array_map(function($photo) {
+                            return [
+                                "small" => $photo["media_details"]["sizes"]["thumbnail"]["source_url"],
+                                "medium" => $photo["media_details"]["sizes"]["medium"]["source_url"],
+                                "large" => $photo["media_details"]["sizes"]["large"]["source_url"],
+                                "full" => $photo["full_image_url"]
+                            ];
+                        }, $dj["fields"]["photos"]);
+                    ?>
+                    <div class='gallery'>
+                    <?php foreach($dj["fields"]["photos"] as $photo): ?>
+                        <a href='<?= $photo["large"] ?>' data-lightbox='<?= $dj["post_name"] ?>'>
+                            <img src='<?= $photo["small"] ?>' data-lightbox='<?= $dj["post_name"] ?>' loading="lazy" />
+                        </a>
+                    <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                </div>
+                <div class='dj-right'>
+                    <div class='description'><?= $dj["post_content"] ?></div>
+                    <?php if ($dj["fields"]["instagram_link"]): ?>
+                        <button class='instagram'>
+                            <a href="https://www.instagram.com/<?=$dj["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i> 
+                                <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
+                            </a>
+                        </button>
+                    <?php endif; ?>
+                    <?php if ($dj["fields"]["soundcloud_link"]): ?>
+                        <button class='soundcloud'>
+                            <a href="<?= $dj["fields"]["soundcloud_link"] ?>"><i class="fa-brands fa-soundcloud"></i> <?= $dj["post_title"] ?></a>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="more"><a href="djs">More DJs</a></button>
+            </div>
+            <script>
+            $(async () => {
+                let soundcloud = await $.ajax({
+                    url: 'wp.php',
+                    type: 'POST',
+                    dataType: "text",
+                    data: {
+                        action: "soundcloud",
+                        url: $(".soundcloud a").attr("href")
+                    }
+                });
+                if (debug) console.log(soundcloud);
+                if (soundcloud) {
+                    $(".soundcloud").replaceWith(soundcloud);
+                }
+
+                $("title").text(`<?= $dj["post_title"] ?> - BOS Philly`);
+
+                particlesJS.load("particle-background", "css/dj-particles.json");
+            });
+            </script>
+        </div>
+    <?php
+    break;
+}
+?>
+</section>
+<?php endif; ?>
+<?php if(!query()["name"]): ?>
 <section id="splash">
     <div class='splash-background'>
         <video preload autoplay loop muted playsinline poster="">
@@ -250,6 +607,7 @@ endforeach;
         <!-- <button class="more" href="board">About Us...</button> -->
     </div>
 </section>
+<?php endif; ?>
 <section id="partners">
     <div class="title"><h1>Partners:</h1></div>
     <div id="partners-grid">
@@ -281,7 +639,6 @@ endforeach;
         <p><a class='learn-more' href="https://www.bosphilly.com/board/">Learn more about us >></a></p>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -303,6 +660,7 @@ function adjustParticleBackground() {
         height: $("#particle-background canvas").height()+increaseBy
     });
 }
+<?php if(!query()["name"]): ?>
 
 async function loadTiles() {
     function loadPages(pages, url) {
@@ -472,10 +830,10 @@ Math.easeInOutQuad = function(t, b, c, d) {
     return -c / 2 * (t * (t - 2) - 1) + b;
 };
 function scrollToSection(section, offset) {
-    window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
+    // window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
     const target = document.querySelector(`#${section}`);
     if (!target) return
-    const offsetTop = target.offsetTop - $("header").height();
+    const offsetTop = target.offsetTop - $("header").height() + offset;
     scrollTo(document.documentElement, offsetTop, 500);
     $("title").text(`${section.toTitleCase()} - BOS Philly`);
 }
@@ -483,30 +841,29 @@ document.querySelectorAll('.nav').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
         let section = this.getAttribute('href');
-        router(section, "");
+        scrollToSection(section, 0);
     });
 });
-
-
 
 $(async () => {
     $.ajaxSetup({cache: false});
     $(window).on("resize", () => $("#splash video").width($("#splash").width())).resize();
 
-    // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
-
     const isMobile = window.matchMedia("(width < 600px)").matches;
     if (isMobile) $(".overlay").remove()
 
-    // hide and show the menu on mobile
     $("#mobileToggle").click(() => $("nav ul").slideToggle());
 
     loadTiles();
+
+    let route = query();
+    if (route.page) scrollToSection(route.page, 100);
 
     const easterEgg = new Konami(() => {
         $(document.body).toggleClass("konami")
     });
 });
+<?php endif; ?>
 </script>
 </body>
 </html>
