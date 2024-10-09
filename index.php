@@ -1,5 +1,8 @@
 <?php
 include ("wordpress/wp-config.php");
+function isMobile() {
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -176,7 +179,7 @@ endforeach;
 $args = [];
 $args['post_status'] = "publish";
 $args['post_type'] = "dj";
-$args['posts_per_page'] = 6;
+$args['posts_per_page'] = isMobile() ? 6 : 4;
 $query = new WP_Query($args);
 $posts = $query->get_posts();
 foreach($posts as &$post):
@@ -349,7 +352,7 @@ async function loadTiles() {
         }));
     }
 
-    $("#galleries .more").click(async function() {
+    $("#galleries .more").click(async () => {
         let offset = $("#galleries .tile").length;
         let result = await getPages("gallery", offset, true);
         let galleries = result.posts;
@@ -357,7 +360,7 @@ async function loadTiles() {
         $("#galleries .more").hide();
     });
 
-    $(`#models .more`).click(async function() {
+    $(`#models .more`).click(async () => {
         let offset = $(`#models .tile`).length;
         let result = await getPages("model", offset, true);
         let pages = result.posts;
@@ -365,7 +368,7 @@ async function loadTiles() {
         $(`#models .more`).hide();
     });
 
-    $(`#djs .more`).click(async function() {
+    $(`#djs .more`).click(async () => {
         let offset = $(`#djs .tile`).length;
         let result = await getPages("dj", offset, true);
         let pages = result.posts;
@@ -382,7 +385,7 @@ let USDollar = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 
-$(window).scroll(function () {
+$(window).scroll(() => {
     function elementScrolled(elem) {
         let docViewTop = $(window).scrollTop();
         let docViewBottom = docViewTop + $(window).height();
@@ -411,7 +414,7 @@ $(window).scroll(function () {
         }, 15);
         hasFired = true;
     }
-});
+}).scroll();
 
 
 // parallax image movement
@@ -434,10 +437,10 @@ function parallax(event) {
     if (deviceWidth <= 600) direction = mobileScrollDirection;
     zoomImage(direction);
 }
-window.addEventListener('touchstart', function (e) {
+window.addEventListener('touchstart', function(e) {
     start = e.changedTouches[0];
 });
-window.addEventListener('touchmove', function (e) {
+window.addEventListener('touchmove', function(e) {
     let end = e.changedTouches[0];
     mobileScrollDirection = end.screenY - start.screenY > 0 ? -1 : 1
 });
@@ -488,7 +491,7 @@ document.querySelectorAll('.nav').forEach(anchor => {
 
 $(async () => {
     $.ajaxSetup({cache: false});
-    $("#splash video").width($("#splash").width());
+    $(window).on("resize", () => $("#splash video").width($("#splash").width())).resize();
 
     // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
 
