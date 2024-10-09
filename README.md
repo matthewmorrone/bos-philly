@@ -1,7 +1,7 @@
 # BOS
 
 ## Steps for Migration to Dev
-+ Clone or pull in terminal: git clone http://github.com/matthewmorrone/bos dev.bosphilly.com --depth=1
++ Clone or pull in terminal: git clone http://github.com/matthewmorrone/bos-phillu dev.bosphilly.com --depth=1
 + Change the database credentials in wpconfig.php
 
 ## To-Do List

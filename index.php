@@ -493,9 +493,8 @@ $(async () => {
     // $(".splash-title").css("margin-top", -($("#splash").height()-$(".splash-title").height())/2)
 
     const isMobile = window.matchMedia("(width < 600px)").matches;
-    if (isMobile) {
-        $(".overlay").remove()
-    }
+    if (isMobile) $(".overlay").remove()
+
     // hide and show the menu on mobile
     $("#mobileToggle").click(() => $("nav ul").slideToggle());
 
