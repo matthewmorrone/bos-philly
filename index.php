@@ -1,5 +1,10 @@
 <?php
 error_reporting(0);
+header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 include ("wordpress/wp-config.php");
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
@@ -38,6 +43,15 @@ function query() {
 <link rel="apple-touch-icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E5VXE7X7M6"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-E5VXE7X7M6');
+</script>
 </head>
 <body>
 <header class="fixed">
@@ -45,7 +59,7 @@ function query() {
         <img id="logo" src="wordpress/content-bos-logo" alt="BOS Logo">
     </a>
     <nav>
-        <ul>
+        <ul id="navbar">
             <li><a class='nav' href="events">Events</a></li>
             <li><a class='nav' href="galleries">Galleries</a></li>
             <li><a class='nav' href="models">Models</a></li>
@@ -57,7 +71,7 @@ function query() {
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
             <a class='social' href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
-            <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
+            <!-- <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a> -->
         </span>
     </nav>
 </header>
@@ -290,8 +304,11 @@ switch(query()["page"]) {
             </div>
             <script>
             $(async () => {
-                $("title").text(`<?=$gallery["post_title"]?> - BOS Philly`);
-                particlesJS.load("particle-background", "css/model-particles.json");
+                $("title").text(`<?=$model["post_title"]?> - BOS Philly`);
+                particlesJS.load("particle-background", "css/model-particles.json", function() {
+                    $("#particle-background canvas").height($(".model-content").height() + $(".button-container").height() + 100);
+                    $("#particle-background").css("display", "inline");
+                });
             });
             </script>
         </div>
@@ -379,7 +396,10 @@ switch(query()["page"]) {
 
                 $("title").text(`<?= $dj["post_title"] ?> - BOS Philly`);
 
-                particlesJS.load("particle-background", "css/dj-particles.json");
+                particlesJS.load("particle-background", "css/dj-particles.json", function() {
+                    $("#particle-background canvas").height($(".dj-content").height() + $(".button-container").height() + 100);
+                    $("#particle-background").css("display", "inline");
+                });
             });
             </script>
         </div>
@@ -763,7 +783,6 @@ $(window).scroll(() => {
     }
 }).scroll();
 
-
 // parallax image movement
 let currentZoom = 1;
 let minZoom = 1;
@@ -840,9 +859,12 @@ $(async () => {
 
     const isMobile = window.matchMedia("(width < 600px)").matches;
     if (isMobile) $(".overlay").remove()
-
-    $("#mobileToggle").click(() => $("nav ul").slideToggle());
-
+/* 
+    $("header").after($("#navbar"));
+    $("#mobileToggle").click(() => {
+        $("#navbar").slideToggle();
+    });
+*/
     loadTiles();
 
     let route = query();

@@ -31,7 +31,6 @@
     font-size: 48px;
     font-weight: 600;
 }
-
 .event-template .info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -61,8 +60,6 @@
     grid-column: 1 / 3;
     grid-row: 2 / 3;
 }
-
-
 .event-template .info .marker {
     width: 25%;
     padding: 5px;
@@ -81,8 +78,6 @@
 .event-template .info p {
     font-family: 'Work Sans', sans-serif;
 }
-
-
 .event-template .map {
     width: 100%;
     height: 250px;
@@ -90,8 +85,16 @@
 .event-template .map-embed {
     padding: 20px;
 }
-
 @media all and (max-width: 600px) {
+    .event-template {
+        width: 90%;
+    }
+    .event-template .title h1 {
+        font-size: 64px;
+    }
+    .event-template .images {
+        padding: 20px;
+    }
     .event-template .images, .event-template .info {
         flex-flow: column-reverse nowrap !important;
     }
@@ -100,6 +103,8 @@
     }
     .event-template .description {
         width: unset;
+        padding: 10px 0px;
+        font-size: 20px;
     }
     .event-template .info {
         grid-template-columns: repeat(1, 1fr);

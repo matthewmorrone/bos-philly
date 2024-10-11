@@ -57,7 +57,7 @@ nav {
     align-items: center;
     margin-right: 100px;
 }
-nav ul {
+#navbar {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
@@ -68,13 +68,13 @@ nav span {
     flex-flow: nowrap;
     height: 36px;
 }
-nav li:not(:last-child)::after {
+#navbar li:not(:last-child)::after {
     content: '|';
     color: var(--trim);
     font-size: 15px;
     vertical-align: middle;
 }
-nav ul a {
+#navbar a {
     text-decoration: none;
     padding: 1em;
     color: var(--font);
@@ -546,19 +546,19 @@ footer span, footer a {
         flex-direction: column;
         align-items: baseline;
     }
-    nav ul {
+    #navbar {
         display: none;
         flex-direction: column;
         clear: both;
     }
-    nav li {
+    #navbar li {
         padding-left: 10px;
         background-color: var(--fore);
     }
-    nav li + li {
+    #navbar li + li {
         border-top: 1px solid white;
     }
-    nav li:not(:last-child)::after {
+    #navbar li:not(:last-child)::after {
         content: '';
     }
     #mobileToggle {
@@ -597,7 +597,7 @@ footer span, footer a {
         height: unset;
     }
     .button-container {
-        padding-top: unset;
+        /* padding-top: unset; */
     }
     #djs .hover-text {
         font-size: 10px !important;
@@ -648,11 +648,6 @@ footer span, footer a {
     #models .grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    #board .grid {
-        padding: 10px;
-        width: unset;
-        grid-template-columns: repeat(2, 1fr);
-    }
     #events .tile {
         width: 100%;
     }
@@ -683,13 +678,12 @@ footer span, footer a {
     #models .tile img {
         border-radius: 20px;
     }
-    
+    #board .grid {
+        width: 95%;
+        grid-template-columns: repeat(2, 1fr);
+    }
     #board .tile {
-        width: 99%;
-        height: 100%;
-        margin: 1px;
-        padding: 10px;
+        width: 90%;
         border-radius: 0;
-        line-height: 1em;
     }
 }

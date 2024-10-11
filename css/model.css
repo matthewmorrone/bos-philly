@@ -77,7 +77,7 @@
         margin: 20px;
     }
     .model-template .model-content {
-        width: unset;
+        width: 70%;
     }
     .model-template .model-content .model-image {
         grid-column: 1 / 2;
