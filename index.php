@@ -79,6 +79,23 @@ gtag('config', 'G-E5VXE7X7M6');
 <section id="content">
 <?php
 switch(query()["page"]) {
+    case "pages":
+        $args['name'] = query()["name"];
+        $args['post_type'] = "page";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $page = $posts[0];
+        ?><pre><?php
+        // print_r($page);
+        ?></pre><?php
+        ?><div style="
+display: flex;
+align-items: center;
+justify-content: center;
+"><div><?php
+        print_r($page->post_content);
+        ?></div></div><?php
+    break;
     case "events": 
         $args['name'] = query()["name"];
         $args['post_type'] = "event";

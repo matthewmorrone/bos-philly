@@ -145,7 +145,6 @@ if (isset($_["action"])) {
                             endforeach;
                             $postData["secondary_djs"] = $secondary_djs_data;
                         }
-        
                     break;
                     case "gallery": 
                         $postData["gallery_link"] = $post->fields["gallery_link"];
@@ -193,9 +192,6 @@ if (isset($_["action"])) {
                         $postData["photos"] = $post->fields["photos"];
                     break;
                 }
-                
-                
-                
                 $post = $postData;
             endforeach;
             $result["posts"] = $posts;
