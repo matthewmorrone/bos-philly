@@ -5,15 +5,14 @@
 + Change the database credentials in wpconfig.php
 
 ## To-Do List
-
-+ Fix post page appearances
-+ Document steps for deployment to server
++ wysiwyg editor for custom event pages
++ Add link to apple and/or google BOS calendars
++ Move dev to .org
++ Move tickets.bosphilly.com to .org
++ Move img.bosphilly.com to .org
++ Add redirect of bosphilly.com to bosphilly.org
 
 ### Appearance
-+ Use flex for layout where appropriate
-+ Fix particle animations
-+ On mobile, remove hover and put titles under grid cells
-+ Sticky header animation doesn't seem worth the trouble
 + Charity animation should be slower and more chaotic
 
 ### Next Steps
@@ -22,14 +21,12 @@
 + Consider importing draft data
 + Consider url redirection strategies for events
 + Create front-end for gallery album management
-+ Consider "label" implementation for DJ-to-Event relationship
 + Consider Instagram feeds and image hosting
-+ And of course, speed everything wayyyy up
 
 ### Under the hood
 + Separate out index.js into separate files
 + Optimize deployment from localhost -> github -> dev.bosphilly.com
 
 ### Known Bugs
-+ Charity animation doesn’t start on mobile until scroll/tap
-+ Particle animations aren't tall enough
++ Background image resizes when section loads more
++ Links generated after saving a page are incorrect

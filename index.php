@@ -92,7 +92,9 @@ switch(query()["page"]) {
 display: flex;
 align-items: center;
 justify-content: center;
-"><div><?php
+"><div style="display: block;"><?php
+
+apply_filters('the_content', get_post_field('post_content', $page->id));
         print_r($page->post_content);
         ?></div></div><?php
     break;
