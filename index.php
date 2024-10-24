@@ -62,7 +62,6 @@ gtag('config', 'G-E5VXE7X7M6');
         <ul id="navbar">
             <li><a class='nav' href="events">Events</a></li>
             <li><a class='nav' href="galleries">Galleries</a></li>
-            <li><a class='nav' href="models">Models</a></li>
             <li><a class='nav' href="djs">DJs</a></li>
             <li><a class='nav' href="board">Board</a></li>
         </ul>
@@ -268,71 +267,6 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         </script>
     <?php
     break;
-    case "models": 
-        $args['name'] = query()["name"];
-        $args['post_type'] = "model";
-        $query = new WP_Query($args);
-        $posts = $query->get_posts();
-        $model = $posts[0];
-        $model->fields = get_fields(post_id: $model->ID);
-        $model->image = get_the_post_thumbnail_url($model->ID);
-        $model = (array)$model;
-    ?>
-        <div class='model-template'>
-            <link rel="stylesheet" href="css/model.css" />
-            <div id="particle-background"></div>
-            <div class='model-content'>
-                <div class='model-image'>
-                    <img src='<?= $model["image"] ?>' class='featured' />
-                </div>
-                <div class='model-description'>
-                    <h1><?= $model["post_title"] ?></h1>
-                    <h3>Height: <?= $model["fields"]["height"] ?></h3>
-                    <h3>Weight: <?= $model["fields"]["weight"] ?></h3>
-                    <p><?= $model["post_content"] ?></p>
-                    <?php if ($model["fields"]["instagram_link"]): ?>
-                        <button class='instagram'>
-                            <a href="https://www.instagram.com/<?=$model["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i> 
-                                <?= array_slice(explode("/", $model["fields"]["instagram_link"]), -1)[0] ?>
-                            </a>
-                        </button>
-                    <?php endif; ?>
-                </div>
-                <?php if ($model["fields"]["photos"]): ?>
-                    <?php 
-                        $model["fields"]["photos"] = array_map(function($photo) {
-                            return [
-                                "small" => $photo["media_details"]["sizes"]["thumbnail"]["source_url"],
-                                "medium" => $photo["media_details"]["sizes"]["medium"]["source_url"],
-                                "large" => $photo["media_details"]["sizes"]["large"]["source_url"],
-                                "full" => $photo["full_image_url"]
-                            ];
-                        }, $model["fields"]["photos"]);
-                    ?>
-                    <div class='gallery'>
-                    <?php foreach($model["fields"]["photos"] as $photo): ?>
-                        <a href='<?= $photo["large"] ?>' data-lightbox='<?= $model["post_name"] ?>'>
-                            <img src='<?= $photo["small"] ?>' data-lightbox='<?= $model["post_name"] ?>' loading="lazy" />
-                        </a>
-                    <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <div class="button-container">
-                <button class="more"><a href="models">More Models</a></button>
-            </div>
-            <script>
-            $(async () => {
-                $("title").text(`<?=$model["post_title"]?> - BOS Philly`);
-                particlesJS.load("particle-background", "css/model-particles.json", function() {
-                    $("#particle-background canvas").height($(".model-content").height() + $(".button-container").height() + 100);
-                    $("#particle-background").css("display", "inline");
-                });
-            });
-            </script>
-        </div>
-    <?php
-    break;
     case "djs": 
         $args['name'] = query()["name"];
         $args['post_type'] = "dj";
@@ -383,13 +317,14 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <?php if ($dj["fields"]["instagram_link"]): ?>
                         <button class='instagram'>
                             <a href="https://www.instagram.com/<?=$dj["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i> 
+                            &nbsp;
                                 <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
                             </a>
                         </button>
                     <?php endif; ?>
                     <?php if ($dj["fields"]["soundcloud_link"]): ?>
                         <button class='soundcloud'>
-                            <a href="<?= $dj["fields"]["soundcloud_link"] ?>"><i class="fa-brands fa-soundcloud"></i> <?= $dj["post_title"] ?></a>
+                            <a href="<?= $dj["fields"]["soundcloud_link"] ?>"><i class="fa-brands fa-soundcloud"></i>&nbsp;&nbsp;<?= $dj["post_title"] ?></a>
                         </button>
                     <?php endif; ?>
                 </div>
@@ -432,7 +367,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 <section id="splash">
     <div class='splash-background'>
         <video preload autoplay loop muted playsinline poster="">
-            <source src="wordpress/content-splash" type="video/mp4" id="video">
+            <source src="wordpress/body-shop-background" type="video/mp4" id="video">
         </video>
     </div>
     <div class="splash-title">
@@ -515,8 +450,11 @@ foreach($posts as &$post):
     <div class="tile container">
         <a href="galleries/<?= $post->post_name ?>">
             <img src="<?= $post->image ?>" class="hover" loading="lazy" />
-            <div class='label'><?= $post->post_title ?></div>
-            <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
+            <?php if (isMobile()): ?>
+                <div class='label'><?= $post->post_title ?></div>
+            <?php else: ?>
+                <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
+            <?php endif; ?>
         </a>
     </div>
     <?php
@@ -525,35 +463,6 @@ endforeach;
     </div>
     <div class="button-container">
         <button class="more" href="gallery">More Galleries</button>
-    </div>
-</section>
-<section id="models">
-    <h1>Models</h1>
-    <div class="grid">
-<?php
-$args = [];
-$args['post_status'] = "publish";
-$args['post_type'] = "model";
-$args['posts_per_page'] = 6;
-$query = new WP_Query($args);
-$posts = $query->get_posts();
-foreach($posts as &$post):
-    $post->image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
-    $post->fields = get_fields($post->ID);
-    ?>
-    <div class="tile container">
-        <a href="models/<?= $post->post_name ?>">
-            <img src="<?= $post->image ?>" class="hover" loading="lazy" />
-            <div class='label'><?= $post->post_title ?></div>
-            <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
-        </a>
-    </div>
-    <?php
-endforeach;
-?>
-    </div>
-    <div class="button-container">
-        <button class="more" href="model">More Models</button>
     </div>
 </section>
 <section id="djs">
@@ -573,8 +482,11 @@ foreach($posts as &$post):
     <div class="tile container">
         <a href="djs/<?= $post->post_name ?>">
             <img src="<?= $post->image ?>" class="hover" loading="lazy" />
-            <div class='label'><?= $post->post_title ?></div>
-            <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
+            <?php if (isMobile()): ?>
+                <div class='label'><?= $post->post_title ?></div>
+            <?php else: ?>
+                <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
+            <?php endif; ?>
         </a>
     </div>
     <?php
@@ -638,14 +550,17 @@ endforeach;
 <section id="partners">
     <div class="title"><h1>Partners:</h1></div>
     <div id="partners-grid">
-        <div><a href="https://circuitmom.com/" target="_blank"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.waygay.org/" target="_blank"><img src="wordpress/partner-william-way-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.andrewchristian.com/" target="_blank"><img src="wordpress/partner-andrew-christian-logo" loading="lazy" /></a></div>
-        <div><a href="https://qcareplus.com/" target="_blank"><img src="wordpress/partner-q-care-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.instagram.com/alexanderjohnphoto/" target="_blank"><img src="wordpress/partner-alexander-john-logo" loading="lazy" /></a></div>
-        <div><a href="https://americanharvestvodka.com/" target="_blank"><img src="wordpress/partner-american-harvest-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/" target="_blank"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy" /></a></div>
-        <div><a href="https://www.sickening.events/" target="_blank"><img src="wordpress/partner-sickening-events-logo" loading="lazy" /></a></div>
+        <div>
+            <div><a href="https://circuitmom.com/" target="_blank"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy" /></a></div>
+            <div><a href="https://www.waygay.org/" target="_blank"><img src="wordpress/partner-william-way-logo" loading="lazy" /></a></div>
+            <div><a href="https://www.andrewchristian.com/" target="_blank"><img src="wordpress/partner-andrew-christian-logo" loading="lazy" /></a></div>
+            <div><a href="https://qcareplus.com/" target="_blank"><img src="wordpress/partner-q-care-logo" loading="lazy" /></a></div>
+        </div>
+        <div>
+            <div><a href="https://www.instagram.com/alexanderjohnphoto/" target="_blank"><img src="wordpress/partner-alexander-john-logo" loading="lazy" /></a></div>
+            <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/" target="_blank"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy" /></a></div>
+            <div><a href="https://www.sickening.events/" target="_blank"><img src="wordpress/partner-sickening-events-logo" loading="lazy" /></a></div>
+        </div>
     </div>
 </section>
 <footer>
@@ -744,14 +659,6 @@ async function loadTiles() {
         let galleries = result.posts;
         if (galleries.length) loadGalleries(galleries);
         $("#galleries .more").hide();
-    });
-
-    $(`#models .more`).click(async () => {
-        let offset = $(`#models .tile`).length;
-        let result = await getPages("model", offset, true);
-        let pages = result.posts;
-        if (pages.length) loadPages(pages, "model");
-        $(`#models .more`).hide();
     });
 
     $(`#djs .more`).click(async () => {
@@ -857,7 +764,7 @@ Math.easeInOutQuad = function(t, b, c, d) {
     return -c / 2 * (t * (t - 2) - 1) + b;
 };
 function scrollToSection(section, offset) {
-    // window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
+    window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
     const target = document.querySelector(`#${section}`);
     if (!target) return
     const offsetTop = target.offsetTop - $("header").height() + offset;
@@ -878,12 +785,7 @@ $(async () => {
 
     const isMobile = window.matchMedia("(width < 600px)").matches;
     if (isMobile) $(".overlay").remove()
-/* 
-    $("header").after($("#navbar"));
-    $("#mobileToggle").click(() => {
-        $("#navbar").slideToggle();
-    });
-*/
+
     loadTiles();
 
     let route = query();

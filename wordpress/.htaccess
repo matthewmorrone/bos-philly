@@ -13,3 +13,18 @@ RewriteRule . /wordpress/index.php [L]
 </IfModule>
 
 # END WordPress
+
+# Backup Migration START
+  <IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteRule .* - [E=noabort:1]
+    RewriteRule .* - [E=noconntimeout:1]
+
+  </IfModule>
+  <IfModule mod_env>
+
+    SetEnv noabort 1
+
+  </IfModule>
+# Backup Migration END

@@ -261,15 +261,12 @@ button {
 .contact a:link, .contact a:visited {
     color: var(--trim);
 }
-#partners-grid {
-    display: flex;
-    flex-flow: row wrap;
-}
 
 .instagram, .soundcloud {
     font-size: 24px;
     margin: 20px;
     padding: 20px;
+    width: 100%;
 }
 .instagram i, .soundcloud i {
     vertical-align: middle;
@@ -299,17 +296,21 @@ button {
     margin: auto;
 }
 #partners-grid {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(4, 1fr);
     width: 80%;
     margin: auto !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 #partners-grid div {
-    justify-self: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
     align-self: center;
+    align-content: stretch;
+    align-items: stretch;
+}
+#partners-grid div div {
+    flex-grow: 1;
 }
 #partners-grid div img {
     width: 200px;
@@ -405,6 +406,7 @@ footer span, footer a {
     opacity: 0;
     transition: .75s ease;
     background-color: var(--trim);
+    white-space: nowrap;
 }
 .container:hover .overlay {
     opacity: 1;
@@ -501,11 +503,18 @@ footer span, footer a {
     } 
 }
 
+
 @media all and (width >= 600px) {
+    #galleries .tile {
+        width: 90%;
+        height: 300px;
+    }
+    /*
     #galleries .tile, #galleries .tile img {
         width: 350px;
         height: 231px;
-    }
+    } 
+    */
     #models .tile, #models .tile img {
         width: 178px;
         height: 219px;
@@ -513,8 +522,9 @@ footer span, footer a {
     #djs .tile, #djs .tile img {
         width: 278px;
         height: 361px;
-    }
+    } 
 }
+
 
 @media all and (600px < width < 800px) {
     html, body {

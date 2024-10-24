@@ -20,6 +20,8 @@
 }
 .event-template .feature, .event-template .description {
     width: 400px;
+    font-family: 'Work Sans', sans-serif;
+    text-align: justify;
 }
 .event-template .images h1 {
     padding-left: 50px;

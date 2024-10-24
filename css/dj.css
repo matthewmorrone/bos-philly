@@ -71,11 +71,19 @@
     padding-left: 30px;
 }
 
-.soundcloud {
+.dj-template .dj-content .soundcloud {
     background-color: #ff7700;
     font-size: 24px;
 }
-
+.dj-template .dj-content iframe {
+    margin: 20px;
+}
+.dj-template .dj-content .instagram {
+    font-family: "Teko", Sans-serif;
+}
+.dj-template .dj-content .instagram i {
+    font-size: larger;
+}
 @media all and (max-width: 600px) {
     .dj-template .dj-content {
         width: 300px;
