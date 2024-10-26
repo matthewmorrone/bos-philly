@@ -784,7 +784,6 @@ document.querySelectorAll('.nav').forEach(anchor => {
         scrollToSection(section, 0);
     });
 });
-
 $(async () => {
     $.ajaxSetup({cache: false});
     $(window).on("resize", () => $("#splash video").width($("#splash").width())).resize();
@@ -801,6 +800,7 @@ $(async () => {
         $(document.body).toggleClass("konami")
     });
 });
+
 <?php endif; ?>
 </script>
 </body>

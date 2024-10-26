@@ -1,7 +1,6 @@
-
-
 .gallery-template {
-    margin: 30px;
+    width: 50%;
+    margin: auto;
 }
 .gallery-template .gallery-content {
     width: 50%;
@@ -20,17 +19,17 @@
     justify-content: center;
     gap: 20px;
 }
-.gallery-template .photo img {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    object-position: center;
+.gallery-template .photo, .gallery-template .photo img {
+    width: 180px;
+    height: 120px;
 }
 .gallery-template .photo {
-    width: 300px;
-    height: 200px;
     border: 1px solid white;
     justify-self: center;
+}
+.gallery-template .photo img {
+    object-fit: cover;
+    object-position: center;
 }
 
 @media all and (max-width: 600px) {
