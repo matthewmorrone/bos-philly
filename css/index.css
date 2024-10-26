@@ -462,7 +462,7 @@ footer span, footer a {
     margin-bottom: 10px;
 }
 #events .tile {
-    width: 90%;
+    width: 75%;
     border: 1px solid var(--font);
     margin: 25px;
     background-color: #191A3A;
