@@ -135,7 +135,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $event = (array)$event;
     ?>
        <div class='event-template'>
-            <link rel="stylesheet" href="css/event.css" />
+            <link rel="stylesheet" href="css/event.css?version=<?= randomId(4); ?>" />
             <div class='shade'>
                 <div class='title'>
                     <h1><?=$event["post_title"]?></h1>
@@ -249,7 +249,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         }
     ?>
         <div class='gallery-template'>
-            <link rel="stylesheet" href="css/gallery.css" />
+            <link rel="stylesheet" href="css/gallery.css?version=<?= randomId(4); ?>" />
             <div class='gallery-content'>
                 <h1><?= $gallery["post_title"] ?></h1>
             </div>
@@ -284,7 +284,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $dj = (array)$dj;
     ?>
         <div class='dj-template'>
-            <link rel="stylesheet" href="css/dj.css" />
+            <link rel="stylesheet" href="css/dj.css?version=<?= randomId(4); ?>" />
             <?php if ($dj["fields"]["logo"]): ?>
                 <div class='banner'>
                     <img src='<?= $dj["fields"]["logo"]["url"] ?>' class='logo' />
