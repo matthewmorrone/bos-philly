@@ -23,6 +23,12 @@
     font-family: 'Work Sans', sans-serif;
     text-align: justify;
 }
+.event-template .description {
+    background-color: #191A3A85;
+    line-height: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+}
 .event-template .images h1 {
     padding-left: 50px;
     text-align: left;
@@ -32,6 +38,7 @@
     background-color: #191A3A85;
     font-size: 48px;
     font-weight: 600;
+    padding: 20px 30px 15px;
 }
 .event-template .info {
     display: grid;

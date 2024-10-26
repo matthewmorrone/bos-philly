@@ -111,10 +111,12 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             'connected_items' => $event->ID,
             'nopaging' => true,
         ));
-
-        $primary_dj = $primary_dj->posts[0];
-        $primary_dj->post_image = get_the_post_thumbnail_url($primary_dj->ID);
-        $event->primary_dj = (array)$primary_dj;
+        
+        $primary_dj = $primary_dj->posts[0] ?? null;
+        if ($primary_dj !== null) {
+            $primary_dj->post_image = get_the_post_thumbnail_url($primary_dj->ID);
+            $event->primary_dj = (array)$primary_dj;
+        }
 
         $secondary_djs = new WP_Query(array(
             'connected_type' => 'secondary_dj',
@@ -136,7 +138,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                 </div>
                 <div class='images'>
                     <div>
-                        <?php if ($event["primary_dj"]): ?>
+                        <?php if (isset($event["primary_dj"])): ?>
                             <a href="djs/<?=$event["primary_dj"]["post_name"]?>">
                                 <img src='<?=$event["primary_dj"]["post_image"]?>' class='feature' />
                                 <h2><?=$event["primary_dj"]["post_title"]?> »</h2>
