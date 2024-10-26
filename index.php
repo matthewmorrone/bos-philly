@@ -17,6 +17,10 @@ function containsAnySubstring($string, $substrings) {
     }
     return false;
 }
+function randomId($length = 10) {
+    return substr(str_shuffle(str_repeat($x = '0123456789', ceil($length / strlen($x)))), 1, $length);
+}
+
 function query() {
     $qs = []; 
     [$root, $page, $name] = explode("/", $_SERVER['REQUEST_URI']); 
@@ -32,7 +36,7 @@ function query() {
 <meta name="viewport" content="width=device-width, initial-scale=.9, viewport-fit=cover">
 <base href="/" />
 <title>BOS Philly - Bringing Circuit Back to Philly</title>
-<link rel="stylesheet" href="css/index.css?version=1" />
+<link rel="stylesheet" href="css/index.css?version=<?= randomId(4); ?>" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
