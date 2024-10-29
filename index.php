@@ -573,13 +573,16 @@ endforeach;
     <div>
         <h3>Stay Connected</h3>
         <p>Join the over 8,000 people who receive our regular newsletters about all the greatest events!</p>
-        <span>
+        <div id="connect">
             <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
             <a class='social' href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
-        </span>
-        <a href="https://arep.co/m/bosphilly"><button id="signup"><i class="fa-solid fa-envelope-open-text"></i> Subscribe Here</button></a>
+        </div>
+        <div id="subscribe">
+            <a href="https://arep.co/m/bosphilly"><button id="signup"><i class="fa-solid fa-envelope-open-text"></i> Newsletter</button></a>
+            <a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics"><button id="calendar"><i class="fa-solid fa-calendar-days"></i> Calendar</button></a>
+        </div>
     </div>
     <div>
         <h3>Committed To Philadelphia</h3>

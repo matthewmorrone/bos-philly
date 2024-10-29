@@ -7,10 +7,10 @@
 ## To-Do List
 + wysiwyg editor for custom event pages
 + Add link to apple and/or google BOS calendars
-+ Move dev to .org
 + Move tickets.bosphilly.com to .org
-+ Move img.bosphilly.com to .org
 + Add redirect of bosphilly.com to bosphilly.org
++ lock down .git on www.dev.bosphilly.org
++ lock down wordpress
 
 ### Appearance
 + Charity animation should be slower and more chaotic

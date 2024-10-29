@@ -6,3 +6,5 @@ RewriteRule (.*) index.php [QSA,L]
 </ifModule>
 
 Options +Indexes
+
+AddType text/calendar .ics

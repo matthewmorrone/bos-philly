@@ -332,7 +332,7 @@ footer {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-footer div {
+footer > div {
     display: flex;
     flex-flow: column nowrap;
     width: 30%;
@@ -375,7 +375,12 @@ footer span, footer a {
     color: var(--trim);
     text-align: center;
 }
-#signup {
+#connect, #subscribe {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+#signup, #calendar {
     background-color: var(--trim);
     color: var(--font);
     border: none;
