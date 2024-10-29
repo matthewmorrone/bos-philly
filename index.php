@@ -22,9 +22,9 @@ function randomId($length = 10) {
 }
 
 function query() {
-    $qs = []; 
-    [$root, $page, $name] = explode("/", $_SERVER['REQUEST_URI']); 
-    $qs["page"] = $page; 
+    $qs = [];
+    [$root, $page, $name] = explode("/", $_SERVER['REQUEST_URI']);
+    $qs["page"] = $page;
     $qs["name"] = $name;
     return $qs;
 }
@@ -101,7 +101,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         print_r($page->post_content);
         ?></div></div><?php
     break;
-    case "events": 
+    case "events":
         $args['name'] = query()["name"];
         $args['post_type'] = "event";
         $query = new WP_Query($args);
@@ -115,7 +115,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             'connected_items' => $event->ID,
             'nopaging' => true,
         ));
-        
+
         $primary_dj = $primary_dj->posts[0] ?? null;
         if ($primary_dj !== null) {
             $primary_dj->post_image = get_the_post_thumbnail_url($primary_dj->ID);
@@ -214,7 +214,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         </div>
     <?php
     break;
-    case "galleries": 
+    case "galleries":
         $args['name'] = query()["name"];
         $args['post_type'] = "event";
         $query = new WP_Query($args);
@@ -273,7 +273,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         </script>
     <?php
     break;
-    case "djs": 
+    case "djs":
         $args['name'] = query()["name"];
         $args['post_type'] = "dj";
         $query = new WP_Query($args);
@@ -299,7 +299,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                 <div class='dj-left'>
                     <img src='<?= $dj["image"] ?>' class='featured' />
                     <?php if ($dj["fields"]["photos"]): ?>
-                    <?php 
+                    <?php
                         $dj["fields"]["photos"] = array_map(function($photo) {
                             return [
                                 "small" => $photo["media_details"]["sizes"]["thumbnail"]["source_url"],
@@ -322,7 +322,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <div class='description'><?= $dj["post_content"] ?></div>
                     <?php if ($dj["fields"]["instagram_link"]): ?>
                         <button class='instagram'>
-                            <a href="https://www.instagram.com/<?=$dj["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i> 
+                            <a href="https://www.instagram.com/<?=$dj["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i>
                             &nbsp;
                                 <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
                             </a>
@@ -386,7 +386,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <div id='parallax'></div>
     </div>
     <div class="charity-title">
-        <h2><span class="counter" start="0.00" current="0.00" end="75430.37"></span></h2>
+        <h2><span class="counter" start="0.00" current="0.00" end="77497.33"></span></h2>
         <p class="counter-title">Donated to local LGBT Charities since 2018</p>
     </div>
 </section>
@@ -627,8 +627,8 @@ async function loadTiles() {
             return `<div class="tile container">
                 <a href="${page.url}">
                 <img src="${page.image}" class="hover" loading="lazy" />
-                ${isMobile 
-                    ? `<div class='label'>${page.name}</div>` 
+                ${isMobile
+                    ? `<div class='label'>${page.name}</div>`
                     : `<div class="overlay"><div class="hover-text">${page.name}</div></div>`}
                 </a>
             </div>`;
@@ -654,8 +654,8 @@ async function loadTiles() {
             return `<div class="tile container">
                 <a href="${gallery.url}">
                     <img src="${gallery.image}" class="hover" loading="lazy" />
-                    ${isMobile 
-                        ? `<div class='label'>${gallery.name}</div>` 
+                    ${isMobile
+                        ? `<div class='label'>${gallery.name}</div>`
                         : `<div class="overlay"><div class="hover-text">${gallery.name}</div></div>`}
                 </a>
             </div>`;
@@ -677,8 +677,15 @@ async function loadTiles() {
         if (pages.length) loadPages(pages, "dj");
         $(`#djs .more`).hide();
     });
-
 }
+
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};
+
 
 let hasFired = false;
 let increment = 1000;
@@ -686,7 +693,7 @@ let USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
 });
-
+let nums = [0,1,2,3,4,5,6,7,8,9];
 $(window).scroll(() => {
     function elementScrolled(elem) {
         let docViewTop = $(window).scrollTop();
@@ -695,25 +702,50 @@ $(window).scroll(() => {
         return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
     }
     if (elementScrolled('#charity')) {
+
         if (hasFired) return;
         let start = Math.round(parseFloat($(".counter").attr("start")), 2);
         let end = Math.round(parseFloat($(".counter").attr("end")), 2);
         $(".counter").text(start);
-
+/* 
+        let count = 0, flutter = 0;
+        let interval = setInterval(() => {
+            let text = ""+Math.round(parseFloat($(".counter").attr("end")), 2);
+            if (count % 150 - (flutter * 10) === 0) flutter++;
+            for(let i = flutter; i < text.length; i++) {
+                if (text[i].match(/\d/) !== null) {
+                    text = text.replaceAt(i, ""+nums[Math.floor(Math.random()*10)]);
+                }
+            }
+            $(".counter").text(USDollar.format(text));
+            count++;
+            if (flutter === text.length) clearInterval(interval);
+        }, 15);
+*/
+        let flutter = 0;
         let interval = setInterval(() => {
             let value = Math.round(parseFloat($(".counter").attr("current")), 2);
             if (value + increment <= end) {
                 value += increment;
                 $(".counter").attr("current", Math.round(value, 2));
-                $(".counter").text(USDollar.format($(".counter").attr("current")))
+                let text = $(".counter").attr("current");
+                text = USDollar.format(text).slice(1);
+                for(let i = flutter; i < text.length; i++) {
+                    if (text[i].match(/\d/) !== null) {
+                        text = text.replaceAt(i, ""+nums[Math.floor(Math.random()*10)])
+                    }
+                }
+                $(".counter").text("$"+text);
             }
-            else if (increment > .001) {
+            else if (increment > .01) {
                 increment /= 10;
+                flutter++;
             }
             else {
                 clearInterval(interval);
+                $(".counter").text(USDollar.format(end))
             }
-        }, 15);
+        }, 30);
         hasFired = true;
     }
 }).scroll();
