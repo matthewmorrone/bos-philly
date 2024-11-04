@@ -23,7 +23,8 @@ function randomId($length = 10) {
 
 function query() {
     $qs = [];
-    [$root, $page, $name] = explode("/", $_SERVER['REQUEST_URI']);
+    $components = explode("/", $_SERVER['REQUEST_URI']);
+    @[$root, $page, $name] = $components;
     $qs["page"] = $page;
     $qs["name"] = $name;
     return $qs;
@@ -95,8 +96,19 @@ switch(query()["page"]) {
 display: flex;
 align-items: center;
 justify-content: center;
-"><div style="display: block;"><?php
-
+"><div id="cssCage" style="display: block;"><?php
+@get_header();
+?>
+<script>
+let ruleList = $("#global-styles-inline-css")[0].sheet.cssRules;
+for (let i = 0; i < ruleList.length; i++) {
+    $("#global-styles-inline-css")[0].sheet.cssRules[i].selectorText = "#cssCage "+ruleList[i].selectorText
+}
+for (let i = 0; i < ruleList.length; i++) {
+    console.log(ruleList[i].selectorText);
+}
+</script>
+<?php
 apply_filters('the_content', get_post_field('post_content', $page->id));
         print_r($page->post_content);
         ?></div></div><?php
@@ -106,7 +118,13 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $args['post_type'] = "event";
         $query = new WP_Query($args);
         $posts = $query->get_posts();
-        $event = $posts[0];
+        $event = $posts[0] ?? null;
+        if ($event === null): ?> 
+        <script>
+        window.location.replace("..");
+        </script>
+
+        <?php endif;
         $event->fields = get_fields($event->ID);
         $event->image = get_the_post_thumbnail_url($event->ID);
 
@@ -415,7 +433,7 @@ foreach($posts as &$post):
         'connected_items' => $post->ID,
         'nopaging' => true,
     ));
-    $post->dj = $primary_dj->posts[0]->post_title;
+    @$post->dj = $primary_dj->posts[0]->post_title;
     ?>
     <div class="tile container">
         <a href="events/<?= $post->post_name ?>"><img src="<?= $post->image ?>" loading="lazy" /></a>
@@ -582,7 +600,7 @@ endforeach;
         </div>
         <div id="subscribe">
             <a href="https://arep.co/m/bosphilly"><button id="signup"><i class="fa-solid fa-envelope-open-text"></i> Newsletter</button></a>
-            <a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics"><button id="calendar"><i class="fa-solid fa-calendar-days"></i> Calendar</button></a>
+            <a><button id="calendar"><i class="fa-solid fa-calendar-days"></i> Calendar</button></a>
         </div>
     </div>
     <div>
@@ -596,6 +614,7 @@ endforeach;
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="utils.js"></script>
 <script src="wp.js"></script>
 <script>
@@ -831,6 +850,27 @@ $(async () => {
 
     let route = query();
     if (route.page) scrollToSection(route.page, 100);
+
+    $('#calendar').click(function() {
+        Swal.fire({
+            title: "<strong>Live Calendar</strong>",
+            icon: "info",
+            html: `
+                Stay up to date with our latest events by subscribing to our live calendar. Just click below and it will open in your default calendar app. 
+                
+            `,
+            confirmButtonText: `
+<a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics">Subscribe</a>
+<!--  -->
+  `,
+            iconHtml: `<i class="fa-solid fa-calendar-days"></i>`,
+            showCloseButton: true,
+            showCancelButton: true,
+            iconColor: "#ed208b",
+            confirmButtonColor: "#ed208b",
+        });
+    });
+    
 
     const easterEgg = new Konami(() => {
         $(document.body).toggleClass("konami")
