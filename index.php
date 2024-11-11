@@ -43,9 +43,9 @@ function query() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-75x75.png" sizes="32x32">
-<link rel="icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png" sizes="192x192">
-<link rel="apple-touch-icon" href="https://bosphilly.com/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
+<link rel="icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-75x75.png" sizes="32x32">
+<link rel="icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- Google tag (gtag.js) -->
@@ -91,7 +91,7 @@ src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
         <span>
             <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a class='social' href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
             <!-- <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a> -->
         </span>
@@ -550,7 +550,7 @@ endforeach;
             <h4>Director of Business</h4>
             <div class="contact">
                 <a href="https://www.facebook.com/steve.mccann" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:steve@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+                <a href="mailto:steve@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
                 <a href="http://instagram.com/phillygaycalendar" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
@@ -560,7 +560,7 @@ endforeach;
             <h4>Director of Logistics</h4>
             <div class="contact">
                 <a href="https://www.facebook.com/Mr.Breig" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:matt@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+                <a href="mailto:matt@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
                 <a href="https://www.instagram.com/mr_breig/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
@@ -580,7 +580,7 @@ endforeach;
             <h4>Director of Coordination</h4>
             <div class="contact">
                 <a href="https://www.facebook.com/justindile" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:justin@bosphilly.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+                <a href="mailto:justin@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
                 <a href="https://www.instagram.com/justindile/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
@@ -613,7 +613,7 @@ endforeach;
         <div id="connect">
             <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a class='social' href="mailto:info@bosphilly.com" target="_blank"><i class="fas fa-envelope"></i></a>
+            <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
         </div>
         <div id="subscribe">
@@ -624,7 +624,7 @@ endforeach;
     <div>
         <h3>Committed To Philadelphia</h3>
         <p>BOS Philly brings circuit parties to Philadelphia with international DJs and top-notch production while supporting local LGBT charities. Our events are unique and inclusive, creating an unforgettable experience. Join us to make a positive impact on the community while dancing the night away.</p>
-        <p><a class='learn-more' href="https://www.bosphilly.com/board/">Learn more about us >></a></p>
+        <p><a class='learn-more' href="https://www.bosphilly.org/board/">Learn more about us >></a></p>
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
