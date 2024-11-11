@@ -570,7 +570,7 @@ endforeach;
             <h4>Director of Outreach</h4>
             <div class="contact">
                 <a href="https://www.facebook.com/AlexanderJohn" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:alex@bosphily.com" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+                <a href="mailto:alex@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
                 <a href="https://www.instagram.com/alexanderjawn/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
