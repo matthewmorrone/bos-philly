@@ -338,10 +338,10 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <?php
                         $dj["fields"]["photos"] = array_map(function($photo) {
                             return [
-                                "small" => $photo["media_details"]["sizes"]["thumbnail"]["source_url"],
-                                "medium" => $photo["media_details"]["sizes"]["medium"]["source_url"],
-                                "large" => $photo["media_details"]["sizes"]["large"]["source_url"],
-                                "full" => $photo["full_image_url"]
+                                "small" => @$photo["media_details"]["sizes"]["thumbnail"]["source_url"],
+                                "medium" => @$photo["media_details"]["sizes"]["medium"]["source_url"],
+                                "large" => @$photo["media_details"]["sizes"]["large"]["source_url"],
+                                "full" => @$photo["full_image_url"]
                             ];
                         }, $dj["fields"]["photos"]);
                     ?>
@@ -358,7 +358,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <div class='description'><?= $dj["post_content"] ?></div>
                     <?php if ($dj["fields"]["instagram_link"]): ?>
                         <button class='instagram'>
-                            <a href="https://www.instagram.com/<?=$dj["fields"]["instagram_link"]?>/" target="_blank"><i class="fab fa-instagram"></i>
+                            <a href="<?=$dj["fields"]["instagram_link"]?>" target="_blank"><i class="fab fa-instagram"></i>
                             &nbsp;
                                 <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
                             </a>
@@ -383,11 +383,17 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     data: {
                         action: "soundcloud",
                         url: $(".soundcloud a").attr("href")
-                    }
+                    }/* ,
+                    error: function(e) {
+                        console.log(e);
+                    } */
                 });
                 if (debug) console.log(soundcloud);
                 if (soundcloud) {
                     $(".soundcloud").replaceWith(soundcloud);
+                }
+                else {
+                    $(".soundcloud").remove();
                 }
 
                 $("title").text(`<?= $dj["post_title"] ?> - BOS Philly`);

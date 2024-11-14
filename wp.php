@@ -11,6 +11,21 @@ function containsAnySubstring($string, $substrings) {
     }
     return false;
 }
+function isUrlValid($url) {
+    // Disable error reporting for file_get_contents
+    $context = stream_context_create(['http' => ['ignore_errors' => true]]);
+    // Fetch the URL content
+    $content = file_get_contents($url, false, $context);
+    // Get the response headers
+    $headers = $http_response_header;
+    // Check if the response code contains "404"
+    foreach ($headers as $header) {
+        if (stripos($header, 'HTTP/1.1 404') !== false) {
+            return false; // URL is invalid or returns a 404 error
+        }
+    }
+    return true; // URL is valid
+ }
 
 if (isset($_["debug"])) {
     echo "<pre>"; print_r($_); echo "</pre>";
@@ -23,11 +38,16 @@ if (isset($_["action"])) {
     switch ($_["action"]) {
         case "soundcloud":
             $url = $_["url"];
-            $getValues = file_get_contents("http://soundcloud.com/oembed?format=js&url=$url&iframe=true");
-            $decodeiFrame = substr($getValues, 1, -2);
-            $jsonObj = json_decode($decodeiFrame);
-            echo str_replace('height="450"', 'height="150"', $jsonObj->html);
-            exit();
+            if (isUrlValid($url)) {
+                $getValues = file_get_contents("http://soundcloud.com/oembed?format=js&url=$url&iframe=true");
+                $decodeiFrame = substr($getValues, 1, -2);
+                $jsonObj = json_decode($decodeiFrame);
+                echo str_replace('height="450"', 'height="150"', $jsonObj->html);
+                exit();
+            }
+            else {
+                echo -1;
+            }
         case "list":
             $args['post_type'] = $_["post_type"];
             switch ($_["post_type"]) {
