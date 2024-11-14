@@ -45,14 +45,14 @@ if (isset($_["action"])) {
                     $decodeiFrame = substr($getValues, 1, -2);
                     $jsonObj = json_decode($decodeiFrame);
                     echo str_replace('height="450"', 'height="150"', $jsonObj->html);
-                    exit();
                 }
             }
             else {
                 echo -1;
             }
+            exit();
         case "list":
-            $args['post_type'] = $_["post_type"];
+            @$args['post_type'] = $_["post_type"];
             switch ($_["post_type"]) {
                 case "event": 
                     $args['orderby'] = "meta_value_num";
