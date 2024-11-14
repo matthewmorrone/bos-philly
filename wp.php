@@ -25,7 +25,7 @@ function isUrlValid($url) {
         }
     }
     return true; // URL is valid
- }
+}
 
 if (isset($_["debug"])) {
     echo "<pre>"; print_r($_); echo "</pre>";
@@ -39,11 +39,14 @@ if (isset($_["action"])) {
         case "soundcloud":
             $url = $_["url"];
             if (isUrlValid($url)) {
-                $getValues = file_get_contents("http://soundcloud.com/oembed?format=js&url=$url&iframe=true");
-                $decodeiFrame = substr($getValues, 1, -2);
-                $jsonObj = json_decode($decodeiFrame);
-                echo str_replace('height="450"', 'height="150"', $jsonObj->html);
-                exit();
+                $url = "http://soundcloud.com/oembed?format=js&url=$url&iframe=true";
+                if (isUrlValid($url)) {
+                    $getValues = file_get_contents($url);
+                    $decodeiFrame = substr($getValues, 1, -2);
+                    $jsonObj = json_decode($decodeiFrame);
+                    echo str_replace('height="450"', 'height="150"', $jsonObj->html);
+                    exit();
+                }
             }
             else {
                 echo -1;
