@@ -75,6 +75,9 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<!-- Facebook verification -->
+<meta name="facebook-domain-verification" content="ca9qnb8k0n5fkq5jfuw2unmwkxcj13" />
+<!-- End Facebook verification -->
 </head>
 <body>
 <header class="fixed">
