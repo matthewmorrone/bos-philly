@@ -205,7 +205,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                         </div>
                         <div class='ticket-button'>
                         <?php if ($event["fields"]["ticket_link"]): ?>
-                            <a href='<?=$event["fields"]["ticket_link"]?>'><button>Tickets</button></a>
+                            <a href='<?=$event["fields"]["ticket_link"]?>' target="_blank"><button>Tickets</button></a>
                         <?php else: ?>
                             <button>Coming Soon</button>
                         <?php endif; ?>
