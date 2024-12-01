@@ -93,14 +93,14 @@ if (isset($_["action"])) {
                 }
                 $post = $postData;
             endforeach;
-            if ($_["limit"] >= 0) {
+            if (@$_["limit"] >= 0) {
                 $post_count = count($posts);
-                if ($_["rest"] === "true")  $posts = array_slice($posts, $_["limit"]);
-                else                        $posts = array_slice($posts, 0, $_["limit"]);
+                if (@$_["rest"] === "true") $posts = array_slice($posts, @$_["limit"]);
+                else                        $posts = array_slice($posts, 0, @$_["limit"]);
                 $limit = count($posts);
             }
             $result["posts"] = $posts;
-            if ($_["limit"] >= 0) {
+            if (@$_["limit"] >= 0) {
                 $result["post_count"] = $post_count;
                 $result["post_limit"] = $limit;
             }
