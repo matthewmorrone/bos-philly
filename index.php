@@ -7,7 +7,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 include ("wordpress/wp-config.php");
 function isMobile() {
-    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", @$_SERVER["HTTP_USER_AGENT"]);
 }
 function containsAnySubstring($string, $substrings) {
     foreach ($substrings as $substring) {
@@ -448,7 +448,7 @@ $args['orderby'] = "meta_value";
 $args['order'] = "ASC";
 $args['meta_query'] = array(
     'relation' => 'AND',
-    array('key' => 'date_of_event', 'compare' => '>=', 'value' => date('Ymd'))
+    array('key' => 'date_of_event', 'compare' => '>=', 'value' => date('Ymd', strtotime("yesterday")))
 );
 $query = new WP_Query($args);
 $posts = $query->get_posts();
