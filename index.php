@@ -615,7 +615,7 @@ endforeach;
         </div>
     </div>
     <div class="button-container">
-        <!-- <button class="more" href="board">About Us...</button> -->
+        <button class="more" href="wordpress/about-us">About Us...</button>
     </div>
 </section>
 <?php endif; ?>
@@ -744,6 +744,10 @@ async function loadTiles() {
         if (pages.length) loadPages(pages, "dj");
         $(`#djs .more`).hide();
     });
+
+    $(`#board .more`).click(async () => {
+        window.location.href = "wordpress/about-us";
+    });
 }
 
 String.prototype.replaceAt = function(index, replacement) {
@@ -763,10 +767,15 @@ let USDollar = new Intl.NumberFormat('en-US', {
 let nums = [0,1,2,3,4,5,6,7,8,9];
 $(window).scroll(() => {
     function elementScrolled(elem) {
-        let docViewTop = $(window).scrollTop();
-        let docViewBottom = docViewTop + $(window).height();
-        let elemTop = $(elem).offset().top;
-        return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+        try {
+            let docViewTop = $(window).scrollTop();
+            let docViewBottom = docViewTop + $(window).height();
+            let elemTop = $(elem).offset().top;
+            return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+        }
+        catch (e) {
+            return false;
+        }
     }
     if (elementScrolled('#charity')) {
 
@@ -830,7 +839,7 @@ function zoomImage(direction) {
     if (newZoom < minZoom || newZoom > maxZoom) return;
     currentZoom = newZoom;
     let image = document.querySelector('#parallax');
-    image.style.transform = 'scale(' + currentZoom + ')';
+    if (image) image.style.transform = 'scale(' + currentZoom + ')';
 }
 function parallax(event) {
     let direction = event.deltaY > 0 ? 1 : -1;
@@ -897,10 +906,19 @@ $(async () => {
         $("#navbar").slideToggle();
     });
 
-    loadTiles();
-
     let route = query();
-    if (route.page) scrollToSection(route.page, 100);
+    if (route.page === "about-us") {
+        $("#splash, #charity, #events, #galleries, #djs").remove();
+        $("#board .button-container button, #board h1, #board #separator").remove();
+        let page = await $get("board.html");
+        console.log(page);
+        // let aboutUs = `<h1>${page.posts[0].post_title}</h1>${page.posts[0].post_content}`;
+        $("#board").prepend(page)
+    }
+    else if (route.page) scrollToSection(route.page, 100);
+    else loadTiles();
+
+    
 
     $('#calendar').click(function() {
         Swal.fire({

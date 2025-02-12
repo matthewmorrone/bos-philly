@@ -314,3 +314,8 @@ function google_calendar_button_for_edit_post() {
     }
 }
 add_action('admin_footer', 'google_calendar_button_for_edit_post');
+
+function my_enqueue_styles() {
+    wp_enqueue_style('theme-style', get_stylesheet_uri());
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_styles');
