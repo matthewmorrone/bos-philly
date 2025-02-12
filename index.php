@@ -58,23 +58,6 @@ gtag('js', new Date());
 gtag('config', 'G-E5VXE7X7M6');
 </script>
 <!-- End Google tag (gtag.js) -->
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1255364439052457');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 <!-- Facebook verification -->
 <meta name="facebook-domain-verification" content="ca9qnb8k0n5fkq5jfuw2unmwkxcj13" />
 <!-- End Facebook verification -->
@@ -85,21 +68,31 @@ src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
         <img id="logo" src="wordpress/content-bos-logo" alt="BOS Logo">
     </a>
     <nav>
+        <?php if (!isMobile()): ?>
         <ul id="navbar">
             <li><a class='nav' href="events">Events</a></li>
             <li><a class='nav' href="galleries">Galleries</a></li>
             <li><a class='nav' href="djs">DJs</a></li>
             <li><a class='nav' href="board">Board</a></li>
         </ul>
+        <?php endif; ?>
         <span>
             <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
             <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
-            <!-- <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a> -->
+            <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
         </span>
     </nav>
 </header>
+<?php if (isMobile()): ?>
+    <ul id="navbar">
+        <li><a class='nav' href="events">Events</a></li>
+        <li><a class='nav' href="galleries">Galleries</a></li>
+        <li><a class='nav' href="djs">DJs</a></li>
+        <li><a class='nav' href="board">Board</a></li>
+    </ul>
+<?php endif; ?>
 <?php if(query()["name"]): ?>
 <section id="content">
 <?php
@@ -899,6 +892,10 @@ $(async () => {
 
     const isMobile = window.matchMedia("(width < 600px)").matches;
     if (isMobile) $(".overlay").remove()
+
+    $("#mobileToggle").click(() => {
+        $("#navbar").slideToggle();
+    });
 
     loadTiles();
 

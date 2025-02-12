@@ -20,16 +20,16 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'bosphill_org' );
+define( 'DB_NAME', 'db' );
 
 /** Database username */
-define( 'DB_USER', 'bosphill_admin' );
+define( 'DB_USER', 'db' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'thisisahardpassword' );
+define( 'DB_PASSWORD', 'db' );
 
 /** Database hostname */
-define( 'DB_HOST', '127.0.0.1' );
+define( 'DB_HOST', 'db' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
