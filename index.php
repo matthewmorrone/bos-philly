@@ -436,6 +436,33 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <p class="counter-title">Donated to local LGBT Charities since 2018</p>
     </div>
 </section>
+<section id="pandering">
+    <div>
+        <h2>Committed To Philadelphia</h2>
+        <h3>BOS Philly, a 501c3, brings circuit parties to Philadelphia with international DJs and top-notch production while supporting local LGBT charities. Our events are unique and inclusive, creating an unforgettable experience. Join us to make a positive impact on the community while dancing the night away.</h3>
+        <p><a href="https://www.bosphilly.org/board/">Learn more about us >></a></p>
+    </div>
+    <style>
+    #pandering {
+        text-align: center;
+    }
+    #pandering div {    
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+    }
+    #pandering h2, #pandering h3, #pandering p {
+        margin: 20px;
+        width: 50%;
+    }
+    #pandering h3 {
+        font-weight: normal;
+    }
+    #pandering a {
+        color: #ed208b;
+    }
+    </style>
+</section>
 <section id="events">
     <h1>Events</h1>
     <div class="grid">
