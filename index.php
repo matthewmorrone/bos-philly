@@ -908,11 +908,9 @@ $(async () => {
 
     let route = query();
     if (route.page === "about-us") {
-        $("#splash, #charity, #events, #galleries, #djs").remove();
+        $("#splash, #charity, #pandering, #events, #galleries, #djs").remove();
         $("#board .button-container button, #board h1, #board #separator").remove();
         let page = await $get("board.html");
-        console.log(page);
-        // let aboutUs = `<h1>${page.posts[0].post_title}</h1>${page.posts[0].post_content}`;
         $("#board").prepend(page)
     }
     else if (route.page) scrollToSection(route.page, 100);
