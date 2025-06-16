@@ -5,6 +5,7 @@ import { pathToFileURL } from 'url';
 
 /**
  * Scrape the provided URL and return the formatted HTML.
+ * Writes the scraped HTML to disk as a side effect.
  * Returns null if an error occurs.
  * @param {string} url
  * @returns {Promise<string|null>}
