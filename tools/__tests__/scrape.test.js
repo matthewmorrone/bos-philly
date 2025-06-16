@@ -1,5 +1,5 @@
-import { scrape } from '../scrape.js';
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
+const { scrape } = require('../scrape.js');
 
 jest.mock('puppeteer');
 
