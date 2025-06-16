@@ -23,6 +23,10 @@ Some data migration utilities rely on Node.js packages. Change into the
 `tools/` directory and run `npm install` to install them. If Puppeteer is not
 needed, you can set the `PUPPETEER_SKIP_DOWNLOAD=1` environment variable.
 
+Run `node scrape.js [url]` from inside the `tools/` directory to save the
+rendered HTML from a page. If `url` is omitted, it defaults to
+`https://dev.bosphilly.com/`.
+
 ### Data Migration Scripts
 
 The `tools/` folder contains PHP scripts that help move data between
