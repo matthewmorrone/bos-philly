@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import pretty from "pretty";
 
-const url = 'https://dev.bosphilly.com/';
+const url = process.argv[2] || 'https://dev.bosphilly.com/';
 
 try {
     const browser = await puppeteer.launch({
