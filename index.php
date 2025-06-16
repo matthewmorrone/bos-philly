@@ -25,8 +25,8 @@ function query() {
     $qs = [];
     $components = explode("/", $_SERVER['REQUEST_URI']);
     @[$root, $page, $name] = $components;
-    $qs["page"] = $page;
-    $qs["name"] = $name;
+    $qs["page"] = sanitize_text_field($page);
+    $qs["name"] = sanitize_text_field($name);
     return $qs;
 }
 ?>
@@ -256,8 +256,9 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $gallery = (array)$gallery;
         if (isset($gallery["fields"]["gallery_link"])) {
             $gallery_url = "https://".$gallery["fields"]["gallery_link"];
-            $images = file_get_contents($gallery_url);
-            if ($images) {
+            $response = wp_safe_remote_get($gallery_url);
+            if (!is_wp_error($response)) {
+                $images = wp_remote_retrieve_body($response);
                 $dom = new DomDocument();
                 $dom->loadHTML($images);
                 foreach ($dom->getElementsByTagName('a') as $item) {
