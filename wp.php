@@ -1,7 +1,17 @@
 <?php
 error_reporting(E_ERROR);
 include ("wordpress/wp-config.php");
-$_ = $_POST ?: $_GET; // extract($_);
+
+// Collect request data and sanitize expected parameters
+$request_raw = $_POST ? wp_unslash($_POST) : wp_unslash($_GET);
+$request = [];
+foreach (['action','post_type','name','url','limit','rest','debug'] as $key) {
+    if (isset($request_raw[$key])) {
+        $request[$key] = sanitize_text_field($request_raw[$key]);
+    }
+}
+
+$allowed_post_types = ['event','gallery','dj','model','page'];
 
 function containsAnySubstring($string, $substrings) {
     foreach ($substrings as $substring) {
@@ -12,48 +22,43 @@ function containsAnySubstring($string, $substrings) {
     return false;
 }
 function isUrlValid($url) {
-    // Disable error reporting for file_get_contents
-    $context = stream_context_create(['http' => ['ignore_errors' => true]]);
-    // Fetch the URL content
-    $content = file_get_contents($url, false, $context);
-    // Get the response headers
-    $headers = $http_response_header;
-    // Check if the response code contains "404"
-    foreach ($headers as $header) {
-        if (stripos($header, 'HTTP/1.1 404') !== false) {
-            return false; // URL is invalid or returns a 404 error
-        }
-    }
-    return true; // URL is valid
+    $response = wp_safe_remote_head($url);
+    return !is_wp_error($response) && wp_remote_retrieve_response_code($response) < 400;
 }
 
-if (isset($_["debug"])) {
-    echo "<pre>"; print_r($_); echo "</pre>";
+if (isset($request["debug"])) {
+    echo "<pre>"; print_r($request); echo "</pre>";
 }
-if (isset($_["action"])) {
+if (isset($request["action"])) {
     $args = [];
     $args['post_status'] = "publish";
     $args['nopaging'] = true;
 
-    switch ($_["action"]) {
+    switch ($request["action"]) {
         case "soundcloud":
-            $url = $_["url"];
-            if (isUrlValid($url)) {
-                $url = "http://soundcloud.com/oembed?format=js&url=$url&iframe=true";
-                if (isUrlValid($url)) {
-                    $getValues = file_get_contents($url);
-                    $decodeiFrame = substr($getValues, 1, -2);
-                    $jsonObj = json_decode($decodeiFrame);
-                    echo str_replace('height="450"', 'height="150"', $jsonObj->html);
+            $url = isset($request["url"]) ? esc_url_raw($request["url"]) : '';
+            if ($url && isUrlValid($url)) {
+                $oembed = "http://soundcloud.com/oembed?format=js&url=$url&iframe=true";
+                if (isUrlValid($oembed)) {
+                    $response = wp_safe_remote_get($oembed);
+                    if (!is_wp_error($response)) {
+                        $getValues = wp_remote_retrieve_body($response);
+                        $decodeiFrame = substr($getValues, 1, -2);
+                        $jsonObj = json_decode($decodeiFrame);
+                        echo str_replace('height="450"', 'height="150"', $jsonObj->html);
+                    }
                 }
-            }
-            else {
+            } else {
                 echo -1;
             }
             exit();
         case "list":
-            @$args['post_type'] = $_["post_type"];
-            switch ($_["post_type"]) {
+            @$args['post_type'] = $request["post_type"] ?? '';
+            if (!in_array($args['post_type'], $allowed_post_types, true)) {
+                $result = ['error' => 'Invalid post type'];
+                break;
+            }
+            switch ($args['post_type']) {
                 case "event": 
                     $args['orderby'] = "meta_value_num";
                     $args['meta_query'] = array(
@@ -79,7 +84,7 @@ if (isset($_["action"])) {
                 $postData["post_name"] = $post->post_name;
                 $postData["post_title"] = $post->post_title;
                 $postData["image"] = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
-                switch ($_["post_type"]) {
+                switch ($args['post_type']) {
                     case "event": 
                         $post->fields = get_fields($post->ID);
                         $postData["date_of_event"] = $post->fields["date_of_event"];
@@ -93,22 +98,33 @@ if (isset($_["action"])) {
                 }
                 $post = $postData;
             endforeach;
-            if (@$_["limit"] >= 0) {
+            if (isset($request["limit"]) && $request["limit"] >= 0) {
                 $post_count = count($posts);
-                if (@$_["rest"] === "true") $posts = array_slice($posts, @$_["limit"]);
-                else                        $posts = array_slice($posts, 0, @$_["limit"]);
+                if (isset($request["rest"]) && $request["rest"] === "true") {
+                    $posts = array_slice($posts, $request["limit"]);
+                } else {
+                    $posts = array_slice($posts, 0, $request["limit"]);
+                }
                 $limit = count($posts);
             }
             $result["posts"] = $posts;
-            if (@$_["limit"] >= 0) {
+            if (isset($request["limit"]) && $request["limit"] >= 0) {
                 $result["post_count"] = $post_count;
                 $result["post_limit"] = $limit;
             }
         break;
         case "get":
-            $args['name'] = $_["name"];
-            $args['post_type'] = $_["post_type"];
-            if (strcmp($_["post_type"], 'gallery') === 0) {
+            $args['name'] = $request["name"] ?? '';
+            $args['post_type'] = $request["post_type"] ?? '';
+            if (!in_array($args['post_type'], $allowed_post_types, true)) {
+                $result = ['error' => 'Invalid post type'];
+                break;
+            }
+            if ($args['name'] === '') {
+                $result = ['error' => 'Missing name'];
+                break;
+            }
+            if ($args['post_type'] === 'gallery') {
                 $args['post_type'] = "event";
             }
             $query = new WP_Query($args);
@@ -122,7 +138,7 @@ if (isset($_["action"])) {
                 $postData["image"] = get_the_post_thumbnail_url($post->ID);
                 
                 $post->fields = get_fields($post->ID);
-                switch ($_["post_type"]) {
+                switch ($args['post_type']) {
                     case "event": 
                         $postData["date_of_event"] = $post->fields["date_of_event"];
                         $postData["background_image"] = $post->fields["background_image"]["url"]; // get a smaller image
@@ -133,7 +149,7 @@ if (isset($_["action"])) {
                         $postData["ticket_link"] = $post->fields["ticket_link"];
                         $postData["soundcloud_link"] = $post->fields["soundcloud_link"];
 
-                        if (strcmp($_["post_type"], "event") === 0) {
+                        if ($args['post_type'] === "event") {
                             $primary_dj = new WP_Query(array(
                                 'connected_type' => 'primary_dj',
                                 'connected_items' => $post->ID,
@@ -174,8 +190,9 @@ if (isset($_["action"])) {
                         if (isset($post->fields["gallery_link"])) {
                             $gallery = "http://".$post->fields["gallery_link"];
                             if ($gallery) {
-                                $images = file_get_contents($gallery);
-                                if ($images) {
+                                $response = wp_safe_remote_get($gallery);
+                                if (!is_wp_error($response)) {
+                                    $images = wp_remote_retrieve_body($response);
                                     $dom = new DomDocument();
                                     $dom->loadHTML($images);
                                     foreach ($dom->getElementsByTagName('a') as $item) {
@@ -218,6 +235,9 @@ if (isset($_["action"])) {
                 $post = $postData;
             endforeach;
             $result["posts"] = $posts;
+        break;
+        default:
+            $result = ['error' => 'Invalid action'];
         break;
     }
         if ($_POST) {
