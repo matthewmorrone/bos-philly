@@ -18,9 +18,7 @@ export async function scrape(url) {
     const [page] = await browser.pages();
 
     await page.goto(url, { waitUntil: 'networkidle2' });
-    let data = await page.evaluate(() =>
-      document.querySelector('*').outerHTML
-    );
+    let data = await page.content();
 
     data = pretty(data);
 
