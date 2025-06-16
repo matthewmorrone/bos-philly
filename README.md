@@ -1,5 +1,51 @@
 # BOS
 
+This repository contains the code and WordPress installation for the BOS
+project. The site is designed to run inside the [DDEV](https://ddev.com/)
+development environment.
+
+## Installation
+
+1. Install [DDEV](https://ddev.com/) and Docker.
+2. Clone this repository and run `ddev start` from the project root.
+3. After the containers build, WordPress will be available at the URL
+   printed by DDEV (typically `https://bos.ddev.site`).
+
+### WordPress Configuration
+
+WordPress lives in the `wordpress/` directory. The provided `wp-config.php`
+is configured to work with DDEV. If you are running without DDEV, update the
+database credentials in `wp-config.php` to match your local database.
+
+### Installing Node Dependencies
+
+Some data migration utilities rely on Node.js packages. Change into the
+`tools/` directory and run `npm install` to install them. If Puppeteer is not
+needed, you can set the `PUPPETEER_SKIP_DOWNLOAD=1` environment variable.
+
+### Data Migration Scripts
+
+The `tools/` folder contains PHP scripts that help move data between
+installations:
+
+* `db-to-csv.php` – export custom post types and metadata to CSV files.
+* `csv-to-db.php` – import those CSV files back into the database.
+* `content-to-csv.php` – export post content to `csv/content.csv`.
+* `csv-to-content.php` – import content from that CSV back into WordPress.
+* `connect-featured-images.php` – associate downloaded images as featured
+  images.
+* `connect-extra-images.php` – attach additional gallery images.
+* `generate-thumbs.php` – rebuild thumbnails for the image galleries.
+
+Run any of these tools with `php tools/<script-name.php>` once WordPress is
+configured and accessible.
+
+### Running the Site Locally
+
+With DDEV running, visit the site at the URL printed by `ddev start` (for
+example `https://bos.ddev.site`). Development assets can be live reloaded by
+running `ddev browsersync`.
+
 ## To-Do List
 + wysiwyg editor for custom event pages
 + Move tickets.bosphilly.com to .org
