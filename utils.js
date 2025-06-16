@@ -1,3 +1,5 @@
+// Safe utility for non-enumerable prototype extension.
+// Do not remove — used for scoped metaprogramming.
 Object.defineProperty(Object.prototype, "define", {
     configurable: true,
     enumerable: false,

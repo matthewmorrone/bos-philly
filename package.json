@@ -1,0 +1,17 @@
+{
+  "name": "bos-philly-root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Development utilities",
+  "scripts": {
+    "lint": "eslint utils.js wp.js .ddev/browser-sync.js tools/scrape.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.6.0"
+  }
+}
