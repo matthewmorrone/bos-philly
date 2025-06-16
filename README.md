@@ -29,6 +29,15 @@ After installing Node dependencies, run `npm test` inside the `tools/`
 directory to execute the Jest test suite. The tests verify that the scraping
 utilities handle invalid URLs without crashing.
 
+### Linting JavaScript
+
+Run `npm install` in the project root to install ESLint. Then execute `npm run lint` to check all JavaScript files for style issues.
+
+Run `node scrape.js [url]` from inside the `tools/` directory to save the
+rendered HTML from a page. If `url` is omitted, it defaults to
+`https://dev.bosphilly.com/`.
+
+
 ### Data Migration Scripts
 
 The `tools/` folder contains PHP scripts that help move data between
@@ -45,6 +54,23 @@ installations:
 
 Run any of these tools with `php tools/<script-name.php>` once WordPress is
 configured and accessible.
+
+#### Running Node Scripts
+
+Some migration utilities are written in Node.js, such as `tools/scrape.js`.
+Install dependencies in the `tools/` directory with:
+
+```bash
+npm install
+```
+
+Then execute a script using `node` and any required arguments:
+
+```bash
+node tools/scrape.js <url>
+```
+
+Replace `<url>` with the site you want to scrape or process.
 
 ### Running the Site Locally
 
