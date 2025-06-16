@@ -40,6 +40,23 @@ installations:
 Run any of these tools with `php tools/<script-name.php>` once WordPress is
 configured and accessible.
 
+#### Running Node Scripts
+
+Some migration utilities are written in Node.js, such as `tools/scrape.js`.
+Install dependencies in the `tools/` directory with:
+
+```bash
+npm install
+```
+
+Then execute a script using `node` and any required arguments:
+
+```bash
+node tools/scrape.js <url>
+```
+
+Replace `<url>` with the site you want to scrape or process.
+
 ### Running the Site Locally
 
 With DDEV running, visit the site at the URL printed by `ddev start` (for
