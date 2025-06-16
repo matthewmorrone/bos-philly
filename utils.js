@@ -1,18 +1,17 @@
 Object.defineProperty(Object.prototype, "define", {
     configurable: true,
     enumerable: false,
-    writable: true,
+    writable: false,
     value: function (name, value) {
-        if (Object[name]) {
-            delete Object[name];
+        if (this.hasOwnProperty(name)) {
+            delete this[name];
         }
         Object.defineProperty(this, name, {
             configurable: true,
             enumerable: false,
-            writable: true,
             value: value
         });
-        return this;
+        return this[name];
     }
 });
 Object.prototype.define("map", function (mapFn) {
@@ -31,7 +30,7 @@ Object.prototype.define("each", function (fn) {
     }
     return this;
 });
-Array.prototype.define("each", Array.prototype.forEach)
+Array.prototype.define("each", Array.prototype.forEach);
 String.prototype.define('toTitleCase', function () {
     return this.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -39,11 +38,11 @@ String.prototype.define('toTitleCase', function () {
 });
 String.prototype.define('escapeHTML', function () {
     let replacements = { "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", "\"": "&quot;" };
-    return this.replace(/[<>&'"]/g, function (character) {
+    return this.replace(/[<>&'\"]/g, function (character) {
         return replacements[character];
     });
 });
-Math.define("nativeRound", Math.round)
+Math.define("nativeRound", Math.round);
 Math.define("round", function (i, n) {
     return +i.toFixed(n);
 });
@@ -94,7 +93,7 @@ function query() {
         return this.each(function() {
             let $this = $(this);
             if (tree) $this = $(this).find(tree);
-            
+
             let unsortedElems = $this.children(childElem);
             let elems = unsortedElems.clone();
 
