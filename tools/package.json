@@ -4,12 +4,15 @@
     "pretty": "^2.0.0",
     "puppeteer": "^23.5.0"
   },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "name": "bos-philly",
   "version": "1.0.0",
   "description": "## Steps for Migration to Dev + Clone or pull in terminal: git clone http://github.com/matthewmorrone/bos-philly dev.bosphilly.com --depth=1 + Change the database credentials in wpconfig.php",
   "main": "scrape.js",
   "scripts": {
-    "test": "node scrape.js"
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
   },
   "author": "",
   "license": "ISC",

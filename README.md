@@ -23,6 +23,12 @@ Some data migration utilities rely on Node.js packages. Change into the
 `tools/` directory and run `npm install` to install them. If Puppeteer is not
 needed, you can set the `PUPPETEER_SKIP_DOWNLOAD=1` environment variable.
 
+### Running Tests
+
+After installing Node dependencies, run `npm test` inside the `tools/`
+directory to execute the Jest test suite. The tests verify that the scraping
+utilities handle invalid URLs without crashing.
+
 ### Data Migration Scripts
 
 The `tools/` folder contains PHP scripts that help move data between
