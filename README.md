@@ -23,6 +23,11 @@ Some data migration utilities rely on Node.js packages. Change into the
 `tools/` directory and run `npm install` to install them. If Puppeteer is not
 needed, you can set the `PUPPETEER_SKIP_DOWNLOAD=1` environment variable.
 
+### Linting JavaScript
+
+Run `npm install` in the project root to install ESLint. Then execute `npm run lint` to check all JavaScript files for style issues.
+
+
 ### Data Migration Scripts
 
 The `tools/` folder contains PHP scripts that help move data between
