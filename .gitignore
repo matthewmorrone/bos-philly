@@ -6,3 +6,7 @@ wordpress/wp-content/plugins/*
 wordpress/wp-content/uploads/
 wordpress/wp-content/uploads/*-*x*.*
 wordpress/wp-content/backup-migration-*
+# Runtime logs
+error_log
+**/error_log
+wordpress/wp-content/debug.log
