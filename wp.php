@@ -136,7 +136,7 @@ if (isset($request["action"])) {
                 $postData["post_title"] = $post->post_title;
                 $postData["post_content"] = $post->post_content;
                 $postData["image"] = get_the_post_thumbnail_url($post->ID);
-                
+
                 $post->fields = get_fields($post->ID);
                 switch ($args['post_type']) {
                     case "event": 
@@ -166,7 +166,7 @@ if (isset($request["action"])) {
                                 ];
                             }
                             $postData["primary_dj"] = $primary_dj_data;
-        
+
                             $secondary_djs = new WP_Query(array(
                                 'connected_type' => 'secondary_dj',
                                 'connected_items' => $post->ID,
@@ -185,7 +185,7 @@ if (isset($request["action"])) {
                             $postData["secondary_djs"] = $secondary_djs_data;
                         }
                     break;
-                    case "gallery": 
+                    case "gallery":
                         $postData["gallery_link"] = $post->fields["gallery_link"];
                         if (isset($post->fields["gallery_link"])) {
                             $gallery = "http://".$post->fields["gallery_link"];
@@ -232,6 +232,7 @@ if (isset($request["action"])) {
                         $postData["photos"] = $post->fields["photos"];
                     break;
                 }
+                $postData["styles"] = get_page_styles($post->ID);
                 $post = $postData;
             endforeach;
             $result["posts"] = $posts;
@@ -242,8 +243,24 @@ if (isset($request["action"])) {
     }
         if ($_POST) {
             ob_start('ob_gzhandler');
-            echo json_encode($result); 
+            echo json_encode($result);
         }
     else if ($_GET)  {echo "<pre>"; print_r($result); echo "</pre>";}
 }
 
+function get_page_styles($page_id) {
+    // Get the fully-rendered page as HTML
+    $page_url = get_permalink($page_id);
+    $response = wp_remote_get($page_url);
+
+    if (is_wp_error($response)) {
+        return [];
+    }
+
+    $html = wp_remote_retrieve_body($response);
+
+    // Extract styles using regex
+    preg_match_all('/<link.*?rel=["\']stylesheet["\'].*?href=["\'](.*?)["\'].*?>/i', $html, $matches);
+
+    return !empty($matches[1]) ? array_unique($matches[1]) : [];
+}
