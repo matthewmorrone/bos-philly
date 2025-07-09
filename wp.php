@@ -54,7 +54,7 @@ if (isset($_["action"])) {
         case "list":
             @$args['post_type'] = $_["post_type"];
             switch ($_["post_type"]) {
-                case "event": 
+                case "event":
                     $args['orderby'] = "meta_value_num";
                     $args['meta_query'] = array(
                         'relation' => 'AND',
@@ -80,7 +80,7 @@ if (isset($_["action"])) {
                 $postData["post_title"] = $post->post_title;
                 $postData["image"] = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
                 switch ($_["post_type"]) {
-                    case "event": 
+                    case "event":
                         $post->fields = get_fields($post->ID);
                         $postData["date_of_event"] = $post->fields["date_of_event"];
                         $primary_dj = new WP_Query(array(
@@ -120,10 +120,10 @@ if (isset($_["action"])) {
                 $postData["post_title"] = $post->post_title;
                 $postData["post_content"] = $post->post_content;
                 $postData["image"] = get_the_post_thumbnail_url($post->ID);
-                
+
                 $post->fields = get_fields($post->ID);
                 switch ($_["post_type"]) {
-                    case "event": 
+                    case "event":
                         $postData["date_of_event"] = $post->fields["date_of_event"];
                         $postData["background_image"] = $post->fields["background_image"]["url"]; // get a smaller image
                         $postData["start_time"] = $post->fields["start_time"];
@@ -150,7 +150,7 @@ if (isset($_["action"])) {
                                 ];
                             }
                             $postData["primary_dj"] = $primary_dj_data;
-        
+
                             $secondary_djs = new WP_Query(array(
                                 'connected_type' => 'secondary_dj',
                                 'connected_items' => $post->ID,
@@ -169,7 +169,7 @@ if (isset($_["action"])) {
                             $postData["secondary_djs"] = $secondary_djs_data;
                         }
                     break;
-                    case "gallery": 
+                    case "gallery":
                         $postData["gallery_link"] = $post->fields["gallery_link"];
                         if (isset($post->fields["gallery_link"])) {
                             $gallery = "http://".$post->fields["gallery_link"];
@@ -215,6 +215,7 @@ if (isset($_["action"])) {
                         $postData["photos"] = $post->fields["photos"];
                     break;
                 }
+                $postData["styles"] = get_page_styles($post->ID);
                 $post = $postData;
             endforeach;
             $result["posts"] = $posts;
@@ -222,8 +223,24 @@ if (isset($_["action"])) {
     }
         if ($_POST) {
             ob_start('ob_gzhandler');
-            echo json_encode($result); 
+            echo json_encode($result);
         }
     else if ($_GET)  {echo "<pre>"; print_r($result); echo "</pre>";}
 }
 
+function get_page_styles($page_id) {
+    // Get the fully-rendered page as HTML
+    $page_url = get_permalink($page_id);
+    $response = wp_remote_get($page_url);
+
+    if (is_wp_error($response)) {
+        return [];
+    }
+
+    $html = wp_remote_retrieve_body($response);
+
+    // Extract styles using regex
+    preg_match_all('/<link.*?rel=["\']stylesheet["\'].*?href=["\'](.*?)["\'].*?>/i', $html, $matches);
+
+    return !empty($matches[1]) ? array_unique($matches[1]) : [];
+}

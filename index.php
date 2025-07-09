@@ -65,7 +65,7 @@ gtag('config', 'G-E5VXE7X7M6');
 <body>
 <header class="fixed">
     <a href="/" id="home">
-        <img id="logo" src="wordpress/content-bos-logo" alt="BOS Logo">
+        <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo-1.png" alt="BOS Logo">
     </a>
     <nav>
         <?php if (!isMobile()): ?>
@@ -194,11 +194,11 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <div class='ticket-panel'>
                         <div class='marker'><i class='fas fa-ticket'></i></div>
                         <div class='panel'>
-                            <h3>Tickets</h3>
+                            <h3>Ticket</h3>
                         </div>
                         <div class='ticket-button'>
                         <?php if ($event["fields"]["ticket_link"]): ?>
-                            <a href='<?=$event["fields"]["ticket_link"]?>' target="_blank"><button>Tickets</button></a>
+                            <a href='<?=$event["fields"]["ticket_link"]?>' target="_blank"><button>Ticket</button></a>
                         <?php else: ?>
                             <button>Coming Soon</button>
                         <?php endif; ?>
@@ -245,6 +245,137 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             </script>
         </div>
     <?php
+    break;
+    case "blowouts": 
+        $args['name'] = query()["name"];
+        $args['post_type'] = "blowout";
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+        $blowout = $posts[0];
+        $blowout->fields = get_fields($blowout->ID);
+        ?>
+        <?php
+        $splash_background = $blowout->fields["splash_background"]["url"];
+        $splash_content = $blowout->fields["splash_content"];
+        $ticket_background = $blowout->fields["ticket_background"];
+        $ticket_image = $blowout->fields["ticket_image"]["url"];
+        $djs_background = $blowout->fields["djs_background"]["url"];
+        $content = $blowout->fields["content"];
+        $djs = $blowout->fields["djs"];
+        $vip_background = $blowout->fields["vip_background"]["url"];
+        $vip_content = $blowout->fields["vip_content"];
+        $venue_background = $blowout->fields["venue_background"]["url"];
+        $venue_content = $blowout->fields["venue_content"];
+        $hotel_background = $blowout->fields["hotel_background"]["url"];
+        $hotel_content = $blowout->fields["hotel_content"];
+        ?>
+<style>
+.bg-cover {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+#blowout-splash {
+    position: relative;
+    background-image: url("<?= $splash_background ?>");
+    color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#blowout-splash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+#blowout-splash > * {
+    position: relative;
+    z-index: 2;
+}
+/* Section-specific backgrounds */
+#blowout-ticket  { background-image: url("<?= $ticket_background ?>"); }
+#blowout-djs     { background-image: url("<?= $djs_background ?>"); }
+#blowout-vip     { background-image: url("<?= $vip_background ?>"); }
+#blowout-venue   { background-image: url("<?= $venue_background ?>"); }
+#blowout-hotel   { background-image: url("<?= $hotel_background ?>"); }
+#blowout-ticket,
+#blowout-djs,
+#blowout-vip,
+#blowout-venue,
+#blowout-hotel {
+    color: white;
+}
+.shade {
+    /* font-size: 2rem; */
+    max-width: 80%;
+    /* line-height: 1.4; */
+    margin: 0 auto;
+    text-align: center;
+}
+.shade-fg {
+    background-color: #0201019E;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 25px;
+}
+.ticket-image {
+    width: 500px;
+}
+</style>
+<div id="blowout-splash" class="bg-cover">
+    <div class="shade">
+        <?= $splash_content ?>
+    </div>
+</div>
+
+<div id="blowout-ticket" class="bg-cover">
+    <div class="shade">
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    </div>
+</div>
+<div id="blowout-djs" class="bg-cover">
+    <div class="shade">
+        <div class="shade-fg">
+            <?= $content ?>
+        </div>
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    </div>
+</div>
+<div id="blowout-vip" class="bg-cover">
+    <div class="shade">
+        <div class="shade-fg">
+            <?= $vip_content ?>
+        </div>
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    </div>
+</div>
+<div id="blowout-venue" class="bg-cover">
+    <div class="shade">
+        <div class="shade-fg">
+            <?= $venue_content ?>
+        </div>
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    </div>
+</div>
+<div id="blowout-hotel" class="bg-cover">
+    <div class="shade">
+        <div class="shade-fg">
+            <?= $hotel_content ?>
+            <div class="button-container">
+                <button class="more">
+                    <a href="<?= $hotel_link ?>">$149 Per Night</a>
+                </button>
+            </div>
+        </div>
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    </div>
+</div>
+        <?php
     break;
     case "galleries":
         $args['name'] = query()["name"];
@@ -489,7 +620,7 @@ foreach($posts as &$post):
         <?php if ($post->dj): ?>
             <a href="events/<?= $post->post_name ?>"><h4><?= $post->dj ?></h4></a>
         <?php endif; ?>
-        <a href="events/<?= $post->post_name ?>"><button class='tickets'>Tickets</button></a>
+        <a href="events/<?= $post->post_name ?>"><button class='ticket'>Ticket</button></a>
     </div>
     <?php
 endforeach;
@@ -666,6 +797,7 @@ endforeach;
 <script src="wp.js"></script>
 <script>
 let route = query();
+
 debug = getQueryString().debug;
 if (debug) console.log(getQueryString());
 
@@ -678,7 +810,9 @@ function adjustParticleBackground() {
         height: $("#particle-background canvas").height()+increaseBy
     });
 }
-<?php if(!query()["name"]): ?>
+
+
+<?php // if(!query()["name"]): ?>
 
 async function loadTiles() {
     function loadPages(pages, url) {
@@ -746,7 +880,7 @@ async function loadTiles() {
     });
 
     $(`#board .more`).click(async () => {
-        window.location.href = "wordpress/about-us";
+        window.location.href = "about-us";
     });
 }
 
@@ -911,12 +1045,20 @@ $(async () => {
         $("#splash, #charity, #pandering, #events, #galleries, #djs").remove();
         $("#board .button-container button, #board h1, #board #separator").remove();
         let page = await $get("board.html");
-        $("#board").prepend(page)
+        $("#board").prepend(page);
     }
-    else if (route.page) scrollToSection(route.page, 100);
-    else loadTiles();
-
-    
+    // else if (route.page === "blowout") {
+    //     console.log(route)
+    //     let page = await getPageByName("page", route.name);
+    //     console.log(page)
+    // }
+    else if (route.page) {
+        console.log(route);
+        // scrollToSection(route.page, 100);
+    }
+    else {
+        loadTiles();
+    } 
 
     $('#calendar').click(function() {
         Swal.fire({
@@ -939,8 +1081,7 @@ $(async () => {
         $(document.body).toggleClass("konami")
     });
 });
-
-<?php endif; ?>
 </script>
+<?php // endif; ?>
 </body>
 </html>
