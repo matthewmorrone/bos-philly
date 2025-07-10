@@ -65,7 +65,7 @@ gtag('config', 'G-E5VXE7X7M6');
 <body>
 <header class="fixed">
     <a href="/" id="home">
-        <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo-1.png" alt="BOS Logo">
+        <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo.png" alt="BOS Logo">
     </a>
     <nav>
         <?php if (!isMobile()): ?>
@@ -268,6 +268,11 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $venue_content = $blowout->fields["venue_content"];
         $hotel_background = $blowout->fields["hotel_background"]["url"];
         $hotel_content = $blowout->fields["hotel_content"];
+
+        $music_anchor = $blowout->fields["music_anchor"];
+        $venue_anchor = $blowout->fields["venue_anchor"];
+        $vip_anchor = $blowout->fields["vip_anchor"];
+        $hotel_anchor = $blowout->fields["hotel_anchor"];
         ?>
 <style>
 .bg-cover {
@@ -332,7 +337,66 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <?= $splash_content ?>
     </div>
 </div>
-
+<style>
+#blowout-highlights {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 32px;
+    background: #000;
+    padding: 0;
+    margin: 0;
+}
+.highlight-tile {
+    flex: 1 1 0;
+    max-width: 220px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    height: 100%;
+}
+.highlight-tile img {
+    width: 100%;
+    max-width: 240px;
+    margin-bottom: 12px;
+    display: block;
+}
+.highlight-label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5em;
+    width: 100%;
+    box-sizing: border-box;
+    height: 2.5em;
+    line-height: 2.5em;
+    text-align: center;
+}
+</style>
+<div id="blowout-highlights">
+    <a href="/blowouts/<?= htmlspecialchars(query()['name']) ?>#blowout-djs" class="highlight-tile">
+        <img src="<?= $music_anchor ?>" alt="Music" loading="lazy" />
+        <div class="highlight-label">Music</div>
+    </a>
+    <a href="/blowouts/<?= htmlspecialchars(query()['name']) ?>#blowout-vip" class="highlight-tile">
+        <img src="<?= $vip_anchor ?>" alt="VIP" loading="lazy" />
+        <div class="highlight-label">VIP</div>
+    </a>
+    <a href="/blowouts/<?= htmlspecialchars(query()['name']) ?>#blowout-venue" class="highlight-tile">
+        <img src="<?= $venue_anchor ?>" alt="Venue" loading="lazy" />
+        <div class="highlight-label">Venue</div>
+    </a>
+    <a href="/blowouts/<?= htmlspecialchars(query()['name']) ?>#blowout-hotel" class="highlight-tile">
+        <img src="<?= $hotel_anchor ?>" alt="Hotel" loading="lazy" />
+        <div class="highlight-label">Hotel</div>
+    </a>
+</div>
 <div id="blowout-ticket" class="bg-cover">
     <div class="shade">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
