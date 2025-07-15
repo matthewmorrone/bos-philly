@@ -194,7 +194,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                     <div class='ticket-panel'>
                         <div class='marker'><i class='fas fa-ticket'></i></div>
                         <div class='panel'>
-                            <h3>Ticket</h3>
+                            <h3>Tickets</h3>
                         </div>
                         <div class='ticket-button'>
                         <?php if ($event["fields"]["ticket_link"]): ?>
@@ -685,7 +685,7 @@ foreach($posts as &$post):
         <?php if ($post->dj): ?>
             <a href="events/<?= $post->post_name ?>"><h4><?= $post->dj ?></h4></a>
         <?php endif; ?>
-        <a href="events/<?= $post->post_name ?>"><button class='ticket'>Ticket</button></a>
+        <a href="events/<?= $post->post_name ?>"><button class='ticket'>Tickets</button></a>
     </div>
     <?php
 endforeach;
