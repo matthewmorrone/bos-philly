@@ -133,7 +133,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $query = new WP_Query($args);
         $posts = $query->get_posts();
         $event = $posts[0] ?? null;
-        if ($event === null): ?> 
+        if ($event === null): ?>
         <script>
         window.location.replace("..");
         </script>
@@ -246,7 +246,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         </div>
     <?php
     break;
-    case "blowouts": 
+    case "blowouts":
         $args['name'] = query()["name"];
         $args['post_type'] = "blowout";
         $query = new WP_Query($args);
@@ -275,6 +275,9 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $hotel_anchor = $blowout->fields["hotel_anchor"];
         ?>
 <style>
+* {
+    list-style-type: none;
+}
 .bg-cover {
     background-repeat: no-repeat;
     background-size: cover;
@@ -311,7 +314,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 #blowout-ticket,
 #blowout-djs,
 #blowout-vip,
-#blowout-venue,
+#blowout-venue
 #blowout-hotel {
     color: white;
 }
@@ -320,7 +323,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     max-width: 80%;
     /* line-height: 1.4; */
     margin: 0 auto;
-    text-align: center;
+    /* text-align: center; */
 }
 .shade-fg {
     background-color: #0201019E;
@@ -378,6 +381,11 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     line-height: 2.5em;
     text-align: center;
 }
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
 <div id="blowout-highlights">
     <a href="/blowouts/<?= htmlspecialchars(query()['name']) ?>#blowout-djs" class="highlight-tile">
@@ -399,6 +407,10 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 </div>
 <div id="blowout-ticket" class="bg-cover">
     <div class="shade">
+        <div class="shade-fg">
+        </div>
+    </div>
+    <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
@@ -407,6 +419,8 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <div class="shade-fg">
             <?= $content ?>
         </div>
+    </div>
+    <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
@@ -415,6 +429,8 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <div class="shade-fg">
             <?= $vip_content ?>
         </div>
+    </div>
+    <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
@@ -423,6 +439,8 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <div class="shade-fg">
             <?= $venue_content ?>
         </div>
+    </div>
+    <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
@@ -436,6 +454,8 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                 </button>
             </div>
         </div>
+    </div>
+    <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
@@ -635,7 +655,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     #pandering {
         text-align: center;
     }
-    #pandering div {    
+    #pandering div {
         display: flex;
         flex-flow: row wrap;
         justify-content: space-around;
@@ -982,7 +1002,7 @@ $(window).scroll(() => {
         let start = Math.round(parseFloat($(".counter").attr("start")), 2);
         let end = Math.round(parseFloat($(".counter").attr("end")), 2);
         $(".counter").text(start);
-/* 
+/*
         let count = 0, flutter = 0;
         let interval = setInterval(() => {
             let text = ""+Math.round(parseFloat($(".counter").attr("end")), 2);
@@ -1123,7 +1143,7 @@ $(async () => {
     }
     else {
         loadTiles();
-    } 
+    }
 
     $('#calendar').click(function() {
         Swal.fire({
@@ -1140,7 +1160,7 @@ $(async () => {
             confirmButtonColor: "#ed208b",
         });
     });
-    
+
 
     const easterEgg = new Konami(() => {
         $(document.body).toggleClass("konami")
