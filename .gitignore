@@ -1,12 +1,26 @@
+# macOS system files
 .DS_Store
-img
+
+# Node dependencies
 node_modules
+
+# WordPress - plugin folders (ignored globally, then plugin-specific)
 wordpress/wp-content/plugins
 wordpress/wp-content/plugins/*
+
+# WordPress - plugin backups and staging (WPVivid)
+wordpress/wp-content/wpvividbackups/
+wordpress/wp-content/wpvivid_staging/
+wordpress/wp-content/backup-migration-*
+
+# WordPress - uploads
 wordpress/wp-content/uploads/
 wordpress/wp-content/uploads/*-*x*.*
-wordpress/wp-content/backup-migration-*
-# Runtime logs
+
+# WordPress - logs
 error_log
 **/error_log
 wordpress/wp-content/debug.log
+
+# Project-specific images
+img
