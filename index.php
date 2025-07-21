@@ -64,26 +64,28 @@ gtag('config', 'G-E5VXE7X7M6');
 </head>
 <body>
 <header class="fixed">
-    <a href="/" id="home">
-        <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo.png" alt="BOS Logo">
-    </a>
-    <nav>
-        <?php if (!isMobile()): ?>
-        <ul id="navbar">
-            <li><a class='nav' href="events">Events</a></li>
-            <li><a class='nav' href="galleries">Galleries</a></li>
-            <li><a class='nav' href="djs">DJs</a></li>
-            <li><a class='nav' href="board">Board</a></li>
-        </ul>
-        <?php endif; ?>
-        <span>
-            <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
-            <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
-            <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
-        </span>
-    </nav>
+    <div class="header-inner">
+        <a href="/" id="home">
+            <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo.png" alt="BOS Logo">
+        </a>
+        <nav>
+            <?php if (!isMobile()): ?>
+            <ul id="navbar">
+                <li><a class='nav' href="events">Events</a></li>
+                <li><a class='nav' href="galleries">Galleries</a></li>
+                <li><a class='nav' href="djs">DJs</a></li>
+                <li><a class='nav' href="board">Board</a></li>
+            </ul>
+            <?php endif; ?>
+            <span>
+                <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
+                <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
+            </span>
+        </nav>
+    </div>
 </header>
 <?php if (isMobile()): ?>
     <ul id="navbar">
@@ -260,15 +262,19 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $ticket_background = $blowout->fields["ticket_background"];
         $ticket_image = $blowout->fields["ticket_image"]["url"];
         $djs_background = $blowout->fields["djs_background"]["url"];
-        $content = $blowout->fields["content"];
         $djs = $blowout->fields["djs"];
+        foreach($djs as $dj):
+            $dj->fields = get_fields($dj->ID);
+            $dj->image = get_the_post_thumbnail_url($dj->ID);
+        endforeach;
+        $content = $blowout->fields["content"];
         $vip_background = $blowout->fields["vip_background"]["url"];
         $vip_content = $blowout->fields["vip_content"];
+        $venue_name = $blowout->fields["venue_name"];
         $venue_background = $blowout->fields["venue_background"]["url"];
         $venue_content = $blowout->fields["venue_content"];
         $hotel_background = $blowout->fields["hotel_background"]["url"];
         $hotel_content = $blowout->fields["hotel_content"];
-
         $music_anchor = $blowout->fields["music_anchor"];
         $venue_anchor = $blowout->fields["venue_anchor"];
         $vip_anchor = $blowout->fields["vip_anchor"];
@@ -281,7 +287,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 .bg-cover {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top center;
 }
 #blowout-splash {
     position: relative;
@@ -320,19 +326,120 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 }
 .shade {
     /* font-size: 2rem; */
-    max-width: 80%;
+    max-width: 50%;
     /* line-height: 1.4; */
     margin: 0 auto;
     /* text-align: center; */
+    padding-top: 25px;
 }
 .shade-fg {
     background-color: #0201019E;
-    margin-top: 25px;
+    /* margin-top: 25px; */
     padding: 25px;
     border-radius: 25px;
 }
 .ticket-image {
-    width: 500px;
+    /* width: 500px; */
+    margin: 40px;
+    transition: transform 0.2s ease-in-out;
+}
+.ticket-image:hover {
+    transform: rotate(3deg) scale(1.05);
+}
+
+/* DJ Profile Styles */
+.dj-profile {
+    margin-bottom: 30px;
+}
+
+.dj-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 0;
+}
+
+.dj-photo {
+    flex: 0 0 250px;
+}
+
+.dj-photo img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ed208b;
+}
+
+.dj-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.dj-logo {
+    margin-bottom: 15px;
+}
+
+.dj-logo img {
+    max-width: 250px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+.dj-name {
+    font-size: 2.2rem;
+    color: #ed208b;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.dj-content {
+    text-align: left;
+}
+
+.dj-description {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.dj-description p {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.dj-soundcloud {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .dj-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .dj-photo {
+        flex: none;
+        margin-bottom: 15px;
+    }
+    
+    .dj-photo img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .dj-info {
+        align-items: center;
+        padding-top: 0;
+    }
+    
+    .dj-content {
+        text-align: center;
+    }
 }
 </style>
 <div id="blowout-splash" class="bg-cover">
@@ -406,25 +513,50 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </a>
 </div>
 <div id="blowout-ticket" class="bg-cover">
-    <div class="shade">
-        <div class="shade-fg">
-        </div>
-    </div>
     <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
-<div id="blowout-djs" class="bg-cover">
+<!-- <div id="blowout-content" class="bg-cover">
     <div class="shade">
         <div class="shade-fg">
             <?= $content ?>
         </div>
     </div>
+</div> -->
+<div id="blowout-djs" class="bg-cover">
+    <?php foreach($djs as $dj): ?>
+        <div class="shade">
+            <div class="shade-fg dj-profile">
+                <div class="dj-header">
+                    <div class="dj-photo">
+                        <img src='<?=$dj->image?>' alt="<?=$dj->post_title?>" />
+                    </div>
+                    <div class="dj-info">
+                        <div class="dj-logo">
+                            <img src='<?=$dj->fields["logo"]["url"]?>' alt="<?=$dj->post_title?> Logo" />
+                        </div>
+                        <div class="dj-content">
+                            <div class="dj-description">
+                                <p><?php echo $dj->post_content; ?></p>
+                            </div>
+                            <?php if($dj->fields["soundcloud_link"]): ?>
+                                <div class="dj-soundcloud">
+                                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<?php echo urlencode($dj->fields["soundcloud_link"]); ?>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
     <div class="center-wrapper">
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
 <div id="blowout-vip" class="bg-cover">
+    <h1>VIP</h1>
     <div class="shade">
         <div class="shade-fg">
             <?= $vip_content ?>
@@ -435,6 +567,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div>
 <div id="blowout-venue" class="bg-cover">
+    <h1>The Venue: <?= $venue_name ?></h1>
     <div class="shade">
         <div class="shade-fg">
             <?= $venue_content ?>
@@ -445,12 +578,17 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div>
 <div id="blowout-hotel" class="bg-cover">
+    <style>
+        #blowout-hotel p {
+            text-align: center;
+        }
+    </style>
     <div class="shade">
         <div class="shade-fg">
             <?= $hotel_content ?>
             <div class="button-container">
                 <button class="more">
-                    <a href="<?= $hotel_link ?>">$149 Per Night</a>
+                    <a href="<?= $hotel_link ?>">$179 Per Night</a>
                 </button>
             </div>
         </div>
