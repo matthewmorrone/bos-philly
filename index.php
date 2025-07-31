@@ -288,7 +288,6 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    min-height: 100vh;
     padding: 20px 0;
 }
 #blowout-splash {
@@ -367,12 +366,6 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         width: -webkit-fill-available;
         height: auto;
     }
-    div {
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-    }
     
     /* Make first image in splash section full width on mobile */
     #blowout-splash .shade p:first-child a img,
@@ -405,6 +398,18 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     .ticket-image:hover {
         transform: scale(1.02);
     }
+}
+
+/* Global typography for blowout sections */
+#blowout-splash div,
+#blowout-djs div,
+#blowout-vip div,
+#blowout-venue div,
+#blowout-hotel div {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 /* DJ Profile Styles */
@@ -472,6 +477,91 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 
 .dj-soundcloud {
     margin-top: 20px;
+}
+
+/* Desktop DJ Profile Layout */
+@media (min-width: 769px) {
+    .dj-profile {
+        display: flex;
+        align-items: stretch;
+        gap: 40px;
+        margin-bottom: 40px;
+        min-height: 400px;
+    }
+    
+    .dj-header {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 40px;
+        width: 100%;
+    }
+    
+    .dj-photo {
+        flex: 0 0 300px;
+        order: 1;
+        display: flex;
+        align-items: stretch;
+    }
+    
+    .dj-photo img {
+        width: 300px;
+        height: 100%;
+        min-height: 400px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 4px solid #ed208b;
+    }
+    
+    .dj-info {
+        flex: 1;
+        order: 2;
+        padding-top: 0;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    
+    .dj-logo {
+        margin-bottom: 20px;
+    }
+    
+    .dj-logo img {
+        max-width: 350px;
+        max-height: 120px;
+        object-fit: contain;
+    }
+    
+    .dj-content {
+        text-align: left;
+        flex: 1;
+    }
+    
+    .dj-description {
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+    
+    .dj-description p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    /* DJ shade width matching other sections */
+    #blowout-djs .shade {
+        max-width: 50%;
+    }
+    
+    /* DJ text sizing to match other sections */
+    #blowout-djs .shade-fg {
+        font-size: 16px;
+    }
+    
+    #blowout-djs .dj-description p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
 }
 
 /* Mobile DJ Profile Styles */
@@ -877,16 +967,47 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         }
         
         /* Venue section specific styles */
-        #blowout-venue .shade-fg img {
-            display: none !important;
-        }
-        
-        #blowout-venue .shade-fg p:first-child img:first-child {
-            display: block !important;
-        }
-        
         #blowout-venue .shade-fg {
             font-size: 16px;
+        }
+        
+        /* Venue image layout - desktop */
+        @media (min-width: 769px) {
+            #blowout-venue .shade-fg p:first-child {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            #blowout-venue .shade-fg p:first-child img:first-child {
+                display: block;
+                margin: 0 auto;
+                max-width: 80%;
+                height: auto;
+            }
+            
+            #blowout-venue .shade-fg p:not(:first-child) {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                gap: 15px;
+                margin: 15px 0;
+            }
+            
+            #blowout-venue .shade-fg p:not(:first-child) img {
+                /* Keep original image sizes, just improve spacing */
+                height: auto;
+            }
+        }
+        
+        /* Hide extra venue images on mobile only */
+        @media (max-width: 768px) {
+            #blowout-venue .shade-fg img {
+                display: none !important;
+            }
+            
+            #blowout-venue .shade-fg p:first-child img:first-child {
+                display: block !important;
+            }
         }
         
         #blowout-hotel .shade-fg {
@@ -911,6 +1032,21 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             margin-bottom: 16px;
         }
         
+        /* Desktop shade width constraints */
+        @media (min-width: 769px) {
+            #blowout-vip .shade {
+                max-width: 50%;
+            }
+            
+            #blowout-venue .shade {
+                max-width: 50%;
+            }
+            
+            #blowout-hotel .shade {
+                max-width: 50%;
+            }
+        }
+        
         /* Mobile VIP styles */
         @media (max-width: 768px) {
             #blowout-vip .shade-fg {
@@ -928,11 +1064,6 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                 line-height: 1.3;
                 margin-bottom: 15px;
             }
-        }
-        
-        /* Protect Partners section from VIP styling */
-        #partners * {
-            line-height: initial !important;
         }
     </style>
     <div class="shade">
