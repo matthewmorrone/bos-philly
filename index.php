@@ -261,11 +261,13 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $splash_content = $blowout->fields["splash_content"];
         $ticket_background = $blowout->fields["ticket_background"];
         $ticket_image = $blowout->fields["ticket_image"]["url"];
+        $ticket_link = $blowout->fields["ticket_link"];
         $djs_background = $blowout->fields["djs_background"]["url"];
         $djs = $blowout->fields["djs"];
         foreach($djs as $dj):
             $dj->fields = get_fields($dj->ID);
             $dj->image = get_the_post_thumbnail_url($dj->ID);
+            $dj->link = get_permalink($dj->ID);
         endforeach;
         $content = $blowout->fields["content"];
         $vip_background = $blowout->fields["vip_background"]["url"];
@@ -278,6 +280,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         $music_anchor = $blowout->fields["music_anchor"];
         $venue_anchor = $blowout->fields["venue_anchor"];
         $vip_anchor = $blowout->fields["vip_anchor"];
+        $hotel_link = $blowout->fields["hotel_link"];
         $hotel_anchor = $blowout->fields["hotel_anchor"];
         ?>
 <style>
@@ -409,7 +412,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     font-family: 'Work Sans', sans-serif;
     font-weight: 400;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
 }
 
 /* DJ Profile Styles */
@@ -497,6 +500,17 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         width: 100%;
     }
     
+    /* Fix for anchor tag wrapper */
+    .dj-header > a {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 40px;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+    
     .dj-photo {
         flex: 0 0 300px;
         order: 1;
@@ -576,6 +590,17 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         align-items: center;
         text-align: center;
         gap: 15px;
+    }
+    
+    /* Fix for anchor tag wrapper on mobile */
+    .dj-header > a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
     }
     
     .dj-photo {
@@ -787,28 +812,32 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div> -->
 <div id="blowout-djs" class="bg-cover">
+    <h1 class="section-title">Music</h1>
     <?php foreach($djs as $dj): ?>
         <div class="shade">
             <div class="shade-fg dj-profile">
+
                 <div class="dj-header">
+                    <a href="<?= $dj->link ?>">
                     <div class="dj-photo">
-                        <img src='<?=$dj->image?>' alt="<?=$dj->post_title?>" />
+                        <img src='<?= $dj->image ?>' alt="<?= $dj->post_title ?>" />
                     </div>
                     <div class="dj-info">
                         <div class="dj-logo">
-                            <img src='<?=$dj->fields["logo"]["url"]?>' alt="<?=$dj->post_title?> Logo" />
+                            <img src='<?=$dj->fields["logo"]["url"]?>' alt="<?= $dj->post_title ?> Logo" />
                         </div>
                         <div class="dj-content">
                             <div class="dj-description">
-                                <p><?php echo $dj->post_content; ?></p>
+                                <p><?= $dj->post_content ?></p>
                             </div>
-                            <?php if($dj->fields["soundcloud_link"]): ?>
+                            <?php if($dj->soundcloud_link): ?>
                                 <div class="dj-soundcloud">
-                                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<?php echo urlencode($dj->fields["soundcloud_link"]); ?>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+                                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<?php echo urlencode($dj->soundcloud_link); ?>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
                                 </div>
                             <?php endif; ?>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1068,6 +1097,69 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
                 margin-bottom: 15px;
             }
         }
+        
+        /* Floating Back to Top Button Styles */
+        .floating-back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ed208b;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        .floating-back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .floating-back-to-top:hover {
+            background-color: #d41d7a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        .floating-back-to-top.show:hover {
+            transform: translateY(-2px);
+        }
+        
+        .floating-back-to-top i {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .floating-back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Hide old back-to-top button styles */
+        .back-to-top {
+            display: none;
+        }
     </style>
     <div class="shade">
         <div class="shade-fg">
@@ -1083,6 +1175,10 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
     </div>
 </div>
+<!-- Floating Back to Top Button -->
+<button class="floating-back-to-top" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>
         <?php
     break;
     case "galleries":
@@ -1789,6 +1885,25 @@ $(async () => {
     const easterEgg = new Konami(() => {
         $(document.body).toggleClass("konami")
     });
+});
+
+// Smooth scroll to top function for blowout pages - defined globally
+function scrollToTop() {
+    $('html, body').animate({
+        scrollTop: 0
+    }, 600);
+}
+
+// Show/hide floating back to top button based on scroll position
+$(window).scroll(function() {
+    const scrollTop = $(this).scrollTop();
+    const backToTopButton = $('.floating-back-to-top');
+    
+    if (scrollTop > 300) {
+        backToTopButton.addClass('show');
+    } else {
+        backToTopButton.removeClass('show');
+    }
 });
 </script>
 <?php // endif; ?>
