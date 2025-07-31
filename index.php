@@ -467,12 +467,13 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 
 .dj-description {
     margin-bottom: 25px;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .dj-description p {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 .dj-soundcloud {
@@ -539,12 +540,12 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     
     .dj-description {
         margin-bottom: 30px;
-        line-height: 1.6;
+        line-height: 1.5;
     }
     
     .dj-description p {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 16px;
+        line-height: 1.5;
         margin-bottom: 15px;
     }
     
@@ -600,18 +601,18 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         width: 100%;
     }
     
-    /* Make DJ logo full width on mobile */
+    /* Make DJ logo 75% width on mobile to stay within shade border */
     .dj-logo img {
-        width: 100vw !important;
-        max-width: 100vw !important;
+        width: 75% !important;
+        max-width: 75% !important;
         height: auto !important;
-        margin-left: calc(-50vw + 50%) !important;
-        margin-right: calc(-50vw + 50%) !important;
+        margin: 0 auto !important;
         object-fit: contain;
         max-height: 150px;
         background: rgba(0, 0, 0, 0.1);
         padding: 10px;
         border-radius: 5px;
+        display: block;
     }
     
     .dj-name {
@@ -627,9 +628,13 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     .dj-content strong {
         margin-top: 15px;
     }
+    
+    /* Make DJ bios visible on mobile again */
+    .dj-description {
+        display: block !important;
+    }
+    
     .dj-description p {
-        /* font-size: 1rem; */
-
         line-height: 1.5;
     }
     
@@ -727,10 +732,6 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     
     .center-wrapper {
         padding: 15px 10px;
-    }
-
-    .dj-description {
-        display: none;
     }
 }
 
@@ -887,10 +888,10 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         /* Mobile Section Styles */
         @media (max-width: 768px) {
             .section-title {
-                font-size: 2.2rem;
+                font-size: 4.4rem;
                 margin: 15px 0;
                 padding: 15px 10px;
-                line-height: 1.2;
+                line-height: 1.5;
             }
             
             .button-container {
@@ -906,9 +907,10 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
         
         @media (max-width: 480px) {
             .section-title {
-                font-size: 1.8rem;
+                font-size: 3.6rem;
                 margin: 10px 0;
                 padding: 10px 5px;
+                line-height: 1.5;
             }
             
             .button-container .more {
@@ -922,13 +924,13 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             .shade-fg h1,
             .shade-fg h2 {
                 font-size: 1.8rem;
-                line-height: 1.3;
+                line-height: 1.5;
                 margin-bottom: 15px;
             }
             
             .shade-fg h3 {
                 font-size: 1.4rem;
-                line-height: 1.3;
+                line-height: 1.5;
                 margin-bottom: 12px;
             }
             
@@ -940,6 +942,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
             
             .shade-fg {
                 font-size: 0.95rem;
+                line-height: 1.5;
             }
         }
         
