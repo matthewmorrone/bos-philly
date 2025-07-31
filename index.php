@@ -287,7 +287,9 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 .bg-cover {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top center;
+    background-position: center center;
+    min-height: 100vh;
+    padding: 20px 0;
 }
 #blowout-splash {
     position: relative;
@@ -299,6 +301,8 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     justify-content: center;
     align-items: center;
     text-align: center;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 #blowout-splash::before {
     content: "";
@@ -320,31 +324,87 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
 #blowout-ticket,
 #blowout-djs,
 #blowout-vip,
-#blowout-venue
+#blowout-venue,
 #blowout-hotel {
     color: white;
 }
 .shade {
-    /* font-size: 2rem; */
-    max-width: 50%;
-    /* line-height: 1.4; */
+    max-width: 90%;
     margin: 0 auto;
-    /* text-align: center; */
-    padding-top: 25px;
+    padding: 20px 0;
 }
 .shade-fg {
-    background-color: #0201019E;
-    /* margin-top: 25px; */
-    padding: 25px;
-    border-radius: 25px;
+    background-color: rgba(2, 1, 1, 0.85);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
 }
 .ticket-image {
-    /* width: 500px; */
-    margin: 40px;
+    max-width: 90%;
+    height: auto;
+    margin: 20px;
     transition: transform 0.2s ease-in-out;
 }
 .ticket-image:hover {
     transform: rotate(3deg) scale(1.05);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .bg-cover {
+        background-position: center;
+        background-attachment: scroll;
+        padding: 10px 0;
+        min-height: auto;
+    }
+    
+    #blowout-splash {
+        min-height: 80vh;
+        padding: 20px 10px;
+    }
+
+    img {
+        width: -webkit-fill-available;
+        height: auto;
+    }
+    div {
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    
+    /* Make first image in splash section full width on mobile */
+    #blowout-splash .shade p:first-child a img,
+    #blowout-splash .shade p:first-child img {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: auto !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        object-fit: contain;
+    }
+    
+    .shade {
+        max-width: 95%;
+        padding: 10px 0;
+    }
+    
+    .shade-fg {
+        padding: 25px;
+        border-radius: 25px;
+        margin: 10px 0;
+    }
+    
+    .ticket-image {
+        max-width: 85%;
+        margin: 15px auto;
+        display: block;
+    }
+    
+    .ticket-image:hover {
+        transform: scale(1.02);
+    }
 }
 
 /* DJ Profile Styles */
@@ -414,31 +474,78 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     margin-top: 20px;
 }
 
+/* Mobile DJ Profile Styles */
 @media (max-width: 768px) {
+    .dj-profile {
+        margin-bottom: 20px;
+    }
+    
     .dj-header {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 20px;
+        gap: 15px;
     }
     
     .dj-photo {
         flex: none;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        width: 100%;
     }
     
+    /* Keep DJ profile photo within shade container on mobile */
     .dj-photo img {
-        width: 200px;
-        height: 200px;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: cover;
+        border-radius: 10px !important;
+        border-width: 2px;
+        max-height: 50vh;
     }
     
     .dj-info {
         align-items: center;
         padding-top: 0;
+        width: 100%;
+    }
+    
+    /* Make DJ logo full width on mobile */
+    .dj-logo img {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: auto !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        object-fit: contain;
+        max-height: 150px;
+        background: rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .dj-name {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        text-align: center;
     }
     
     .dj-content {
         text-align: center;
+        width: 100%;
+    }
+    .dj-content strong {
+        margin-top: 15px;
+    }
+    .dj-description p {
+        /* font-size: 1rem; */
+
+        line-height: 1.5;
+    }
+    
+    .dj-soundcloud iframe {
+        height: 120px;
+        width: 100%;
     }
 }
 </style>
@@ -454,7 +561,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     align-items: stretch;
     gap: 32px;
     background: #000;
-    padding: 0;
+    padding: 20px 0;
     margin: 0;
 }
 .highlight-tile {
@@ -467,12 +574,14 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     align-items: center;
     min-width: 0;
     height: 100%;
+    padding: 10px;
 }
 .highlight-tile img {
     width: 100%;
     max-width: 240px;
     margin-bottom: 12px;
     display: block;
+    height: auto;
 }
 .highlight-label {
     font-size: 1.3rem;
@@ -492,6 +601,68 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+}
+
+/* Mobile Highlights Styles */
+@media (max-width: 768px) {
+    #blowout-highlights {
+        flex-wrap: nowrap;
+        gap: 8px;
+        padding: 15px 5px;
+        overflow-x: auto;
+    }
+    
+    .highlight-tile {
+        flex: 0 0 calc(25% - 6px);
+        max-width: calc(25% - 6px);
+        min-width: 80px;
+        padding: 4px;
+    }
+    
+    .highlight-tile img {
+        max-width: 100%;
+        margin-bottom: 6px;
+    }
+    
+    .highlight-label {
+        font-size: 0.9rem;
+        min-height: 1.5em;
+        height: 1.5em;
+        line-height: 1.5em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .center-wrapper {
+        padding: 15px 10px;
+    }
+
+    .dj-description {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    #blowout-highlights {
+        gap: 4px;
+        padding: 10px 2px;
+    }
+    
+    .highlight-tile {
+        flex: 0 0 calc(25% - 3px);
+        max-width: calc(25% - 3px);
+        min-width: 70px;
+        padding: 2px;
+    }
+    
+    .highlight-label {
+        font-size: 0.8rem;
+        min-height: 1.2em;
+        height: 1.2em;
+        line-height: 1.2em;
+    }
 }
 </style>
 <div id="blowout-highlights">
@@ -556,7 +727,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div>
 <div id="blowout-vip" class="bg-cover">
-    <h1>VIP</h1>
+    <h1 class="section-title">VIP</h1>
     <div class="shade">
         <div class="shade-fg">
             <?= $vip_content ?>
@@ -567,7 +738,7 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div>
 <div id="blowout-venue" class="bg-cover">
-    <h1>The Venue: <?= $venue_name ?></h1>
+    <h1 class="section-title">The Venue: <?= $venue_name ?></h1>
     <div class="shade">
         <div class="shade-fg">
             <?= $venue_content ?>
@@ -578,9 +749,190 @@ apply_filters('the_content', get_post_field('post_content', $page->id));
     </div>
 </div>
 <div id="blowout-hotel" class="bg-cover">
+    <h1 class="section-title">Hotel</h1>
     <style>
         #blowout-hotel p {
             text-align: center;
+        }
+        
+        /* Section Title Styles */
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Button Styles */
+        .button-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .button-container .more {
+            background-color: #ed208b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .button-container .more:hover {
+            background-color: #d41d7a;
+            transform: translateY(-2px);
+        }
+        
+        .button-container .more a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Mobile Section Styles */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+                margin: 15px 0;
+                padding: 15px 10px;
+                line-height: 1.2;
+            }
+            
+            .button-container {
+                padding: 15px 10px;
+            }
+            
+            .button-container .more {
+                padding: 10px 20px;
+                font-size: 1rem;
+                border-radius: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.8rem;
+                margin: 10px 0;
+                padding: 10px 5px;
+            }
+            
+            .button-container .more {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* General Mobile Typography */
+        @media (max-width: 768px) {
+            .shade-fg h1,
+            .shade-fg h2 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+                margin-bottom: 15px;
+            }
+            
+            .shade-fg h3 {
+                font-size: 1.4rem;
+                line-height: 1.3;
+                margin-bottom: 12px;
+            }
+            
+            .shade-fg p {
+                /* font-size: 1rem; */
+                line-height: 1.5;
+                margin-bottom: 15px;
+            }
+            
+            .shade-fg {
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .shade-fg h1,
+            .shade-fg h2 {
+                font-size: 1.5rem;
+            }
+            
+            .shade-fg h3 {
+                font-size: 1.2rem;
+            }
+            
+            .shade-fg p {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Fix for background attachment on mobile */
+        @media (max-width: 768px) {
+            .bg-cover {
+                background-attachment: scroll !important;
+            }
+        }
+        
+        /* Venue section specific styles */
+        #blowout-venue .shade-fg img {
+            display: none !important;
+        }
+        
+        #blowout-venue .shade-fg p:first-child img:first-child {
+            display: block !important;
+        }
+        
+        #blowout-venue .shade-fg {
+            font-size: 16px;
+        }
+        
+        #blowout-hotel .shade-fg {
+            font-size: 16px;
+        }
+        
+        /* VIP section specific styles */
+        #blowout-vip .shade-fg {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        #blowout-vip .shade-fg p {
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        #blowout-vip .shade-fg h1,
+        #blowout-vip .shade-fg h2,
+        #blowout-vip .shade-fg h3 {
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        
+        /* Mobile VIP styles */
+        @media (max-width: 768px) {
+            #blowout-vip .shade-fg {
+                line-height: 1.5;
+            }
+            
+            #blowout-vip .shade-fg p {
+                line-height: 1.5;
+                margin-bottom: 15px;
+            }
+            
+            #blowout-vip .shade-fg h1,
+            #blowout-vip .shade-fg h2,
+            #blowout-vip .shade-fg h3 {
+                line-height: 1.3;
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* Protect Partners section from VIP styling */
+        #partners * {
+            line-height: initial !important;
         }
     </style>
     <div class="shade">

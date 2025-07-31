@@ -59,3 +59,46 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 .more-link {
 	display: block;
 }
+
+/* 
+ * ACF WYSIWYG Font Size Support
+ * Ensure font sizes set in ACF WYSIWYG editor are properly displayed
+ */
+.acf-wysiwyg-content span[style*="font-size"] {
+	/* Ensure inline font-size styles are preserved and not overridden */
+	line-height: 1.4;
+}
+
+/* Allow all font sizes to be displayed properly */
+.acf-content span,
+.acf-wysiwyg span,
+.entry-content span {
+	/* Preserve font-size styles set in editor */
+	font-size: inherit;
+}
+
+/* Specific font size classes that might be used */
+.font-size-8px { font-size: 8px !important; }
+.font-size-9px { font-size: 9px !important; }
+.font-size-10px { font-size: 10px !important; }
+.font-size-11px { font-size: 11px !important; }
+.font-size-12px { font-size: 12px !important; }
+.font-size-13px { font-size: 13px !important; }
+.font-size-14px { font-size: 14px !important; }
+.font-size-15px { font-size: 15px !important; }
+.font-size-16px { font-size: 16px !important; }
+.font-size-18px { font-size: 18px !important; }
+.font-size-20px { font-size: 20px !important; }
+.font-size-22px { font-size: 22px !important; }
+.font-size-24px { font-size: 24px !important; }
+.font-size-26px { font-size: 26px !important; }
+.font-size-28px { font-size: 28px !important; }
+.font-size-30px { font-size: 30px !important; }
+.font-size-32px { font-size: 32px !important; }
+.font-size-36px { font-size: 36px !important; }
+.font-size-42px { font-size: 42px !important; }
+.font-size-48px { font-size: 48px !important; }
+.font-size-54px { font-size: 54px !important; }
+.font-size-60px { font-size: 60px !important; }
+.font-size-66px { font-size: 66px !important; }
+.font-size-72px { font-size: 72px !important; }
