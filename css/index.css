@@ -853,3 +853,27 @@ footer .social i {
         text-justify: auto;
     }
 }
+
+/* ===== PANDERING SECTION ===== */
+#pandering {
+    text-align: center;
+}
+
+#pandering div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+#pandering h2, #pandering h3, #pandering p {
+    margin: 20px;
+    width: 50%;
+}
+
+#pandering h3 {
+    font-weight: normal;
+}
+
+#pandering a {
+    color: #ed208b;
+}
