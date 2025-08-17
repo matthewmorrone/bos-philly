@@ -3,7 +3,7 @@
     <img src="wordpress/content-separator" id="separator" />
     <div class="grid">
         <div class="tile">
-            <img src="wordpress/board-steve" alt="Steve McCann" loading="lazy" />
+            <img src="wordpress/wp-content/uploads/board-steve-1.jpg" alt="Steve McCann" loading="lazy" />
             <h3>Steve McCann</h3>
             <h4>Director of Business</h4>
             <div class="contact">
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/board-matt" alt="Matt Rowe" loading="lazy" />
+            <img src="wordpress/wp-content/uploads/board-matt-1.jpg" alt="Matt Rowe" loading="lazy" />
             <h3>Matt Rowe</h3>
             <h4>Director of Logistics</h4>
             <div class="contact">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/board-alex" alt="Alex Ortiz" loading="lazy" />
+            <img src="wordpress/wp-content/uploads/board-alex-1-scaled.jpg" alt="Alex Ortiz" loading="lazy" />
             <h3>Alex Ortiz</h3>
             <h4>Director of Outreach</h4>
             <div class="contact">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/board-justin" alt="Justin Dile" loading="lazy" />
+            <img src="wordpress/wp-content/uploads/board-justin-1.jpg" alt="Justin Dile" loading="lazy" />
             <h3>Justin Dile</h3>
             <h4>Director of Coordination</h4>
             <div class="contact">
@@ -42,8 +42,19 @@
                 <a href="https://www.instagram.com/justindile/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
+        <div class="tile">
+            <img src="wordpress/wp-content/uploads/board-joe.jpg" alt="Joe Fazio" loading="lazy" />
+            <h3>Joe Fazio</h3>
+            <h4>Director of Volunteers</h4>
+            <div class="contact">
+                <a href="https://www.facebook.com/jfaziojr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:joe@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
+                <a href="https://www.instagram.com/joefazio/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
     </div>
     <div class="button-container">
         <button class="more" href="about-us">About Us...</button>
     </div>
 </section>
+

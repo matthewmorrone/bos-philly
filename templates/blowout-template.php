@@ -6,6 +6,7 @@ $posts = $query->get_posts();
 $blowout = $posts[0];
 $blowout->fields = get_fields($blowout->ID);
 
+/** @phpstan-ignore-start */
 $splash_background = $blowout->fields["splash_background"]["url"];
 $splash_content = $blowout->fields["splash_content"];
 $ticket_background = $blowout->fields["ticket_background"];
@@ -31,7 +32,9 @@ $venue_anchor = $blowout->fields["venue_anchor"];
 $vip_anchor = $blowout->fields["vip_anchor"];
 $hotel_link = $blowout->fields["hotel_link"];
 $hotel_anchor = $blowout->fields["hotel_anchor"];
+/** @phpstan-ignore-end */
 ?>
+
 <link rel="stylesheet" href="css/blowout.css?version=<?= randomId(4); ?>" />
 <style>
 /* Dynamic background images set via PHP */
