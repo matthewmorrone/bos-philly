@@ -10,10 +10,30 @@
     if (a.matches('[data-lightbox]')) {
       e.preventDefault();
       if (!window.lightbox) {
-        await Promise.all([
-          import('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js'),
-          new Promise(res=>{const l=document.createElement('link');l.rel='stylesheet';l.href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css';l.onload=res;document.head.appendChild(l);})
-        ]);
+        try {
+          await Promise.all([
+            import('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js'),
+            new Promise((res, rej) => {
+              const l = document.createElement('link');
+              l.rel = 'stylesheet';
+              l.href = 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css';
+              l.onload = res;
+              l.onerror = () => rej(new Error('Failed to load lightbox stylesheet.'));
+              document.head.appendChild(l);
+            })
+          ]);
+        } catch (err) {
+          if (window.Swal) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lightbox failed to load',
+              text: err.message || 'Please check your connection and try again.',
+            });
+          } else {
+            alert('Lightbox failed to load: ' + (err.message || 'Please check your connection and try again.'));
+          }
+          return;
+        }
       }
       lightbox.start($(a)[0]);
     }
