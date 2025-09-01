@@ -76,7 +76,6 @@ $event = (array)$event;
             </div>
             <div>
                 <div class='marker'><?= icon('clock') ?></div>
-                <div class='panel'>
                     <h3>Time</h3>
                     <p><?= $event["fields"]["date_of_event"] ?></p>
                     <p><?= $event["fields"]["start_time"] ?> - <?= $event["fields"]["end_time"] ?></p>

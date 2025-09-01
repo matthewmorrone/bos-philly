@@ -48,7 +48,6 @@ $dj = (array)$dj;
             <?php if ($dj["fields"]["instagram_link"]): ?>
                 <button class='instagram'>
                     <a href="<?=$dj["fields"]["instagram_link"]?>" target="_blank"><?= icon('instagram') ?>
-                    &nbsp;
                         <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
                     </a>
                 </button>

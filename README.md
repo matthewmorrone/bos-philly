@@ -88,3 +88,4 @@ running `ddev browsersync`.
 ### Known Bugs
 + Background image resizes when section loads more
 + Links generated after saving a page are incorrect
+Test change for PR flow — no functional code changes.
