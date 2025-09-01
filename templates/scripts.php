@@ -1,11 +1,85 @@
-<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="utils.js"></script>
-<script src="wp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script src="utils.js" defer></script>
+<script src="wp.js" defer></script>
+<script type="module">
+  // Example: lightbox only when a gallery image is clicked
+  document.addEventListener('click', async (e)=>{
+    const a = e.target.closest('a');
+    if(!a) return;
+    if (a.matches('[data-lightbox]')) {
+      e.preventDefault();
+      if (!window.lightbox) {
+        try {
+          await Promise.all([
+            import('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js'),
+            new Promise((res, rej) => {
+              const l = document.createElement('link');
+              l.rel = 'stylesheet';
+              l.href = 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css';
+              l.onload = res;
+              l.onerror = () => rej(new Error('Failed to load lightbox stylesheet.'));
+              document.head.appendChild(l);
+            })
+          ]);
+        } catch (err) {
+          if (window.Swal) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lightbox failed to load',
+              text: err.message || 'Please check your connection and try again.',
+            });
+          } else {
+            alert('Lightbox failed to load: ' + (err.message || 'Please check your connection and try again.'));
+          }
+          return;
+        }
+      }
+      lightbox.start($(a)[0]);
+    }
+  });
+
+  // Defer non-critical libs until idle
+  const deferLib = (src)=> new Promise((res)=>{
+    const s=document.createElement('script'); s.src=src; s.defer=true; s.onload=res; document.head.appendChild(s);
+  });
+  requestIdleCallback?.(()=>{
+    deferLib('https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js');
+    deferLib('https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js');
+    deferLib('https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js');
+  });
+
+  // Lazy-load hero video when idle and in view, with IntersectionObserver polyfill for legacy browsers
+  const startHeroVideo = () => {
+    const v = document.getElementById('heroVideo');
+    if (v && !navigator.connection?.saveData) {
+      const observeVideo = () => {
+        const io = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) {
+            v.load();
+            v.play().catch(() => {});
+            io.disconnect();
+          }
+        });
+        io.observe(v);
+      };
+      if ('IntersectionObserver' in window) {
+        observeVideo();
+      } else {
+        // Load IntersectionObserver polyfill for legacy browsers
+        const polyfillScript = document.createElement('script');
+        polyfillScript.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
+        polyfillScript.onload = observeVideo;
+        document.head.appendChild(polyfillScript);
+      }
+    }
+  };
+  if (window.requestIdleCallback) {
+    requestIdleCallback(startHeroVideo);
+  } else {
+    startHeroVideo();
+  }
+</script>
 <script>
 let route = query();
 
@@ -260,7 +334,7 @@ $(async () => {
             confirmButtonText: `
 <a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics">Subscribe</a>
   `,
-            iconHtml: `<i class="fa-solid fa-calendar-days"></i>`,
+            iconHtml: `<svg aria-hidden='true' width='20' height='20' viewBox='0 0 448 512' role='img' focusable='false'><path d='M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z'/></svg>`,
             showCloseButton: true,
             showCancelButton: true,
             iconColor: "#ed208b",
