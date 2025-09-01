@@ -33,6 +33,13 @@ a {
 img {
     border: none;
 }
+
+/* generic svg icon styling */
+.icon {
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: middle;
+}
 /* ===== HEADER & NAVIGATION ===== */
 header {
     height: 100px;
@@ -105,8 +112,11 @@ nav span {
 
 .social {
     background-color: var(--trim);
+    color: var(--font);
     font-size: 15px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -115,9 +125,9 @@ nav span {
     text-align: center;
 }
 
-.social i {
-    vertical-align: middle;
-    margin-top: 7px;
+.social .icon {
+    width: 20px;
+    height: 20px;
 }
 
 #mobileToggle {
@@ -583,8 +593,9 @@ footer .social {
     font-size: 25px;
 }
 
-footer .social i {
-    margin-top: 12px;
+footer .social .icon {
+    width: 25px;
+    height: 25px;
 }
 
 .learn-more {

@@ -81,6 +81,15 @@
   }
 </script>
 <script>
+if (typeof query !== 'function') {
+    function query() {
+        let qs = {}, slice = 1;
+        let [page, name] = [...window.location.pathname.split("/").slice(slice)];
+        qs.page = page;
+        qs.name = name;
+        return qs;
+    }
+}
 let route = query();
 
 debug = getQueryString().debug;
