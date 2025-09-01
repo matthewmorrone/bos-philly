@@ -49,18 +49,29 @@
     deferLib('https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js');
   });
 
-  // Lazy-load hero video when idle and in view
+  // Lazy-load hero video when idle and in view, with IntersectionObserver polyfill for legacy browsers
   const startHeroVideo = () => {
     const v = document.getElementById('heroVideo');
     if (v && !navigator.connection?.saveData) {
-      const io = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) {
-          v.load();
-          v.play().catch(() => {});
-          io.disconnect();
-        }
-      });
-      io.observe(v);
+      const observeVideo = () => {
+        const io = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) {
+            v.load();
+            v.play().catch(() => {});
+            io.disconnect();
+          }
+        });
+        io.observe(v);
+      };
+      if ('IntersectionObserver' in window) {
+        observeVideo();
+      } else {
+        // Load IntersectionObserver polyfill for legacy browsers
+        const polyfillScript = document.createElement('script');
+        polyfillScript.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
+        polyfillScript.onload = observeVideo;
+        document.head.appendChild(polyfillScript);
+      }
     }
   };
   if (window.requestIdleCallback) {
