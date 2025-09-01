@@ -62,7 +62,7 @@ $event = (array)$event;
         </div>
         <div class='info'>
             <div class='ticket-panel'>
-                <div class='marker'><i class='fas fa-ticket'></i></div>
+                <div class='marker'><?= icon('ticket') ?></div>
                 <div class='panel'>
                     <h3>Tickets</h3>
                 </div>
@@ -75,7 +75,7 @@ $event = (array)$event;
                 </div>
             </div>
             <div>
-                <div class='marker'><i class='far fa-clock'></i></div>
+                <div class='marker'><?= icon('clock') ?></div>
                 <div class='panel'>
                     <h3>Time</h3>
                     <p><?= $event["fields"]["date_of_event"] ?></p>
@@ -83,7 +83,7 @@ $event = (array)$event;
                 </div>
             </div>
             <div>
-                <div class='marker'><i class="fas fa-map-marker-alt"></i></div>
+                <div class='marker'><?= icon('map-marker') ?></div>
                 <div class='panel'>
                     <h3>Location</h3>
                     <h4><?= $event["fields"]["venue_name"] ?></h4>

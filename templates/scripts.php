@@ -7,6 +7,15 @@
 <script src="utils.js"></script>
 <script src="wp.js"></script>
 <script>
+if (typeof query !== 'function') {
+    function query() {
+        let qs = {}, slice = 1;
+        let [page, name] = [...window.location.pathname.split("/").slice(slice)];
+        qs.page = page;
+        qs.name = name;
+        return qs;
+    }
+}
 let route = query();
 
 debug = getQueryString().debug;
@@ -260,7 +269,7 @@ $(async () => {
             confirmButtonText: `
 <a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics">Subscribe</a>
   `,
-            iconHtml: `<i class="fa-solid fa-calendar-days"></i>`,
+            iconHtml: `<?= icon('calendar-days') ?>`,
             showCloseButton: true,
             showCancelButton: true,
             iconColor: "#ed208b",

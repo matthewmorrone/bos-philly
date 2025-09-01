@@ -1,3 +1,4 @@
+<?php include_once __DIR__ . '/../template-parts/icon.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,6 @@
 <base href="/" />
 <title>BOS Philly - Bringing Circuit Back to Philly</title>
 <link rel="stylesheet" href="css/index.css?version=<?= randomId(4); ?>" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
@@ -31,6 +31,7 @@ gtag('config', 'G-E5VXE7X7M6');
 <!-- End Facebook verification -->
 </head>
 <body>
+<?php include __DIR__ . '/../images/icons.svg'; ?>
 <header class="fixed">
     <div class="header-inner">
         <a href="/" id="home">
@@ -46,11 +47,11 @@ gtag('config', 'G-E5VXE7X7M6');
             </ul>
             <?php endif; ?>
             <span>
-                <a class='social' href="http://facebook.com/bosphilly" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a class='social' href="http://instagram.com/bosphilly" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a class='social' href="mailto:info@bosphilly.org" target="_blank"><i class="fas fa-envelope"></i></a>
-                <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><i class="fab fa-soundcloud"></i></a>
-                <a class='social' id="mobileToggle"><i class="fa-solid fa-bars"></i></a>
+                <a class='social' href="http://facebook.com/bosphilly" target="_blank"><?= icon('facebook') ?></a>
+                <a class='social' href="http://instagram.com/bosphilly" target="_blank"><?= icon('instagram') ?></a>
+                <a class='social' href="mailto:info@bosphilly.org" target="_blank"><?= icon('envelope') ?></a>
+                <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><?= icon('soundcloud') ?></a>
+                <a class='social' id="mobileToggle"><?= icon('bars') ?></a>
             </span>
         </nav>
     </div>
