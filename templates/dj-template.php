@@ -47,7 +47,7 @@ $dj = (array)$dj;
             <div class='description'><?= $dj["post_content"] ?></div>
             <?php if ($dj["fields"]["instagram_link"]): ?>
                 <button class='instagram'>
-                    <a href="<?=$dj["fields"]["instagram_link"]?>" target="_blank"><i class="fab fa-instagram"></i>
+                    <a href="<?=$dj["fields"]["instagram_link"]?>" target="_blank"><?= icon('instagram') ?>
                     &nbsp;
                         <?= array_slice(explode("/", $dj["fields"]["instagram_link"]), -2)[0] ?>
                     </a>
@@ -55,7 +55,7 @@ $dj = (array)$dj;
             <?php endif; ?>
             <?php if ($dj["fields"]["soundcloud_link"]): ?>
                 <button class='soundcloud'>
-                    <a href="<?= $dj["fields"]["soundcloud_link"] ?>"><i class="fa-brands fa-soundcloud"></i>&nbsp;&nbsp;<?= $dj["post_title"] ?></a>
+                    <a href="<?= $dj["fields"]["soundcloud_link"] ?>"><?= icon('soundcloud') ?>&nbsp;&nbsp;<?= $dj["post_title"] ?></a>
                 </button>
             <?php endif; ?>
         </div>
