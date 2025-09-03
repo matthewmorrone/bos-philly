@@ -60,6 +60,42 @@ header {
     padding: 0 40px;
 }
 
+/* Static captions for no-hover tiles */
+.tile.container.no-hover { position: relative; overflow: hidden; }
+.tile.container.no-hover a { display: block; position: relative; }
+/* Uniform height & crop */
+.tile.container.no-hover img { display: block; width: 100%; height: 300px; object-fit: cover; }
+/* Bottom overlay caption */
+.tile.container.no-hover .tile-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: -1px; /* slight nudge to remove 1px gap */
+    padding: 16px 12px 14px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    color: #fff;
+    letter-spacing: .5px;
+    /* Lightened overlay */
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    box-shadow: 0 -10px 20px -8px rgba(0,0,0,0.6);
+    font-size: 40px;
+    text-transform: uppercase;
+}
+.tile.container.no-hover .overlay,
+.tile.container.no-hover .hover-text,
+.tile.container.no-hover .label { display: none !important; }
+
+/* Override generic tile anchor sizing so caption can appear below image */
+/* Override previous flex approach for no-hover tiles: we now overlay caption */
+.tile.container.no-hover a { 
+    height: auto !important; 
+    display: block;
+}
+/* (Removed small padding override to preserve darker block) */
+
 #logo {
     width: 117px;
     height: 84px;
@@ -332,6 +368,45 @@ video::-webkit-media-controls {
     height: 400px;
     object-fit: cover;
 }
+
+/* Event ticket/action buttons: adjust only width & spacing (no visual restyle) */
+#events .ticket-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px; /* clearer separation between buttons */
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 12px auto 6px;
+    width: 100%;
+    padding: 0 12px; /* inset so buttons don't touch tile edges */
+    box-sizing: border-box;
+}
+#events .ticket-actions a { flex: 1 1 0; }
+#events .ticket-actions button.ticket {
+    width: 100%;
+    padding: 12px 10px; /* modest padding */
+    font-size: 18px; /* keep original size */
+    border-radius: 8px; /* original radius */
+}
+@media (max-width: 640px) {
+    #events .ticket-actions { max-width: 100%; }
+}
+
+.tile.container a {
+    display: block; /* Ensure percentage height works */
+    height: 100%;   /* Make the anchor fill the height of its parent .tile.container */
+    /* You might also need width: 100%; depending on the parent's display and other flex/grid properties */
+}
+
+.tile.container a img {
+    display: block; /* Often helpful for images within block/flex/grid containers */
+    width: 100%;      /* Make the image fill the width of its parent anchor */
+    height: 100%;     /* Make the image fill the height of its parent anchor */
+    object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
+}
+
+
+
 /* ===== BUTTONS & FORMS ===== */
 .button-container {
     width: 100%;
@@ -634,22 +709,16 @@ footer .social svg {
 
 /* ===== DESKTOP SPECIFIC STYLES ===== */
 @media all and (width >= 600px) {
-    #galleries .tile {
-        width: 90%;
-        height: 300px;
-    }
+    #galleries .tile { width: 90%; }
+    /* Force uniform height so caption overlay is consistent */
+    #galleries .tile img { height: 300px; object-fit: cover; }
 
     #models .tile,
-    #models .tile img {
-        width: 178px;
-        height: 219px;
-    }
+    #models .tile img { width: 178px; height: 219px; }
 
-    #djs .tile,
-    #djs .tile img {
-        width: 278px;
-        height: 361px;
-    }
+    #djs .tile { width: 278px; }
+    /* Uniform DJ image height */
+    #djs .tile img { width: 100%; height: 300px; object-fit: cover; }
 }
 
 @media all and (600px < width < 800px) {

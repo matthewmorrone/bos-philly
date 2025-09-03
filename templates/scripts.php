@@ -24,21 +24,16 @@ function adjustParticleBackground() {
 
 async function loadTiles() {
     function loadPages(pages, url) {
-        pages = pages.map(page => {
-            return {
-                name: page.post_title,
-                url: `${pluralize.singular(url)}s/${page.post_name}`,
-                image: page.image
-            }
-        });
-        const isMobile = window.matchMedia("(width < 600px)").matches;
+        pages = pages.map(page => ({
+            name: page.post_title,
+            url: `${pluralize.singular(url)}s/${page.post_name}`,
+            image: page.image
+        }));
         $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
-            return `<div class="tile container">
+            return `<div class="tile container no-hover">
                 <a href="${page.url}">
-                <img src="${page.image}" class="hover" loading="lazy" />
-                ${isMobile
-                    ? `<div class='label'>${page.name}</div>`
-                    : `<div class="overlay"><div class="hover-text">${page.name}</div></div>`}
+                    <img src="${page.image}" loading="lazy" alt="${page.name}" />
+                    <div class="tile-caption">${page.name}</div>
                 </a>
             </div>`;
         }));
@@ -46,26 +41,19 @@ async function loadTiles() {
 
     function loadGalleries(galleries) {
         if (debug) console.log("galleries: ", galleries);
-        galleries = galleries.map(gallery => {
-            return {
-                name: gallery.post_title,
-                date: gallery.date_of_event,
-                timestamp: luxon.DateTime.fromMillis(Date.parse(gallery.date_of_event)),
-                url: `galleries/${gallery.post_name}`,
-                image: gallery.image
-            }
-        });
-        galleries = galleries.sort(function(a, b) {
-            return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
-        });
-        const isMobile = window.matchMedia("(width < 600px)").matches;
+        galleries = galleries.map(gallery => ({
+            name: gallery.post_title,
+            date: gallery.date_of_event,
+            timestamp: luxon.DateTime.fromMillis(Date.parse(gallery.date_of_event)),
+            url: `galleries/${gallery.post_name}`,
+            image: gallery.image
+        }));
+        galleries = galleries.sort((a, b) => a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0);
         $("#galleries .grid").append(galleries.map(gallery => {
-            return `<div class="tile container">
+            return `<div class="tile container no-hover">
                 <a href="${gallery.url}">
-                    <img src="${gallery.image}" class="hover" loading="lazy" />
-                    ${isMobile
-                        ? `<div class='label'>${gallery.name}</div>`
-                        : `<div class="overlay"><div class="hover-text">${gallery.name}</div></div>`}
+                    <img src="${gallery.image}" loading="lazy" alt="${gallery.name}" />
+                    <div class="tile-caption">${gallery.name}</div>
                 </a>
             </div>`;
         }));

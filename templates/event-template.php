@@ -45,6 +45,10 @@ $event = (array)$event;
         <div class='images'>
             <div>
                 <?php if (isset($event["primary_dj"])): ?>
+
+        <?php
+        echo "<script>console.log(" . json_encode($event["primary_dj"]) . ");</script>";
+        ?>
                     <a href="djs/<?=$event["primary_dj"]["post_name"]?>">
                         <img src='<?=$event["primary_dj"]["post_image"]?>' class='feature' />
                         <h2><?=$event["primary_dj"]["post_title"]?> »</h2>

@@ -31,7 +31,10 @@ foreach($posts as &$post):
         <?php if ($post->dj): ?>
             <a href="events/<?= $post->post_name ?>"><h4><?= $post->dj ?></h4></a>
         <?php endif; ?>
-        <a href="events/<?= $post->post_name ?>"><button class='ticket'>Tickets</button></a>
+        <div class="ticket-actions">
+            <a href="events/<?= $post->post_name ?>"><button class='ticket'>More Info</button></a>
+            <a href="<?= $post->fields["ticket_link"] ?>"><button class='ticket'>Tickets</button></a>
+        </div>
     </div>
     <?php
 endforeach;

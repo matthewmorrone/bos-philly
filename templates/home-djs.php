@@ -12,14 +12,10 @@ foreach($posts as &$post):
     $post->image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
     $post->fields = get_fields($post->ID);
     ?>
-    <div class="tile container">
+    <div class="tile container no-hover">
         <a href="djs/<?= $post->post_name ?>">
-            <img src="<?= $post->image ?>" class="hover" loading="lazy" />
-            <?php if (isMobile()): ?>
-                <div class='label'><?= $post->post_title ?></div>
-            <?php else: ?>
-                <div class="overlay"><div class="hover-text"><?= $post->post_title ?></div></div>
-            <?php endif; ?>
+            <img src="<?= $post->image ?>" loading="lazy" alt="<?= esc_attr($post->post_title) ?>" />
+            <div class='tile-caption'><?= $post->post_title ?></div>
         </a>
     </div>
     <?php

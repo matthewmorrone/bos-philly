@@ -29,6 +29,7 @@ if (isset($gallery["fields"]["gallery_link"])) {
             ];
         }, $imageList);
         $gallery["images"] = $imageList;
+
     }
 }
 ?>
