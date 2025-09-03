@@ -4,8 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="utils.js"></script>
-<script src="wp.js"></script>
+<script src="/utils.js"></script>
+<script src="/wp.js"></script>
 <script>
 let route = query();
 
