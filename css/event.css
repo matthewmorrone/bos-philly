@@ -73,8 +73,13 @@
 .event-template .info .marker {
     width: 25%;
     padding: 5px;
+    color: var(--font);
 }
-.event-template .info h3, .info .marker i {
+.event-template .info .marker svg {
+    width: 30px;
+    height: 30px;
+}
+.event-template .info h3 {
     font-size: 30px;
 }
 .event-template .info button {

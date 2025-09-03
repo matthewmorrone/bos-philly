@@ -7,9 +7,9 @@
             <h3>Steve McCann</h3>
             <h4>Director of Business</h4>
             <div class="contact">
-                <a href="https://www.facebook.com/steve.mccann" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:steve@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
-                <a href="http://instagram.com/phillygaycalendar" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/steve.mccann" target="_blank"><?= svg_icon('facebook') ?></a>
+                <a href="mailto:steve@bosphilly.org" target="_blank"><?= svg_icon('envelope-regular') ?></a>
+                <a href="http://instagram.com/phillygaycalendar" target="_blank"><?= svg_icon('instagram') ?></a>
             </div>
         </div>
         <div class="tile">
@@ -17,9 +17,9 @@
             <h3>Matt Rowe</h3>
             <h4>Director of Logistics</h4>
             <div class="contact">
-                <a href="https://www.facebook.com/Mr.Breig" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:matt@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
-                <a href="https://www.instagram.com/mr_breig/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/Mr.Breig" target="_blank"><?= svg_icon('facebook') ?></a>
+                <a href="mailto:matt@bosphilly.org" target="_blank"><?= svg_icon('envelope-regular') ?></a>
+                <a href="https://www.instagram.com/mr_breig/" target="_blank"><?= svg_icon('instagram') ?></a>
             </div>
         </div>
         <div class="tile">
@@ -27,9 +27,9 @@
             <h3>Alex Ortiz</h3>
             <h4>Director of Outreach</h4>
             <div class="contact">
-                <a href="https://www.facebook.com/AlexanderJohn" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:alex@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
-                <a href="https://www.instagram.com/alexanderjawn/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/AlexanderJohn" target="_blank"><?= svg_icon('facebook') ?></a>
+                <a href="mailto:alex@bosphilly.org" target="_blank"><?= svg_icon('envelope-regular') ?></a>
+                <a href="https://www.instagram.com/alexanderjawn/" target="_blank"><?= svg_icon('instagram') ?></a>
             </div>
         </div>
         <div class="tile">
@@ -37,9 +37,9 @@
             <h3>Justin Dile</h3>
             <h4>Director of Coordination</h4>
             <div class="contact">
-                <a href="https://www.facebook.com/justindile" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:justin@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
-                <a href="https://www.instagram.com/justindile/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/justindile" target="_blank"><?= svg_icon('facebook') ?></a>
+                <a href="mailto:justin@bosphilly.org" target="_blank"><?= svg_icon('envelope-regular') ?></a>
+                <a href="https://www.instagram.com/justindile/" target="_blank"><?= svg_icon('instagram') ?></a>
             </div>
         </div>
         <div class="tile">
@@ -47,9 +47,9 @@
             <h3>Joe Fazio</h3>
             <h4>Director of Volunteers</h4>
             <div class="contact">
-                <a href="https://www.facebook.com/jfaziojr" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:joe@bosphilly.org" target="_blank"><i class="fa-fw far fa-envelope"></i></a>
-                <a href="https://www.instagram.com/joefazio/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/jfaziojr" target="_blank"><?= svg_icon('facebook') ?></a>
+                <a href="mailto:joe@bosphilly.org" target="_blank"><?= svg_icon('envelope-regular') ?></a>
+                <a href="https://www.instagram.com/joefazio/" target="_blank"><?= svg_icon('instagram') ?></a>
             </div>
         </div>
     </div>

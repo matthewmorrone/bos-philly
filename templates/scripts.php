@@ -260,7 +260,7 @@ $(async () => {
             confirmButtonText: `
 <a href="webcal://calendar.google.com/calendar/ical/c_e5ccfcf9265560b5a19219e3e0cc2047926d5adb287c163e59322c00137ec065%40group.calendar.google.com/public/basic.ics">Subscribe</a>
   `,
-            iconHtml: `<i class="fa-solid fa-calendar-days"></i>`,
+            iconHtml: `<?= svg_icon('calendar-days') ?>`,
             showCloseButton: true,
             showCancelButton: true,
             iconColor: "#ed208b",

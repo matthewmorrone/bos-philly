@@ -147,5 +147,5 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
 </div>
 <!-- Floating Back to Top Button -->
 <button class="floating-back-to-top" onclick="scrollToTop()">
-    <i class="fas fa-arrow-up"></i>
+    <?= svg_icon('arrow-up') ?>
 </button>

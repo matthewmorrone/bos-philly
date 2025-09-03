@@ -113,10 +113,13 @@ nav span {
     vertical-align: middle;
     margin-left: 10px;
     text-align: center;
+    color: var(--font);
 }
 
-.social i {
+.social svg {
     vertical-align: middle;
+    width: 1em;
+    height: 1em;
     margin-top: 7px;
 }
 
@@ -366,9 +369,11 @@ button {
     width: 100%;
 }
 
-.instagram i,
-.soundcloud i {
+.instagram svg,
+.soundcloud svg {
     vertical-align: middle;
+    width: 1em;
+    height: 1em;
 }
 
 .instagram {
@@ -390,6 +395,13 @@ button {
     padding: 20px;
     font-size: 16px;
     font-family: 'Work Sans', sans-serif;
+}
+#signup svg,
+#calendar svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-right: 10px;
 }
 
 #email {
@@ -583,7 +595,7 @@ footer .social {
     font-size: 25px;
 }
 
-footer .social i {
+footer .social svg {
     margin-top: 12px;
 }
 

@@ -33,7 +33,8 @@ function query() {
     return $qs;
 }
 
-// Include header
+// Include icon library and header
+include 'templates/icons.php';
 include 'templates/header.php';
 
 // Handle different page types

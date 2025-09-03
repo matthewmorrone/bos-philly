@@ -81,9 +81,6 @@
 .dj-template .dj-content .instagram {
     font-family: "Teko", Sans-serif;
 }
-.dj-template .dj-content .instagram i {
-    font-size: larger;
-}
 @media all and (max-width: 600px) {
     .dj-template .dj-content {
         width: 300px;
