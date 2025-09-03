@@ -493,11 +493,13 @@ button {
 .contact a {
     padding: 0.5em;
     font-size: 24px;
+    color: var(--font);
 }
 
-.contact a:link,
-.contact a:visited {
-    color: var(--trim);
+.contact svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
 }
 
 /* ===== PARTNERS SECTION ===== */
