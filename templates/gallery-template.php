@@ -56,9 +56,10 @@ if (isset($gallery["fields"]["gallery_link"])) {
 $(() => {
     $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
     $('.photo-gallery').justifiedGallery({
-        rowHeight: 180,
-        margins: 5,
-        lastRow: 'nojustify',
+        rowHeight: 200,
+        margins: 0,
+        lastRow: 'justify',
+        waitThumbnailsLoad: true,
         randomize: true,
         captions: false
     });
