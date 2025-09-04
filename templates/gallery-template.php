@@ -43,7 +43,7 @@ if (isset($gallery["fields"]["gallery_link"])) {
     <div class='photo-gallery'>
         <?php foreach($gallery["images"] as $photo): ?>
             <a href='<?= $photo["large"] ?>' data-lightbox='<?= $gallery["post_name"] ?>'>
-                <img src='<?= $photo["medium"] ?>' loading="lazy" />
+                <img src='<?= $photo["small"] ?>' loading="lazy" />
             </a>
         <?php endforeach; ?>
     </div>
@@ -56,7 +56,7 @@ if (isset($gallery["fields"]["gallery_link"])) {
 $(() => {
     $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
     $('.photo-gallery').justifiedGallery({
-        rowHeight: 200,
+        rowHeight: 150,
         margins: 0,
         lastRow: 'justify',
         waitThumbnailsLoad: true,
