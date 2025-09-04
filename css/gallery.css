@@ -13,7 +13,7 @@
     font-size: 16px;
 }
 .gallery-template .photo-gallery {
-    margin: 20px;
+    margin: 0;
 }
 .gallery-template .photo-gallery a {
     display: inline-block;

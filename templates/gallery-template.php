@@ -56,8 +56,8 @@ $(() => {
     $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
     $('.photo-gallery').justifiedGallery({
         rowHeight: 220,
-        margins: 5,
-        lastRow: 'nojustify',
+        margins: 0,
+        lastRow: 'justify',
         captions: false
     });
 });
