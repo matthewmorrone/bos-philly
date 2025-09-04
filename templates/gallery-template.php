@@ -29,6 +29,7 @@ if (isset($gallery["fields"]["gallery_link"])) {
             ];
         }, $imageList);
         $gallery["images"] = $imageList;
+        shuffle($gallery["images"]);
 
     }
 }
@@ -55,9 +56,10 @@ if (isset($gallery["fields"]["gallery_link"])) {
 $(() => {
     $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
     $('.photo-gallery').justifiedGallery({
-        rowHeight: 220,
-        margins: 0,
-        lastRow: 'justify',
+        rowHeight: 180,
+        margins: 5,
+        lastRow: 'nojustify',
+        randomize: true,
         captions: false
     });
 });

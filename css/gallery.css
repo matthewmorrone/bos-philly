@@ -16,13 +16,13 @@
     margin: 0;
 }
 .gallery-template .photo-gallery a {
-    display: inline-block;
+    border-radius: 4px;
     overflow: hidden;
 }
 .gallery-template .photo-gallery img {
     width: 100%;
-    height: auto;
-    border-radius: 4px;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.2s ease;
 }
 .gallery-template .photo-gallery img:hover {
