@@ -51,8 +51,8 @@ if (isset($gallery["fields"]["gallery_link"])) {
     </div>
 </div>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" integrity="sha512-eDmqS1xiUTtWrKJeNEgnC/LEqs2WIGeGZ7mSXAPh3divgLPgAvFp8ZUBKbjrKMg09uXBJgp7wa9u0edPFoG4Ng==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-$(async () => {
+<script defer>
+$(() => {
     $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
     $('.photo-gallery').justifiedGallery({
         rowHeight: 220,
