@@ -29,7 +29,7 @@
 }
 .gallery-template .photo img {
     object-fit: cover;
-    object-position: center;
+    object-position: top;
 }
 
 @media all and (max-width: 600px) {

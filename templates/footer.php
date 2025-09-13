@@ -7,6 +7,8 @@
             <a class='social' href="http://instagram.com/bosphilly" target="_blank"><?= svg_icon('instagram') ?></a>
             <a class='social' href="mailto:info@bosphilly.org" target="_blank"><?= svg_icon('envelope') ?></a>
             <a class='social' href="https://soundcloud.com/bos-philly" target="_blank"><?= svg_icon('soundcloud') ?></a>
+            <a class='social' href="https://youtube.com/@bosphilly" target="_blank"><?= svg_icon('youtube') ?></a>
+            <a class='social' href="https://tiktok.com/@bosphilly" target="_blank"><?= svg_icon('tiktok') ?></a>
         </div>
         <div id="subscribe">
             <a href="https://arep.co/m/bosphilly"><button id="signup"><?= svg_icon('envelope-open-text') ?> Newsletter</button></a>

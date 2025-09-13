@@ -458,7 +458,11 @@ button {
 .soundcloud {
     background-color: #ff7700;
 }
-
+button#signup, button#calendar {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Adjust the value as needed */
+}
 #signup,
 #calendar {
     background-color: var(--trim);

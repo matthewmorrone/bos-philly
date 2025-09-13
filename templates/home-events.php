@@ -14,6 +14,9 @@ $args['meta_query'] = array(
 );
 $query = new WP_Query($args);
 $posts = $query->get_posts();
+?>
+<script src="https://tickets.bosphilly.com/ts_modal.js"></script>
+<?php
 foreach($posts as &$post):
     $post->image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
     $post->fields = get_fields($post->ID);
@@ -25,15 +28,21 @@ foreach($posts as &$post):
     @$post->dj = $primary_dj->posts[0]->post_title;
     ?>
     <div class="tile container">
-        <a href="events/<?= $post->post_name ?>"><img src="<?= $post->image ?>" loading="lazy" /></a>
-        <a href="events/<?= $post->post_name ?>"><h3><?= $post->post_title ?></h3></a>
-        <a href="events/<?= $post->post_name ?>"><h4><?= $post->fields["date_of_event"] ?></h4></a>
+        <a><img src="<?= $post->image ?>" loading="lazy" /></a>
+        <a><h3><?= $post->post_title ?></h3></a>
+        <a><h4><?= $post->fields["date_of_event"] ?></h4></a>
         <?php if ($post->dj): ?>
-            <a href="events/<?= $post->post_name ?>"><h4><?= $post->dj ?></h4></a>
+            <a><h4><?= $post->dj ?></h4></a>
         <?php endif; ?>
         <div class="ticket-actions">
             <a href="events/<?= $post->post_name ?>"><button class='ticket'>More Info</button></a>
-            <a href="<?= $post->fields["ticket_link"] ?>"><button class='ticket'>Tickets</button></a>
+            <a id='modal-trigger-<?= $post->post_name ?>'><button class='ticket'>Tickets</button></a>
+            <script>
+            window.TSModals.buildModal({
+                url: '<?= $post->fields["ticket_link"] ?>',
+                modalTriggerElementId: 'modal-trigger-<?= $post->post_name ?>'
+            });
+            </script>
         </div>
     </div>
     <?php

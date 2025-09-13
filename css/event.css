@@ -100,6 +100,107 @@
 .event-template .map-embed {
     padding: 20px;
 }
+/* Secondary DJ rail next to primary */
+.event-template .dj-area {
+    display: flex;
+    flex-direction: column; /* stack secondary below primary */
+    align-items: stretch;
+    gap: 12px;
+}
+.event-template .primary-dj {
+    display: flex;
+    flex-direction: column;
+}
+.event-template .secondary-rail {
+    display: flex;
+    flex-direction: row; /* horizontal rail */
+    flex-wrap: nowrap;   /* keep consecutive DJs horizontal */
+    gap: 10px;
+    overflow-x: auto;    /* scroll horizontally when overflow */
+    -webkit-overflow-scrolling: touch;
+}
+.event-template .secondary-rail .sdj-card {
+    background-color: #191A3A85;
+    border: 1px solid white;
+    padding-bottom: 8px;
+    flex: 0 0 auto;      /* do not shrink; stay horizontal */
+    width: 160px;        /* fixed card width for horizontal layout */
+}
+.event-template .secondary-rail .sdj-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+.event-template .secondary-rail .sdj-card h4 {
+    text-align: center;
+    font-size: 22px;
+    margin: 6px 6px 4px;
+}
+.event-template .secondary-rail .sdj-card .social {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 0 6px;
+}
+.event-template .secondary-rail .sdj-card .social a svg {
+    width: 18px;
+    height: 18px;
+}
+/* Secondary DJs */
+.event-template .secondary-djs {
+    padding: 10px 20px 0 20px;
+}
+.event-template .secondary-djs > h2 {
+    text-align: center;
+    background-color: #191A3A85;
+    font-size: 40px;
+    font-weight: 600;
+    padding: 10px 20px;
+    margin: 10px 20px 0;
+}
+.event-template .secondary-djs .dj-list {
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(220px, 1fr) );
+    gap: 16px;
+    padding: 16px 20px 0 20px;
+}
+.event-template .secondary-djs .dj-card {
+    background-color: #191A3A85;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.event-template .secondary-djs .dj-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+.event-template .secondary-djs .dj-card .name h3 {
+    text-align: center;
+    font-size: 28px;
+    margin: 8px 8px 4px;
+}
+.event-template .secondary-djs .dj-card .social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+}
+.event-template .secondary-djs .dj-card .social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid white;
+    padding: 6px 10px;
+    font-family: "Teko", Sans-serif;
+    font-size: 22px;
+}
+.event-template .secondary-djs .dj-card .social a svg {
+    width: 20px;
+    height: 20px;
+}
 @media all and (max-width: 600px) {
     .event-template {
         width: 90%;
@@ -123,5 +224,29 @@
     }
     .event-template .info {
         grid-template-columns: repeat(1, 1fr);
+    }
+    .event-template .secondary-djs .dj-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+    .event-template .secondary-djs .dj-card img {
+        height: 160px;
+    }
+    /* Secondary DJ rail responsive */
+    .event-template .dj-area {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .event-template .secondary-rail {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .event-template .secondary-rail .sdj-card {
+        width: calc(50% - 5px);
+    }
+    .event-template .secondary-rail .sdj-card img {
+        height: 120px;
     }
 }
