@@ -206,10 +206,16 @@
         width: 90%;
     }
     .event-template .title h1 {
-        font-size: 64px;
+        font-size: 36px;
+        line-height: 1.1;
     }
     .event-template .images {
         padding: 20px;
+    }
+    /* Primary DJ label smaller on mobile */
+    .event-template .images h2 {
+        font-size: 28px;
+        padding: 12px 18px 10px;
     }
     .event-template .images, .event-template .info {
         flex-flow: column-reverse nowrap !important;
@@ -248,5 +254,10 @@
     }
     .event-template .secondary-rail .sdj-card img {
         height: 120px;
+    }
+    /* Secondary DJ name smaller on mobile */
+    .event-template .secondary-rail .sdj-card h4 {
+        font-size: 16px;
+        margin: 6px;
     }
 }

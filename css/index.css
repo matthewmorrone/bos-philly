@@ -712,8 +712,10 @@ footer .social svg {
 }
 
 /* ===== DESKTOP SPECIFIC STYLES ===== */
-@media all and (width >= 600px) {
-    #galleries .tile { width: 90%; }
+@media all and (min-width: 600px) {
+    /* Match Galleries grid to DJs for consistent spacing */
+    #galleries .grid { grid-template-columns: repeat(4, 1fr); }
+    #galleries .tile { width: 278px; }
     /* Force uniform height so caption overlay is consistent */
     #galleries .tile img { height: 300px; object-fit: cover; }
 
@@ -725,7 +727,7 @@ footer .social svg {
     #djs .tile img { width: 100%; height: 300px; object-fit: cover; }
 }
 
-@media all and (600px < width < 800px) {
+@media all and (min-width: 600px) and (max-width: 800px) {
     html,
     body {
         max-width: 100%;
@@ -734,7 +736,13 @@ footer .social svg {
 }
 
 /* ===== MOBILE RESPONSIVE STYLES ===== */
-@media all and (width < 600px) {
+@media all and (max-width: 600px) {
+    /* Make captioned no-hover tiles mobile-friendly */
+    .tile.container.no-hover .tile-caption {
+        font-size: 18px; /* override large desktop size */
+        padding: 10px 8px 9px;
+        letter-spacing: .3px;
+    }
     /* Base Mobile Layout */
     html,
     body {
@@ -860,11 +868,12 @@ footer .social svg {
     #galleries .tile {
         background-color: unset;
         border-radius: 0;
-        width: 120px;
+        width: auto; /* follow grid like DJs */
     }
 
     #galleries .tile img {
-        height: 80px;
+        width: 110px; /* match DJs mobile width */
+        height: 160px; /* match DJs mobile height */
         border-radius: 20px;
     }
 
