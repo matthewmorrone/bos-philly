@@ -21,7 +21,8 @@ function containsAnySubstring($string, $substrings) {
 }
 
 function randomId($length = 10) {
-    return substr(str_shuffle(str_repeat($x = '0123456789', ceil($length / strlen($x)))), 1, $length);
+    $x = '0123456789';
+    return substr(str_shuffle(str_repeat($x, ceil($length / strlen($x)))), 1, $length);
 }
 
 function query() {

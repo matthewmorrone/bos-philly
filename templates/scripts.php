@@ -233,6 +233,12 @@ $(async () => {
         let page = await $get("board.html");
         $("#board").prepend(page);
     }
+    if (route.page === "social-media") {
+        $("#splash, #charity, #pandering, #events, #galleries, #djs, #board").remove();
+        // $("#board .button-container button, #board h1, #board #separator").remove();
+        let page = await $get("social.html");
+        $("header").after(page);
+    }
     else if (route.page) {
         console.log(route);
     }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BOS Philly | Social Media</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="background-color: #0b0e25; font-family: 'Arial', sans-serif; color: white; margin: 0; padding: 40px;">
+
+  <!-- Header -->
+  <section style="text-align: center; margin-bottom: 60px;">
+    <h1 style="font-size: 48px; color: #e70088; margin-bottom: 10px;">Follow Us</h1>    
+  </section>
+
+  <!-- Mission -->
+  <section style="text-align: center; margin: 60px; max-width: 700px; margin-left: auto; margin-right: auto; border-bottom: 0 !important;">
+    <p style="color: #cccccc; font-size: 16px; line-height: 1.6; margin-top: 20px;">
+      BOS Philly is a 501(c)(3) nonprofit organization dedicated to building vibrant, inclusive nightlife and cultural spaces that uplift Philadelphia's LGBTQ+ community. Through high-energy events and themed parties, we raise funds to support local LGBTQ+ charities — blending celebration with purpose. This page highlights our social media channels, where we share live event updates, behind-the-scenes moments, and the impact of your support.
+    </p>
+  </section>
+
+  <!-- Social Links -->
+  <section id="social-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin: 60px; border-bottom: 0 !important;">
+
+    <a id="instagram" href="https://www.instagram.com/bosphilly" target="_blank" style="text-decoration: none;">
+      <div style="background-color: #1e1e2f; padding: 30px; border-top: 8px solid #E1306C; border-radius: 12px; width: 220px; text-align: center;">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/instagram-new.png" alt="Instagram" width="60">
+        <div style="margin-top: 15px; font-size: 20px; color: #E1306C;">Instagram</div>
+      </div>
+    </a>
+
+    <a id="facebook" href="https://www.facebook.com/bosphilly" target="_blank" style="text-decoration: none;">
+      <div style="background-color: #1e1e2f; padding: 30px; border-top: 8px solid #1877F2; border-radius: 12px; width: 220px; text-align: center;">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/facebook--v1.png" alt="Facebook" width="60">
+        <div style="margin-top: 15px; font-size: 20px; color: #1877F2;">Facebook</div>
+      </div>
+    </a>
+
+    <a id="youtube" href="https://www.youtube.com/@bosphilly" target="_blank" style="text-decoration: none;">
+      <div style="background-color: #1e1e2f; padding: 30px; border-top: 8px solid #FF0000; border-radius: 12px; width: 220px; text-align: center;">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/youtube-play.png" alt="YouTube" width="60">
+        <div style="margin-top: 15px; font-size: 20px; color: #FF0000;">YouTube</div>
+      </div>
+    </a>
+
+    <a id="tiktok" href="https://www.tiktok.com/@bosphilly" target="_blank" style="text-decoration: none;">
+      <div style="background-color: #1e1e2f; padding: 30px; border-top: 8px solid #2af0ea; border-radius: 12px; width: 220px; text-align: center;">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/tiktok--v1.png" alt="TikTok" width="60">
+        <div style="margin-top: 15px; font-size: 20px; color: #2af0ea;">TikTok</div>
+      </div>
+    </a>
+
+    <a id="soundcloud" href="https://soundcloud.com/bosphilly" target="_blank" style="text-decoration: none;">
+      <div style="background-color: #1e1e2f; padding: 30px; border-top: 8px solid #FF5500; border-radius: 12px; width: 220px; text-align: center;">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/soundcloud.png" alt="SoundCloud" width="60">
+        <div style="margin-top: 15px; font-size: 20px; color: #FF5500;">SoundCloud</div>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- Optional Highlight Script -->
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const social = params.get('social');
+
+  if (social) {
+    const id = social.toLowerCase();
+    const target = document.getElementById(id);
+    const container = document.getElementById("social-container");
+
+    // Define brand glow colors
+    const glowColors = {
+      instagram: "#E1306C",
+      facebook: "#1877F2",
+      youtube: "#FF0000",
+      tiktok: "#2af0ea",
+      soundcloud: "#FF5500"
+    };
+
+    if (target && container.contains(target)) {
+      container.prepend(target);
+      const brandColor = glowColors[id] || "#e70088"; // fallback
+      const card = target.querySelector("div");
+
+      card.style.boxShadow = `0 0 20px 5px ${brandColor}`;
+      card.style.transform = "scale(1.05)";
+    }
+  }
+</script>
+
+
+
+</body>
+</html>
