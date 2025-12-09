@@ -244,6 +244,9 @@ section h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    min-height: 60vh; /* reserve space to prevent layout shift when video metadata loads */
+    overflow: hidden;
 }
 
 .splash-title {
@@ -252,6 +255,7 @@ section h1 {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    z-index: 1; /* ensure title sits above background video */
 }
 
 .splash-title h2 {
@@ -267,9 +271,12 @@ section h1 {
     margin-top: -50px;
 }
 
+.splash-background { position: absolute; inset: 0; }
 .splash-background video {
     width: 100%;
+    height: 100%;
     display: block;
+    object-fit: cover;
     pointer-events: none;
 }
 
@@ -293,6 +300,15 @@ video::-webkit-media-controls {
 #charity h2 {
     font-size: 69px;
     font-weight: 600;
+}
+
+/* Stabilize counter width to avoid text reflow during animation */
+.charity-title .counter {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    min-width: 8ch; /* reserve width for up to 8 characters like 82497.33 */
+    text-align: center;
 }
 
 #charity p {

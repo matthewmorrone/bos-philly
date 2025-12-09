@@ -5,11 +5,19 @@ $query = new WP_Query($args);
 $posts = $query->get_posts();
 $dj = $posts[0];
 $dj->fields = get_fields(post_id: $dj->ID);
-$dj->image = get_the_post_thumbnail_url($dj->ID);
+$dj_thumb_id = get_post_thumbnail_id($dj->ID);
+$dj_img_full = wp_get_attachment_image_src($dj_thumb_id, 'full');
+$dj->image = $dj_img_full[0] ?? '';
+$dj->image_w = $dj_img_full[1] ?? null;
+$dj->image_h = $dj_img_full[2] ?? null;
+$dj->srcset = wp_get_attachment_image_srcset($dj_thumb_id, 'large');
+$dj->sizes = '(max-width: 900px) 100vw, 50vw';
 $dj = (array)$dj;
 ?>
 <div class='dj-template'>
-    <link rel="stylesheet" href="css/dj.css?version=<?= randomId(4); ?>" />
+    <link rel="stylesheet" href="css/dj.css?version=<?= asset_version('css/dj.css'); ?>" />
+    <!-- Lightbox CSS only when needed on DJ pages -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
     <?php if ($dj["fields"]["logo"]): ?>
         <div class='banner'>
             <img src='<?= $dj["fields"]["logo"]["url"] ?>' class='logo' />
@@ -22,7 +30,15 @@ $dj = (array)$dj;
             <h3><?= $dj["fields"]["hometown"] ?></h3>
         </div>
         <div class='dj-left'>
-            <img src='<?= $dj["image"] ?>' class='featured' />
+            <img 
+                src='<?= $dj["image"] ?>'
+                <?php if (!empty($dj["srcset"])): ?>srcset='<?= esc_attr($dj["srcset"]) ?>'<?php endif; ?>
+                sizes='<?= esc_attr($dj["sizes"]) ?>'
+                <?php if(!empty($dj["image_w"]) && !empty($dj["image_h"])): ?>width='<?= (int)$dj["image_w"] ?>' height='<?= (int)$dj["image_h"] ?>'<?php endif; ?>
+                alt='<?= htmlspecialchars($dj["post_title"]) ?>'
+                class='featured'
+                loading="lazy"
+            />
             <?php if ($dj["fields"]["photos"]): ?>
             <?php
                 $dj["fields"]["photos"] = array_map(function($photo) {
@@ -37,7 +53,14 @@ $dj = (array)$dj;
             <div class='gallery'>
             <?php foreach($dj["fields"]["photos"] as $photo): ?>
                 <a href='<?= $photo["large"] ?>' data-lightbox='<?= $dj["post_name"] ?>'>
-                    <img src='<?= $photo["small"] ?>' data-lightbox='<?= $dj["post_name"] ?>' loading="lazy" />
+                    <img 
+                        src='<?= $photo["small"] ?>' 
+                        srcset='<?= $photo["small"] ?> 320w, <?= $photo["medium"] ?> 640w, <?= $photo["large"] ?> 1024w'
+                        sizes='(max-width: 768px) 45vw, 220px'
+                        data-lightbox='<?= $dj["post_name"] ?>' 
+                        loading="lazy" 
+                        alt='<?= htmlspecialchars($dj["post_title"]) ?> photo'
+                    />
                 </a>
             <?php endforeach; ?>
             </div>
@@ -63,6 +86,8 @@ $dj = (array)$dj;
     <div class="button-container">
         <button class="more"><a href="djs">More DJs</a></button>
     </div>
+    <!-- Load particles.js only on DJ pages -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
     $(async () => {
         let soundcloud = await $.ajax({

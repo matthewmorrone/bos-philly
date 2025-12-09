@@ -10,7 +10,13 @@ window.location.replace("..");
 </script>
 <?php endif;
 $event->fields = get_fields($event->ID);
-$event->image = get_the_post_thumbnail_url($event->ID);
+$event_thumb_id = get_post_thumbnail_id($event->ID);
+$event_img_full = wp_get_attachment_image_src($event_thumb_id, 'full');
+$event->image = $event_img_full[0] ?? '';
+$event->image_w = $event_img_full[1] ?? null;
+$event->image_h = $event_img_full[2] ?? null;
+$event->srcset = wp_get_attachment_image_srcset($event_thumb_id, 'large');
+$event->sizes = '(max-width: 900px) 100vw, 50vw';
 
 $primary_dj = new WP_Query(array(
     'connected_type' => 'primary_dj',
@@ -20,7 +26,13 @@ $primary_dj = new WP_Query(array(
 
 $primary_dj = $primary_dj->posts[0] ?? null;
 if ($primary_dj !== null) {
-    $primary_dj->post_image = get_the_post_thumbnail_url($primary_dj->ID);
+    $primary_dj_thumb_id = get_post_thumbnail_id($primary_dj->ID);
+    $primary_dj_img = wp_get_attachment_image_src($primary_dj_thumb_id, 'large');
+    $primary_dj->post_image = $primary_dj_img[0] ?? '';
+    $primary_dj->image_w = $primary_dj_img[1] ?? null;
+    $primary_dj->image_h = $primary_dj_img[2] ?? null;
+    $primary_dj->srcset = wp_get_attachment_image_srcset($primary_dj_thumb_id, 'large');
+    $primary_dj->sizes = '(max-width: 900px) 50vw, 25vw';
     $event->primary_dj = (array)$primary_dj;
 }
 
@@ -40,7 +52,7 @@ $event->secondary_djs = $secondary_djs;
 $event = (array)$event;
 ?>
 <div class='event-template'>
-    <link rel="stylesheet" href="css/event.css?version=<?= randomId(4); ?>" />
+    <link rel="stylesheet" href="css/event.css?version=<?= asset_version('css/event.css'); ?>" />
     <div class='shade'>
         <div class='title'>
             <h1><?=$event["post_title"]?></h1>
@@ -56,7 +68,15 @@ $event = (array)$event;
                     ?>
                     <a href="djs/<?=$event["primary_dj"]["post_name"]?>">
                         <?php if (!empty($event["primary_dj"]["post_image"])): ?>
-                            <img src='<?=$event["primary_dj"]["post_image"]?>' class='feature' />
+                            <img 
+                                src='<?=$event["primary_dj"]["post_image"]?>'
+                                <?php if (!empty($event["primary_dj"]["srcset"])): ?>srcset='<?= esc_attr($event["primary_dj"]["srcset"]) ?>'<?php endif; ?>
+                                sizes='<?= esc_attr($event["primary_dj"]["sizes"]) ?>'
+                                <?php if(!empty($event["primary_dj"]["image_w"]) && !empty($event["primary_dj"]["image_h"])): ?>width='<?= (int)$event["primary_dj"]["image_w"] ?>' height='<?= (int)$event["primary_dj"]["image_h"] ?>'<?php endif; ?>
+                                alt='<?= htmlspecialchars($event["primary_dj"]["post_title"]) ?>'
+                                class='feature'
+                                loading="lazy"
+                            />
                         <?php endif; ?>
                         <h2><?=$event["primary_dj"]["post_title"]?> »</h2>
                     </a>
@@ -84,7 +104,7 @@ $event = (array)$event;
                         <div class='sdj-card'>
                             <?php if (!empty($sdj["post_image"])): ?>
                                 <a class='image-link' href="djs/<?= $sdj["post_name"] ?>">
-                                    <img src='<?= $sdj["post_image"] ?>' alt='<?= htmlspecialchars($sdj["post_title"]) ?>' />
+                                    <img src='<?= $sdj["post_image"] ?>' alt='<?= htmlspecialchars($sdj["post_title"]) ?>' loading="lazy" />
                                 </a>
                             <?php endif; ?>
                             <a class='name' href="djs/<?= $sdj["post_name"] ?>">
@@ -96,7 +116,15 @@ $event = (array)$event;
                 <?php endif; ?>
             </div>
             <div>
-                <img src='<?= $event["image"] ?>' class='feature' />
+                <img 
+                    src='<?= $event["image"] ?>'
+                    <?php if (!empty($event["srcset"])): ?>srcset='<?= esc_attr($event["srcset"]) ?>'<?php endif; ?>
+                    sizes='<?= esc_attr($event["sizes"]) ?>'
+                    <?php if(!empty($event["image_w"]) && !empty($event["image_h"])): ?>width='<?= (int)$event["image_w"] ?>' height='<?= (int)$event["image_h"] ?>'<?php endif; ?>
+                    alt='<?= htmlspecialchars($event["post_title"]) ?>'
+                    class='feature'
+                    fetchpriority="high"
+                />
                 <div class='description'>
                     <?= $event["post_content"] ?>
                 </div>
@@ -111,8 +139,8 @@ $event = (array)$event;
                 <div class='ticket-button'>
                 <script src="https://tickets.bosphilly.com/ts_modal.js"></script>
                 <?php if ($event["fields"]["ticket_link"]): ?>
-                <a class='ticket-capture' target="_blank"><button id="modal-trigger-element-id">Ticket</button></a>
-                <!-- href='<?=$event["fields"]["ticket_link"]?>'  -->
+                    <a href='<?=$event["fields"]["ticket_link"]?>' target="_blank"><button id="modal-trigger-element-id">Ticket</button></a>
+                <!-- class='ticket-capture'  -->
                 <?php else: ?>
                     <button>Coming Soon</button>
                 <?php endif; ?>

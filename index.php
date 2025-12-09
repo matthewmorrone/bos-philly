@@ -25,6 +25,15 @@ function randomId($length = 10) {
     return substr(str_shuffle(str_repeat($x, ceil($length / strlen($x)))), 1, $length);
 }
 
+// Deterministic asset versioning based on last modified time to enable long-term caching
+function asset_version($relativePath) {
+    $fullPath = __DIR__ . '/' . ltrim($relativePath, '/');
+    if (file_exists($fullPath)) {
+        return filemtime($fullPath);
+    }
+    return '1';
+}
+
 function query() {
     $qs = [];
     $components = explode("/", $_SERVER['REQUEST_URI']);

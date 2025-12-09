@@ -1,11 +1,10 @@
 <script defer src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script defer src="wp.js"></script>
-<script src="utils.js"></script>
+<script defer src="wp.js?version=<?= asset_version('wp.js'); ?>"></script>
+<script src="utils.js?version=<?= asset_version('utils.js'); ?>"></script>
 <script>
 let route = query();
 

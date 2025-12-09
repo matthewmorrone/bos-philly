@@ -35,7 +35,7 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
 /** @phpstan-ignore-end */
 ?>
 
-<link rel="stylesheet" href="css/blowout.css?version=<?= randomId(4); ?>" />
+<link rel="stylesheet" href="css/blowout.css?version=<?= asset_version('css/blowout.css'); ?>" />
 <style>
 /* Dynamic background images set via PHP */
 #blowout-splash { background-image: url("<?= $splash_background ?>"); }
@@ -70,7 +70,7 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
 </div>
 <div id="blowout-ticket" class="bg-cover">
     <div class="center-wrapper">
-        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" loading="lazy" /></a>
     </div>
 </div>
 <div id="blowout-djs" class="bg-cover">
@@ -104,7 +104,7 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
         </div>
     <?php endforeach; ?>
     <div class="center-wrapper">
-        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" loading="lazy" /></a>
     </div>
 </div>
 <div id="blowout-vip" class="bg-cover">
@@ -115,7 +115,7 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
         </div>
     </div>
     <div class="center-wrapper">
-        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" loading="lazy" /></a>
     </div>
 </div>
 <div id="blowout-venue" class="bg-cover">
@@ -126,7 +126,7 @@ $hotel_anchor = $blowout->fields["hotel_anchor"];
         </div>
     </div>
     <div class="center-wrapper">
-        <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" /></a>
+    <a href="<?= $ticket_link ?>"><img class="ticket-image" src="<?= $ticket_image ?>" loading="lazy" /></a>
     </div>
 </div>
 <div id="blowout-hotel" class="bg-cover">
