@@ -23,6 +23,9 @@
     font-family: 'Work Sans', sans-serif;
     text-align: justify;
 }
+.event-template .feature {
+    height: auto; /* ensure responsive images ignore hard-coded height attrs */
+}
 .event-template .description {
     background-color: #191A3A85;
     line-height: 30px;

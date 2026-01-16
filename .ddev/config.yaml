@@ -1,6 +1,6 @@
 name: bos
-type: wordpress
-docroot: ""
+type: php
+docroot: .
 php_version: "8.3"
 webserver_type: apache-fpm
 xdebug_enabled: false
@@ -298,6 +298,3 @@ corepack_enable: false
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
 #hooks:
-# Un-comment to emit the WP CLI version after ddev start.
-#  post-start:
-#    - exec: wp cli version
