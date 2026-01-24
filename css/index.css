@@ -811,6 +811,8 @@ footer .social svg {
 
     #mobileToggle {
         display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
         visibility: visible !important;
         opacity: 1 !important;
         pointer-events: auto;
