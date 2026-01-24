@@ -245,7 +245,9 @@ section h1 {
     align-items: center;
     justify-content: center;
     position: relative;
-    min-height: 60vh; /* reserve space to prevent layout shift when video metadata loads */
+    /* Reserve space to prevent layout shift when video metadata loads,
+       but cap it so tall viewports don't create an oversized hero. */
+    min-height: 29vh;
     overflow: hidden;
 }
 
