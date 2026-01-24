@@ -810,7 +810,12 @@ footer .social svg {
     }
 
     #mobileToggle {
-        display: block;
+        display: inline-flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto;
+        position: relative;
+        z-index: 2000;
         margin-left: 20px;
     }
 
