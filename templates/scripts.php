@@ -206,6 +206,22 @@ function scrollToSection(section, offset) {
     $("title").text(`${section.toTitleCase()} - BOS Philly`);
 }
 
+function isHomeSectionRoute(route) {
+    if (!route || !route.page) return false;
+    const sectionRoutes = new Set(["events", "galleries", "djs", "board", "charity", "pandering", "splash"]);
+    return sectionRoutes.has(route.page);
+}
+
+function scrollToRouteSection(route) {
+    if (!isHomeSectionRoute(route)) return;
+    const target = document.querySelector(`#${route.page}`);
+    if (!target) return;
+    // Defer to ensure layout/header height is stable (esp. on cold loads).
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToSection(route.page, 0));
+    });
+}
+
 document.querySelectorAll('.nav').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -238,11 +254,9 @@ $(async () => {
         let page = await $get("social.html");
         $("header").after(page);
     }
-    else if (route.page) {
-        console.log(route);
-    }
     else {
         loadTiles();
+        scrollToRouteSection(route);
     }
 
     $('#calendar').click(function() {
@@ -264,6 +278,11 @@ $(async () => {
     const easterEgg = new Konami(() => {
         $(document.body).toggleClass("konami")
     });
+});
+
+// Support back/forward navigation between section routes.
+window.addEventListener("popstate", () => {
+    scrollToRouteSection(query());
 });
 
 // Smooth scroll to top function for blowout pages - defined globally
