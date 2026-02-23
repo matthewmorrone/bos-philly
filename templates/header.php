@@ -31,8 +31,9 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
-gtag('config', 'G-E5VXE7X7M6');
+// testing 1 2 3
+gtag('config', 'G-E5VXE7X7M6');      // GA4
+gtag('config', 'AW-17640299113');    // Google Ads
 </script>
 <!-- End Google tag (gtag.js) -->
 <!-- Facebook verification -->
