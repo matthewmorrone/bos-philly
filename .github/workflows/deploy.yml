@@ -22,6 +22,5 @@ jobs:
       - name: Deploy
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-          "cd ~/public_html && \
-           GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no' \
+          "cd ~/public_html/bosphilly.org && \
            git pull origin main"
