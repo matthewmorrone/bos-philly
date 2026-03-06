@@ -22,5 +22,11 @@ jobs:
       - name: Deploy
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-          "cd ~/public_html/bosphilly.org && \
-           git pull origin main"
+          "set -e; \
+           cd ~/public_html/bosphilly.org; \
+           HTACCESS_BACKUP=\"$(mktemp)\"; \
+           if [ -f .htaccess ]; then cp .htaccess \"$HTACCESS_BACKUP\"; fi; \
+           git fetch origin main; \
+           git reset --hard origin/main; \
+           if [ -s \"$HTACCESS_BACKUP\" ]; then cp \"$HTACCESS_BACKUP\" .htaccess; fi; \
+           rm -f \"$HTACCESS_BACKUP\""
