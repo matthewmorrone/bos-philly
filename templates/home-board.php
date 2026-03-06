@@ -1,7 +1,7 @@
 <section id="board">
     <?php $media_base = function_exists('bos_media_prod_base_url') ? bos_media_prod_base_url() : 'https://www.bosphilly.org'; ?>
     <h1>Board</h1>
-    <img src="<?= esc_url($media_base . '/wordpress/content-separator'); ?>" id="separator" />
+    <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-separator.png'); ?>" id="separator" />
     <div class="grid">
         <div class="tile">
             <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-steve-1.jpg'); ?>" alt="Steve McCann" loading="lazy" />

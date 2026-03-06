@@ -16,7 +16,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/worksans/v24/QGYsz_wNahGAdqQ43Rh_fKDptfpA4Q.woff2">
 <!-- Preload the LCP background image used by the charity section to improve LCP (homepage only) -->
 <?php if (!query()["name"]): ?>
-<link rel="preload" as="image" href="<?= esc_url($media_base . '/wordpress/content-charity-parallax'); ?>" />
+<link rel="preload" as="image" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-charity-parallax.png'); ?>" />
 <?php endif; ?>
 <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" sizes="32x32">

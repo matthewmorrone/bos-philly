@@ -6,6 +6,14 @@
  * @package WordPress
  */
 
+$projectRootIndex = dirname(__DIR__) . '/index.php';
+$projectRootTemplates = dirname(__DIR__) . '/templates/header.php';
+
+if (file_exists($projectRootIndex) && file_exists($projectRootTemplates)) {
+	require $projectRootIndex;
+	exit;
+}
+
 /**
  * Tells WordPress to load the WordPress theme and output it.
  *

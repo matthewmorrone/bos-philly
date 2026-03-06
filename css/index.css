@@ -37,7 +37,7 @@ img {
 /* ===== HEADER & NAVIGATION ===== */
 header {
     height: var(--header-height);
-    background-image: url("https://www.bosphilly.org/wordpress/content-header-background");
+    background-image: url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-header-background.jpg");
     background-position: top;
     background-size: cover;
     border-bottom: 2px solid var(--trim);
@@ -339,13 +339,13 @@ video::-webkit-media-controls {
 #parallax {
     height: 100%;
     width: 100%;
-    background-image: url("https://www.bosphilly.org/wordpress/content-charity-parallax");
+    background-image: url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-charity-parallax.png");
     background-position: center;
     background-size: cover;
 }
 /* ===== EVENTS SECTION ===== */
 #events {
-    background-image: url("https://www.bosphilly.org/wordpress/content-events-background");
+    background-image: url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-events-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -519,7 +519,7 @@ button#signup, button#calendar {
 }
 /* ===== DJS & MODELS SECTIONS ===== */
 #djs {
-    background-image: url("https://www.bosphilly.org/wordpress/content-djs-background");
+    background-image: url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-djs-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -607,7 +607,7 @@ button#signup, button#calendar {
 
 /* ===== PARTNERS SECTION ===== */
 #partners .title {
-    background-image: url("https://www.bosphilly.org/wordpress/content-partners-background");
+    background-image: url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-partners-background.jpg");
     text-align: left;
     letter-spacing: 3px;
     background-position: bottom center;
@@ -656,7 +656,7 @@ button#signup, button#calendar {
 /* ===== FOOTER ===== */
 footer {
     height: 50%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.bosphilly.org/wordpress/content-footer-background");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.bosphilly.org/wordpress/wp-content/uploads/content-footer-background.jpg");
     background-position: center;
     background-size: cover;
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);

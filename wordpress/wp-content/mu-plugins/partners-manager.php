@@ -555,6 +555,7 @@ function bos_partner_admin_inline_scripts() {
         }
 
         let latestMoveRequestId = 0;
+        const latestLinebreakRequestByPost = {};
 
         function setButtonLoading(button, isLoading) {
             if (!button) {
@@ -746,8 +747,11 @@ function bos_partner_admin_inline_scripts() {
                     return;
                 }
 
+                const requestId = (latestLinebreakRequestByPost[postId] || 0) + 1;
+                latestLinebreakRequestByPost[postId] = requestId;
+
                 const previousChecked = !checkbox.checked;
-                checkbox.disabled = true;
+                checkbox.setAttribute('aria-busy', 'true');
 
                 const abortController = new AbortController();
                 const timeoutId = window.setTimeout(() => abortController.abort(), 3000);
@@ -782,10 +786,14 @@ function bos_partner_admin_inline_scripts() {
                     }
                 } catch (error) {
                     console.error(error);
-                    checkbox.checked = previousChecked;
+                    if (latestLinebreakRequestByPost[postId] === requestId) {
+                        checkbox.checked = previousChecked;
+                    }
                 } finally {
                     window.clearTimeout(timeoutId);
-                    checkbox.disabled = false;
+                    if (latestLinebreakRequestByPost[postId] === requestId) {
+                        checkbox.setAttribute('aria-busy', 'false');
+                    }
                 }
             });
         });

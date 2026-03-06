@@ -1,9 +1,17 @@
-<ifModule mod_rewrite.c>
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule (.*) index.php [QSA,L]
-</ifModule>
+
+RewriteRule ^wordpress/(.*)$ https://www.bosphilly.org/wordpress/$1 [P,L]
+RewriteRule ^wp-content/uploads/(.*)$ https://bosphilly.org/wordpress/wp-content/uploads/$1 [P,L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.php [QSA,L]
+</IfModule>
 
 Options +Indexes
 
