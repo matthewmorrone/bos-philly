@@ -24,9 +24,7 @@ jobs:
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
           "set -e; \
            cd ~/public_html/bosphilly.org; \
-           HTACCESS_BACKUP=\"$(mktemp)\"; \
-           if [ -f .htaccess ]; then cp .htaccess \"$HTACCESS_BACKUP\"; fi; \
+           if [ -f .htaccess ]; then cp .htaccess .htaccess.deploy-backup; fi; \
            git fetch origin main; \
            git reset --hard origin/main; \
-           if [ -s \"$HTACCESS_BACKUP\" ]; then cp \"$HTACCESS_BACKUP\" .htaccess; fi; \
-           rm -f \"$HTACCESS_BACKUP\""
+           if [ -f .htaccess.deploy-backup ]; then mv .htaccess.deploy-backup .htaccess; fi"
