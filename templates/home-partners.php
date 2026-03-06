@@ -1,16 +1,79 @@
 <section id="partners">
     <div class="title"><h1>Partners:</h1></div>
     <div id="partners-grid">
-        <div>
-            <div><a href="https://circuitmom.com/" target="_blank"><img id="circuitmom" src="wordpress/partner-circuit-mom-logo" loading="lazy" /></a></div>
-            <div><a href="https://www.waygay.org/" target="_blank"><img src="wordpress/partner-william-way-logo" loading="lazy" /></a></div>
-            <!-- <div><a href="https://www.andrewchristian.com/" target="_blank"><img src="wordpress/partner-andrew-christian-logo" loading="lazy" /></a></div> -->
-            <!-- <div><a href="https://qcareplus.com/" target="_blank"><img src="wordpress/partner-q-care-logo" loading="lazy" /></a></div> -->
-        </div>
-        <div>
-            <div><a href="https://www.instagram.com/alexanderjohnphoto/" target="_blank"><img src="wordpress/partner-alexander-john-logo" loading="lazy" /></a></div>
-            <div><a href="https://www.marriott.com/en-us/hotels/phlcc-fairfield-inn-and-suites-philadelphia-downtown-center-city/overview/" target="_blank"><img src="wordpress/partner-fairfield-marriott-logo" loading="lazy" /></a></div>
-            <div><a href="https://www.sickening.events/" target="_blank"><img src="wordpress/partner-sickening-events-logo" loading="lazy" /></a></div>
-        </div>
+        <?php
+        $partners = get_posts(array(
+            'post_type' => 'partner',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ));
+
+        usort($partners, function ($first, $second) {
+            $firstOrderRaw = get_post_meta($first->ID, 'partner_custom_order', true);
+            $secondOrderRaw = get_post_meta($second->ID, 'partner_custom_order', true);
+
+            $firstOrder = ($firstOrderRaw !== '' && is_numeric($firstOrderRaw)) ? (int) $firstOrderRaw : PHP_INT_MAX;
+            $secondOrder = ($secondOrderRaw !== '' && is_numeric($secondOrderRaw)) ? (int) $secondOrderRaw : PHP_INT_MAX;
+
+            if ($firstOrder === $secondOrder) {
+                return strcasecmp($first->post_title, $second->post_title);
+            }
+
+            return $firstOrder <=> $secondOrder;
+        });
+
+        $partnerRows = array();
+        $currentRow = array();
+
+        foreach ($partners as $partner) {
+            $partnerLogo = get_the_post_thumbnail_url($partner->ID, 'medium');
+            if (!$partnerLogo) {
+                continue;
+            }
+
+            $linebreakBefore = get_post_meta($partner->ID, 'partner_linebreak_before', true) === '1';
+
+            if ($linebreakBefore && !empty($currentRow)) {
+                $partnerRows[] = $currentRow;
+                $currentRow = array();
+            }
+
+            if (count($currentRow) >= 3) {
+                $partnerRows[] = $currentRow;
+                $currentRow = array();
+            }
+
+            $currentRow[] = $partner;
+        }
+
+        if (!empty($currentRow)) {
+            $partnerRows[] = $currentRow;
+        }
+
+        foreach ($partnerRows as $partnerRow):
+            ?>
+            <div>
+                <?php foreach ($partnerRow as $partner): ?>
+                    <?php
+                    $partnerLogo = get_the_post_thumbnail_url($partner->ID, 'medium');
+                    if (!$partnerLogo) {
+                        continue;
+                    }
+                    $partnerLink = get_post_meta($partner->ID, 'partner_link', true);
+                    ?>
+                    <div>
+                        <?php if (!empty($partnerLink)): ?>
+                            <a href="<?= esc_url($partnerLink); ?>" target="_blank" rel="noopener noreferrer">
+                                <img src="<?= esc_url($partnerLogo); ?>" loading="lazy" alt="<?= esc_attr(get_the_title($partner->ID)); ?>" />
+                            </a>
+                        <?php else: ?>
+                            <img src="<?= esc_url($partnerLogo); ?>" loading="lazy" alt="<?= esc_attr(get_the_title($partner->ID)); ?>" />
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
     </div>
 </section>

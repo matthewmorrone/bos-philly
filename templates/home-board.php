@@ -1,9 +1,10 @@
 <section id="board">
+    <?php $media_base = function_exists('bos_media_prod_base_url') ? bos_media_prod_base_url() : 'https://www.bosphilly.org'; ?>
     <h1>Board</h1>
-    <img src="wordpress/content-separator" id="separator" />
+    <img src="<?= esc_url($media_base . '/wordpress/content-separator'); ?>" id="separator" />
     <div class="grid">
         <div class="tile">
-            <img src="wordpress/wp-content/uploads/board-steve-1.jpg" alt="Steve McCann" loading="lazy" />
+            <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-steve-1.jpg'); ?>" alt="Steve McCann" loading="lazy" />
             <h3>Steve McCann</h3>
             <h4>Director of Business</h4>
             <div class="contact">
@@ -13,7 +14,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/wp-content/uploads/board-matt-1.jpg" alt="Matt Rowe" loading="lazy" />
+            <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-matt-1.jpg'); ?>" alt="Matt Rowe" loading="lazy" />
             <h3>Matt Rowe</h3>
             <h4>Director of Logistics</h4>
             <div class="contact">
@@ -23,7 +24,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/wp-content/uploads/board-alex-1-scaled.jpg" alt="Alex Ortiz" loading="lazy" />
+            <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-alex-1-scaled.jpg'); ?>" alt="Alex Ortiz" loading="lazy" />
             <h3>Alex Ortiz</h3>
             <h4>Director of Outreach</h4>
             <div class="contact">
@@ -33,7 +34,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/wp-content/uploads/board-justin-1.jpg" alt="Justin Dile" loading="lazy" />
+            <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-justin-1.jpg'); ?>" alt="Justin Dile" loading="lazy" />
             <h3>Justin Dile</h3>
             <h4>Director of Coordination</h4>
             <div class="contact">
@@ -43,7 +44,7 @@
             </div>
         </div>
         <div class="tile">
-            <img src="wordpress/wp-content/uploads/board-joe.jpg" alt="Joe Fazio" loading="lazy" />
+            <img src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/board-joe.jpg'); ?>" alt="Joe Fazio" loading="lazy" />
             <h3>Joe Fazio</h3>
             <h4>Director of Volunteers</h4>
             <div class="contact">

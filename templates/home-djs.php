@@ -10,7 +10,6 @@ $query = new WP_Query($args);
 $posts = $query->get_posts();
 foreach($posts as &$post):
     $post->image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large')[0];
-    $post->fields = get_fields($post->ID);
     ?>
     <div class="tile container no-hover">
         <a href="djs/<?= $post->post_name ?>">

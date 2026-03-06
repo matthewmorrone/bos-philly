@@ -88,6 +88,9 @@ define( 'WP_DEBUG_DISPLAY', false ); // Set to true to display errors directly i
 
 define( 'FS_METHOD', 'direct' );
 
+define('UPLOADS', 'wp-content/uploads');
+define('WP_CONTENT_URL', 'https://bosphilly.org/wp-content');
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<?php $media_base = function_exists('bos_media_prod_base_url') ? bos_media_prod_base_url() : 'https://www.bosphilly.org'; ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <base href="/" />
@@ -15,12 +16,12 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/worksans/v24/QGYsz_wNahGAdqQ43Rh_fKDptfpA4Q.woff2">
 <!-- Preload the LCP background image used by the charity section to improve LCP (homepage only) -->
 <?php if (!query()["name"]): ?>
-<link rel="preload" as="image" href="/wordpress/content-charity-parallax" />
+<link rel="preload" as="image" href="<?= esc_url($media_base . '/wordpress/content-charity-parallax'); ?>" />
 <?php endif; ?>
 <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-75x75.png" sizes="32x32">
-<link rel="icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png" sizes="192x192">
-<link rel="apple-touch-icon" href="https://bosphilly.org/wp-content/uploads/2022/08/android-chrome-512x512-1-300x300.png">
+<link rel="icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" sizes="32x32">
+<link rel="icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" sizes="192x192">
+<link rel="apple-touch-icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>">
 <!-- Preconnect to script CDNs used site-wide -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -44,7 +45,7 @@ gtag('config', 'AW-17640299113');    // Google Ads
 <header class="fixed">
     <div class="header-inner">
         <a href="/" id="home">
-            <img id="logo" src="wordpress/wp-content/uploads/content-bos-logo.png" alt="BOS Logo" width="117" height="84">
+            <img id="logo" src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" alt="BOS Logo" width="117" height="84">
         </a>
         <nav>
             <?php if (!isMobile()): ?>

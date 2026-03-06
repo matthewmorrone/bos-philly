@@ -33,11 +33,6 @@ foreach($posts as &$post):
     ));
     @$post->dj = $primary_dj->posts[0]->post_title;
     ?>
-    <script>
-    console.log(<?php echo wp_json_encode($post); ?>);
-    </script>
-    <?php
-    ?>
     <div class="tile container">
         <a>
             <img 
