@@ -27,14 +27,13 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E5VXE7X7M6"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5X648WGJN"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-// testing 1 2 3
-gtag('config', 'G-E5VXE7X7M6');      // GA4
-gtag('config', 'AW-17640299113');    // Google Ads
+gtag('config', 'G-Y5X648WGJN');      // GA4 - BOS Philly
+gtag('config', 'AW-17640299113');     // Google Ads
 </script>
 <!-- End Google tag (gtag.js) -->
 <!-- Facebook verification -->
