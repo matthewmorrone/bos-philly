@@ -2,10 +2,10 @@
 error_reporting(E_ERROR);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$host = "127.0.0.1";
-$user = "root";
-$pass = "";
-$db   = "bosphill_dev";
+$host = getenv('DB_HOST') ?: '127.0.0.1';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASSWORD') ?: '';
+$db   = getenv('DB_NAME') ?: 'bosphill_dev';
 
 $mysqli = new mysqli($host, $user, $pass, $db);
 

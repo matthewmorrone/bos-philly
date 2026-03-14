@@ -164,16 +164,19 @@ $event = (array)$event;
             </div>
         </div>
         <div class='map-embed'>
+            <?php $maps_api_key = getenv('GOOGLE_MAPS_API_KEY'); ?>
+            <?php if ( $maps_api_key ) : ?>
             <iframe
             title="<?= $event["fields"]["venue_address"] ?>"
             class='map'
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCFs6ozWaQYHbXaQdd7EaRlJQDrioFxhdg
+            src="https://www.google.com/maps/embed/v1/place?key=<?= htmlspecialchars($maps_api_key) ?>
                 &q=<?= $event["fields"]["venue_address"] ?>"
             style="border:0;"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
             </iframe>
+            <?php endif; ?>
         </div>
         <div class="button-container">
             <button class="more"><a href="events">More Events</a></button>
