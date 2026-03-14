@@ -4,6 +4,12 @@
 # Node dependencies
 node_modules
 
+# Environment / secrets
+.env
+.env.*
+wordpress/wp-config.php
+wp-config-local.php
+
 # WordPress - plugin folders (ignored globally, then plugin-specific)
 wordpress/wp-content/plugins
 wordpress/wp-content/plugins/*
