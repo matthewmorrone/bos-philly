@@ -1,3 +1,6 @@
+# Session memory (auto-generated, not for version control)
+.remember/
+
 # macOS system files
 .DS_Store
 
@@ -22,6 +25,9 @@ wordpress/wp-content/backup-migration-*
 # WordPress - uploads
 wordpress/wp-content/uploads/
 wordpress/wp-content/uploads/*-*x*.*
+
+# WordPress - local secrets (never commit)
+wordpress/wp-config-local.php
 
 # WordPress - logs
 error_log

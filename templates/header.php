@@ -57,6 +57,21 @@ gtag('config', 'G-Y5X648WGJN');      // GA4 - BOS Philly
 gtag('config', 'AW-17640299113');     // Google Ads
 </script>
 <!-- End Google tag (gtag.js) -->
+<!-- Universe Ticket Widget: Meta Pixel event bridge -->
+<script>
+document.addEventListener('unii:tracking:metapixel', ((data) => {
+  if (fbq) {
+    fbq(data.detail.command, data.detail.sendTo, data.detail.target, data.detail.options, { eventID: data.detail.eventId });
+  }
+}), false);
+</script>
+<!-- Universe Ticket Widget: GA4 event bridge -->
+<script>
+document.addEventListener('unii:tracking:googleanalytics', ((data) => {
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push(data.detail.command, data.detail.target, data.detail.options);
+}), false);
+</script>
 <!-- Facebook verification -->
 <meta name="facebook-domain-verification" content="ca9qnb8k0n5fkq5jfuw2unmwkxcj13" />
 <!-- End Facebook verification -->
