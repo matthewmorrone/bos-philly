@@ -60,6 +60,6 @@ if (isset($gallery["fields"]["gallery_link"])) {
 </div>
 <script>
 $(async () => {
-    $("title").text(`<?= $gallery["post_title"]?> - BOS Philly`);
+    $("title").text(`BOS Philly :: <?= $gallery["post_title"]?>`);
 });
 </script>

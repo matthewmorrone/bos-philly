@@ -26,7 +26,21 @@ fbq('track', 'PageView');
 </script>
 <!-- End Meta Pixel Code -->
 <base href="/" />
-<title>BOS Philly - Bringing Circuit Back to Philly</title>
+<?php
+$_bos_route = query();
+$_bos_page  = $_bos_route['page'] ?? '';
+$_bos_name  = $_bos_route['name'] ?? '';
+if ( $_bos_name ) {
+    $_bos_post = get_page_by_path( $_bos_name, OBJECT, [ 'event', 'dj', 'page' ] );
+    $_bos_label = $_bos_post ? $_bos_post->post_title : ucfirst( str_replace( '-', ' ', $_bos_name ) );
+    $page_title = 'BOS Philly :: ' . $_bos_label;
+} elseif ( $_bos_page ) {
+    $page_title = 'BOS Philly :: ' . ucfirst( $_bos_page );
+} else {
+    $page_title = 'BOS Philly';
+}
+?>
+<title><?= esc_html( $page_title ) ?></title>
 <link rel="stylesheet" href="css/index.css?version=<?= asset_version('css/index.css'); ?>" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

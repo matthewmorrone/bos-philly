@@ -198,13 +198,44 @@ Math.easeInOutQuad = function(t, b, c, d) {
 };
 
 function scrollToSection(section, offset) {
+    scrollUpdatePaused = true;
     window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
     const target = document.querySelector(`#${section}`);
     if (!target) return
     const offsetTop = target.offsetTop - $("header").height() + offset;
     scrollTo(document.documentElement, offsetTop, 500);
-    $("title").text(`${section.toTitleCase()} - BOS Philly`);
+    $("title").text(`BOS Philly :: ${section.toTitleCase()}`);
+    setTimeout(() => { scrollUpdatePaused = false; }, 600);
 }
+
+const sectionIds = ["events", "galleries", "djs", "board"];
+let scrollUpdatePaused = false;
+const sectionVisibility = {};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    if (scrollUpdatePaused) return;
+    entries.forEach(entry => {
+        sectionVisibility[entry.target.id] = entry.intersectionRatio;
+    });
+    const visible = sectionIds.filter(id => (sectionVisibility[id] || 0) > 0);
+    if (visible.length) {
+        const section = visible[0];
+        window.history.replaceState({}, null, `${window.location.origin}/${section}${window.location.search}`);
+        $("title").text(`BOS Philly :: ${section.toTitleCase()}`);
+    } else {
+        window.history.replaceState({}, null, `${window.location.origin}/${window.location.search}`);
+        $("title").text('BOS Philly');
+    }
+}, { threshold: [0, 0.1, 0.4] });
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (!route.name) {
+        sectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) sectionObserver.observe(el);
+        });
+    }
+});
 
 function isHomeSectionRoute(route) {
     if (!route || !route.page) return false;
@@ -224,8 +255,16 @@ function scrollToRouteSection(route) {
 
 document.querySelectorAll('.nav').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        e.preventDefault();
         let section = this.getAttribute('href');
+        const isSection = isHomeSectionRoute({ page: section });
+        const onHomepage = !route.name;
+        console.log('[nav click]', { section, isSection, onHomepage, route, href: this.href });
+        if (!isSection || !onHomepage) {
+            console.log('[nav] allowing default navigation to:', section);
+            return;
+        }
+        console.log('[nav] intercepting for scroll to section:', section);
+        e.preventDefault();
         scrollToSection(section, 0);
     });
 });

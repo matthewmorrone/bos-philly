@@ -107,7 +107,7 @@ $dj = (array)$dj;
             $(".soundcloud").remove();
         }
 
-        $("title").text(`<?= $dj["post_title"] ?> - BOS Philly`);
+        $("title").text(`BOS Philly :: <?= $dj["post_title"] ?>`);
 
         particlesJS.load("particle-background", "css/dj-particles.json", function() {
             $("#particle-background canvas").height($(".dj-content").height() + $(".button-container").height() + 100);

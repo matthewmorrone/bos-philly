@@ -185,7 +185,7 @@ $event = (array)$event;
     <script>
     $(async () => {
         $("#content .event-template").css("background-image", `url('<?=$event["fields"]["background_image"]["url"]?>')`);
-        $("title").text(`<?=$event["post_title"]?> - BOS Philly`);
+        $("title").text(`BOS Philly :: <?=$event["post_title"]?>`);
     });
     window.TSModals.buildModal({
         url: 'https://tickets.bosphilly.com/e/victory/tickets',
