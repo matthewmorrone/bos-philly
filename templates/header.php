@@ -106,14 +106,12 @@ src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
             <img id="logo" src="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" alt="BOS Logo" width="117" height="84">
         </a>
         <nav>
-            <?php if (!isMobile()): ?>
             <ul id="navbar">
                 <li><a class='nav' href="events">Events</a></li>
                 <li><a class='nav' href="galleries">Galleries</a></li>
                 <li><a class='nav' href="djs">DJs</a></li>
                 <li><a class='nav' href="board">Board</a></li>
             </ul>
-            <?php endif; ?>
             <span>
                 <a class='social' href="http://facebook.com/bosphilly" target="_blank"><?= svg_icon('facebook') ?></a>
                 <a class='social' href="http://instagram.com/bosphilly" target="_blank"><?= svg_icon('instagram') ?></a>
@@ -124,11 +122,3 @@ src="https://www.facebook.com/tr?id=1255364439052457&ev=PageView&noscript=1"
         </nav>
     </div>
 </header>
-<?php if (isMobile()): ?>
-    <ul id="navbar">
-        <li><a class='nav' href="events">Events</a></li>
-        <li><a class='nav' href="galleries">Galleries</a></li>
-        <li><a class='nav' href="djs">DJs</a></li>
-        <li><a class='nav' href="board">Board</a></li>
-    </ul>
-<?php endif; ?>
