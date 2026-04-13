@@ -53,14 +53,16 @@ if ( $_bos_name ) {
 <?php if (!query()["name"]): ?>
 <link rel="preload" as="image" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-charity-parallax.png'); ?>" />
 <?php endif; ?>
-<link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></noscript>
 <link rel="icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" sizes="32x32">
 <link rel="icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>" sizes="192x192">
 <link rel="apple-touch-icon" href="<?= esc_url($media_base . '/wordpress/wp-content/uploads/content-bos-logo.png'); ?>">
 <!-- Preconnect to script CDNs used site-wide -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- jQuery loaded deferred in scripts.php (only needed for Lightbox2) -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5X648WGJN"></script>
 <script>

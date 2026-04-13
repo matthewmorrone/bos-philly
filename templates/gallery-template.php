@@ -35,14 +35,14 @@ if (isset($gallery["fields"]["gallery_link"])) {
 ?>
 <div class='gallery-template'>
     <link rel="stylesheet" href="css/gallery.css?version=<?= asset_version('css/gallery.css'); ?>" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <div class='gallery-content'>
         <h1><?= $gallery["post_title"] ?></h1>
     </div>
     <div class='photo-gallery'>
         <?php foreach($gallery["images"] as $photo): ?>
             <div class='photo'>
-                <a href='<?= $photo["large"] ?>' data-lightbox='<?= $gallery["post_name"] ?>'>
+                <a href='<?= $photo["large"] ?>' class="glightbox" data-gallery='<?= $gallery["post_name"] ?>'>
                     <img 
                         src='<?= $photo["medium"] ?>' 
                         srcset='<?= $photo["small"] ?> 320w, <?= $photo["medium"] ?> 640w, <?= $photo["large"] ?> 1024w'
@@ -59,7 +59,7 @@ if (isset($gallery["fields"]["gallery_link"])) {
     </div>
 </div>
 <script>
-$(async () => {
-    $("title").text(`BOS Philly :: <?= $gallery["post_title"]?>`);
+document.addEventListener('DOMContentLoaded', () => {
+    document.title = `BOS Philly :: <?= $gallery["post_title"]?>`;
 });
 </script>

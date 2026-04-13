@@ -13,13 +13,17 @@ justify-content: center;
 @get_header();
 ?>
 <script>
-let ruleList = $("#global-styles-inline-css")[0].sheet.cssRules;
-for (let i = 0; i < ruleList.length; i++) {
-    $("#global-styles-inline-css")[0].sheet.cssRules[i].selectorText = "#cssCage "+ruleList[i].selectorText
-}
-for (let i = 0; i < ruleList.length; i++) {
-    console.log(ruleList[i].selectorText);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const styleSheet = document.getElementById('global-styles-inline-css');
+    if (!styleSheet || !styleSheet.sheet) return;
+    let ruleList = styleSheet.sheet.cssRules;
+    for (let i = 0; i < ruleList.length; i++) {
+        ruleList[i].selectorText = "#cssCage " + ruleList[i].selectorText;
+    }
+    for (let i = 0; i < ruleList.length; i++) {
+        console.log(ruleList[i].selectorText);
+    }
+});
 </script>
 <?php
 apply_filters('the_content', get_post_field('post_content', $page->id));

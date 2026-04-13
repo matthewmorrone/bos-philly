@@ -1,11 +1,25 @@
+<script defer src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pluralize/8.0.0/pluralize.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/konami@1.6.3/konami.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script defer src="wp.js?version=<?= asset_version('wp.js'); ?>"></script>
-<script src="utils.js?version=<?= asset_version('utils.js'); ?>"></script>
 <script>
+function query() {
+    let [page, name] = window.location.pathname.split('/').slice(1);
+    return { page, name };
+}
+function getQueryString() {
+    return Object.fromEntries(new URLSearchParams(location.search));
+}
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+async function $get(url) {
+    try { return await (await fetch(url)).text(); }
+    catch(e) { console.error(e); return false; }
+}
+
 let route = query();
 
 debug = getQueryString().debug;
@@ -14,11 +28,12 @@ if (debug) console.log(getQueryString());
 const sort = (a, b) => a.localeCompare(b, 'en', {numeric: true})
 
 function adjustParticleBackground() {
-    let increaseBy = $("#content").height() - $("#particle-background canvas").height();
-    $("#particle-background canvas").css({
-        width: $("#particle-background canvas").width()+increaseBy,
-        height: $("#particle-background canvas").height()+increaseBy
-    });
+    const content = document.getElementById('content');
+    const canvas = document.querySelector('#particle-background canvas');
+    if (!content || !canvas) return;
+    let increaseBy = content.offsetHeight - canvas.offsetHeight;
+    canvas.style.width = (canvas.offsetWidth + increaseBy) + 'px';
+    canvas.style.height = (canvas.offsetHeight + increaseBy) + 'px';
 }
 
 async function loadTiles() {
@@ -28,14 +43,15 @@ async function loadTiles() {
             url: `${pluralize.singular(url)}s/${page.post_name}`,
             image: page.image
         }));
-        $(`#${pluralize.plural(url)} .grid`).append(pages.map(page => {
+        const grid = document.querySelector(`#${pluralize.plural(url)} .grid`);
+        if (grid) grid.insertAdjacentHTML('beforeend', pages.map(page => {
             return `<div class="tile container no-hover">
                 <a href="${page.url}">
                     <img src="${page.image}" loading="lazy" alt="${page.name}" />
                     <div class="tile-caption">${page.name}</div>
                 </a>
             </div>`;
-        }));
+        }).join(''));
     }
 
     function loadGalleries(galleries) {
@@ -48,33 +64,37 @@ async function loadTiles() {
             image: gallery.image
         }));
         galleries = galleries.sort((a, b) => a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0);
-        $("#galleries .grid").append(galleries.map(gallery => {
+        const grid = document.querySelector('#galleries .grid');
+        if (grid) grid.insertAdjacentHTML('beforeend', galleries.map(gallery => {
             return `<div class="tile container no-hover">
                 <a href="${gallery.url}">
                     <img src="${gallery.image}" loading="lazy" alt="${gallery.name}" />
                     <div class="tile-caption">${gallery.name}</div>
                 </a>
             </div>`;
-        }));
+        }).join(''));
     }
 
-    $("#galleries .more").click(async () => {
-        let offset = $("#galleries .tile").length;
+    const galleriesMore = document.querySelector('#galleries .more');
+    if (galleriesMore) galleriesMore.addEventListener('click', async () => {
+        let offset = document.querySelectorAll('#galleries .tile').length;
         let result = await getPages("gallery", offset, true);
         let galleries = result.posts;
         if (galleries.length) loadGalleries(galleries);
-        $("#galleries .more").hide();
+        galleriesMore.style.display = 'none';
     });
 
-    $(`#djs .more`).click(async () => {
-        let offset = $(`#djs .tile`).length;
+    const djsMore = document.querySelector('#djs .more');
+    if (djsMore) djsMore.addEventListener('click', async () => {
+        let offset = document.querySelectorAll('#djs .tile').length;
         let result = await getPages("dj", offset, true);
         let pages = result.posts;
         if (pages.length) loadPages(pages, "dj");
-        $(`#djs .more`).hide();
+        djsMore.style.display = 'none';
     });
 
-    $(`#board .more`).click(async () => {
+    const boardMore = document.querySelector('#board .more');
+    if (boardMore) boardMore.addEventListener('click', () => {
         window.location.href = "about-us";
     });
 }
@@ -93,13 +113,13 @@ let USDollar = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 let nums = [0,1,2,3,4,5,6,7,8,9];
-$(window).scroll(() => {
+window.addEventListener('scroll', () => {
     function elementScrolled(elem) {
         try {
-            let docViewTop = $(window).scrollTop();
-            let docViewBottom = docViewTop + $(window).height();
-            let elemTop = $(elem).offset().top;
-            return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+            let el = document.querySelector(elem);
+            if (!el) return false;
+            let rect = el.getBoundingClientRect();
+            return rect.top <= window.innerHeight && rect.top >= 0;
         }
         catch (e) {
             return false;
@@ -107,24 +127,26 @@ $(window).scroll(() => {
     }
     if (elementScrolled('#charity')) {
         if (hasFired) return;
-        let start = Math.round(parseFloat($(".counter").attr("start")), 2);
-        let end = Math.round(parseFloat($(".counter").attr("end")), 2);
-        $(".counter").text(start);
+        const counter = document.querySelector('.counter');
+        if (!counter) return;
+        let start = Math.round(parseFloat(counter.getAttribute('start')), 2);
+        let end = Math.round(parseFloat(counter.getAttribute('end')), 2);
+        counter.textContent = start;
 
         let flutter = 0;
         let interval = setInterval(() => {
-            let value = Math.round(parseFloat($(".counter").attr("current")), 2);
+            let value = Math.round(parseFloat(counter.getAttribute('current')), 2);
             if (value + increment <= end) {
                 value += increment;
-                $(".counter").attr("current", Math.round(value, 2));
-                let text = $(".counter").attr("current");
+                counter.setAttribute('current', Math.round(value, 2));
+                let text = counter.getAttribute('current');
                 text = USDollar.format(text).slice(1);
                 for(let i = flutter; i < text.length; i++) {
                     if (text[i].match(/\d/) !== null) {
                         text = text.replaceAt(i, ""+nums[Math.floor(Math.random()*10)])
                     }
                 }
-                $(".counter").text("$"+text);
+                counter.textContent = "$"+text;
             }
             else if (increment > .01) {
                 increment /= 10;
@@ -132,12 +154,14 @@ $(window).scroll(() => {
             }
             else {
                 clearInterval(interval);
-                $(".counter").text(USDollar.format(end))
+                counter.textContent = USDollar.format(end);
             }
         }, 30);
         hasFired = true;
     }
-}).scroll();
+});
+// Trigger scroll handler once on load in case charity section is already visible
+window.dispatchEvent(new Event('scroll'));
 
 // parallax image movement
 let currentZoom = 1;
@@ -201,32 +225,37 @@ function scrollToSection(section, offset) {
     scrollUpdatePaused = true;
     window.history.pushState({}, null, `${window.location.origin}/${section}${window.location.search}`);
     const target = document.querySelector(`#${section}`);
-    if (!target) return
-    const offsetTop = target.offsetTop - $("header").height() + offset;
+    if (!target) return;
+    const headerEl = document.querySelector('header');
+    const offsetTop = target.offsetTop - (headerEl ? headerEl.offsetHeight : 0) + offset;
     scrollTo(document.documentElement, offsetTop, 500);
-    $("title").text(`BOS Philly :: ${section.toTitleCase()}`);
+    document.title = `BOS Philly :: ${toTitleCase(section)}`;
     setTimeout(() => { scrollUpdatePaused = false; }, 600);
 }
 
 const sectionIds = ["events", "galleries", "djs", "board"];
 let scrollUpdatePaused = false;
-const sectionVisibility = {};
+const visibleSections = new Set();
 
 const sectionObserver = new IntersectionObserver((entries) => {
     if (scrollUpdatePaused) return;
     entries.forEach(entry => {
-        sectionVisibility[entry.target.id] = entry.intersectionRatio;
+        if (entry.isIntersecting) {
+            visibleSections.add(entry.target.id);
+        } else {
+            visibleSections.delete(entry.target.id);
+        }
     });
-    const visible = sectionIds.filter(id => (sectionVisibility[id] || 0) > 0);
+    const visible = sectionIds.filter(id => visibleSections.has(id));
     if (visible.length) {
         const section = visible[0];
         window.history.replaceState({}, null, `${window.location.origin}/${section}${window.location.search}`);
-        $("title").text(`BOS Philly :: ${section.toTitleCase()}`);
+        document.title = `BOS Philly :: ${toTitleCase(section)}`;
     } else {
         window.history.replaceState({}, null, `${window.location.origin}/${window.location.search}`);
-        $("title").text('BOS Philly');
+        document.title = 'BOS Philly';
     }
-}, { threshold: [0, 0.1, 0.4] });
+}, { threshold: 0.1 });
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!route.name) {
@@ -269,36 +298,48 @@ document.querySelectorAll('.nav').forEach(anchor => {
     });
 });
 
-$(async () => {
-    $.ajaxSetup({cache: false});
-    $(window).on("resize", () => $("#splash video").width($("#splash").width())).resize();
+document.addEventListener('DOMContentLoaded', async () => {
+    const splashVideo = document.querySelector('#splash video');
+    if (splashVideo) {
+        window.addEventListener('resize', () => {
+            const splash = document.getElementById('splash');
+            if (splash) splashVideo.style.width = splash.offsetWidth + 'px';
+        });
+        splashVideo.style.width = document.getElementById('splash')?.offsetWidth + 'px';
+    }
 
     const isMobile = window.matchMedia("(width < 600px)").matches;
-    if (isMobile) $(".overlay").remove()
+    if (isMobile) document.querySelectorAll('.overlay').forEach(el => el.remove());
 
-    $("#mobileToggle").click(() => {
-        $("#navbar").slideToggle();
+    const mobileToggle = document.getElementById('mobileToggle');
+    if (mobileToggle) mobileToggle.addEventListener('click', () => {
+        const navbar = document.getElementById('navbar');
+        if (navbar) navbar.classList.toggle('open');
     });
 
     let route = query();
     if (route.page === "about-us") {
-        $("#splash, #charity, #pandering, #events, #galleries, #djs").remove();
-        $("#board .button-container button, #board h1, #board #separator").remove();
-        let page = await $get("board.html");
-        $("#board").prepend(page);
+        document.querySelectorAll('#splash, #charity, #pandering, #events, #galleries, #djs').forEach(el => el.remove());
+        document.querySelectorAll('#board .button-container button, #board h1, #board #separator').forEach(el => el.remove());
+        let resp = await fetch('board.html');
+        let page = await resp.text();
+        const board = document.getElementById('board');
+        if (board) board.insertAdjacentHTML('afterbegin', page);
     }
     if (route.page === "social-media") {
-        $("#splash, #charity, #pandering, #events, #galleries, #djs, #board").remove();
-        // $("#board .button-container button, #board h1, #board #separator").remove();
-        let page = await $get("social.html");
-        $("header").after(page);
+        document.querySelectorAll('#splash, #charity, #pandering, #events, #galleries, #djs, #board').forEach(el => el.remove());
+        let resp = await fetch('social.html');
+        let page = await resp.text();
+        const header = document.querySelector('header');
+        if (header) header.insertAdjacentHTML('afterend', page);
     }
     else {
         loadTiles();
         scrollToRouteSection(route);
     }
 
-    $('#calendar').click(function() {
+    const calendarBtn = document.getElementById('calendar');
+    if (calendarBtn) calendarBtn.addEventListener('click', function() {
         Swal.fire({
             title: "<strong>Live Calendar</strong>",
             icon: "info",
@@ -315,8 +356,10 @@ $(async () => {
     });
 
     const easterEgg = new Konami(() => {
-        $(document.body).toggleClass("konami")
+        document.body.classList.toggle('konami');
     });
+
+    if (typeof GLightbox !== 'undefined') GLightbox();
 });
 
 // Support back/forward navigation between section routes.
@@ -326,20 +369,18 @@ window.addEventListener("popstate", () => {
 
 // Smooth scroll to top function for blowout pages - defined globally
 function scrollToTop() {
-    $('html, body').animate({
-        scrollTop: 0
-    }, 600);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Show/hide floating back to top button based on scroll position
-$(window).scroll(function() {
-    const scrollTop = $(this).scrollTop();
-    const backToTopButton = $('.floating-back-to-top');
-    
+window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const backToTopButton = document.querySelector('.floating-back-to-top');
+    if (!backToTopButton) return;
     if (scrollTop > 300) {
-        backToTopButton.addClass('show');
+        backToTopButton.classList.add('show');
     } else {
-        backToTopButton.removeClass('show');
+        backToTopButton.classList.remove('show');
     }
 });
 </script>

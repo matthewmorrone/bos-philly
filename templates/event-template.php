@@ -183,9 +183,10 @@ $event = (array)$event;
         </div>
     </div>
     <script>
-    $(async () => {
-        $("#content .event-template").css("background-image", `url('<?=$event["fields"]["background_image"]["url"]?>')`);
-        $("title").text(`BOS Philly :: <?=$event["post_title"]?>`);
+    document.addEventListener('DOMContentLoaded', () => {
+        const eventEl = document.querySelector('#content .event-template');
+        if (eventEl) eventEl.style.backgroundImage = `url('<?=$event["fields"]["background_image"]["url"]?>')`;
+        document.title = `BOS Philly :: <?=$event["post_title"]?>`;
     });
     window.TSModals.buildModal({
         url: 'https://tickets.bosphilly.com/e/victory/tickets',

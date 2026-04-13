@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Development utilities",
   "scripts": {
-    "lint": "eslint utils.js wp.js .ddev/browser-sync.js tools/scrape.js"
+    "lint": "eslint wp.js .ddev/browser-sync.js tools/scrape.js"
   },
   "devDependencies": {
     "eslint": "^8.57.1",

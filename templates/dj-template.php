@@ -16,8 +16,7 @@ $dj = (array)$dj;
 ?>
 <div class='dj-template'>
     <link rel="stylesheet" href="css/dj.css?version=<?= asset_version('css/dj.css'); ?>" />
-    <!-- Lightbox CSS only when needed on DJ pages -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <?php if ($dj["fields"]["logo"]): ?>
         <div class='banner'>
             <img src='<?= $dj["fields"]["logo"]["url"] ?>' class='logo' />
@@ -52,13 +51,12 @@ $dj = (array)$dj;
             ?>
             <div class='gallery'>
             <?php foreach($dj["fields"]["photos"] as $photo): ?>
-                <a href='<?= $photo["large"] ?>' data-lightbox='<?= $dj["post_name"] ?>'>
-                    <img 
-                        src='<?= $photo["small"] ?>' 
+                <a href='<?= $photo["large"] ?>' class="glightbox" data-gallery='<?= $dj["post_name"] ?>'>
+                    <img
+                        src='<?= $photo["small"] ?>'
                         srcset='<?= $photo["small"] ?> 320w, <?= $photo["medium"] ?> 640w, <?= $photo["large"] ?> 1024w'
                         sizes='(max-width: 768px) 45vw, 220px'
-                        data-lightbox='<?= $dj["post_name"] ?>' 
-                        loading="lazy" 
+                        loading="lazy"
                         alt='<?= htmlspecialchars($dj["post_title"]) ?> photo'
                     />
                 </a>
@@ -89,29 +87,39 @@ $dj = (array)$dj;
     <!-- Load particles.js only on DJ pages -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-    $(async () => {
-        let soundcloud = await $.ajax({
-            url: 'wp.php',
-            type: 'POST',
-            dataType: "text",
-            data: {
-                action: "soundcloud",
-                url: $(".soundcloud a").attr("href")
+    document.addEventListener('DOMContentLoaded', async () => {
+        const scLink = document.querySelector('.soundcloud a');
+        if (scLink) {
+            const params = new URLSearchParams();
+            params.set('action', 'soundcloud');
+            params.set('url', scLink.getAttribute('href'));
+            try {
+                const resp = await fetch('wp.php', { method: 'POST', body: params });
+                const soundcloud = await resp.text();
+                if (debug) console.log(soundcloud);
+                const scEl = document.querySelector('.soundcloud');
+                if (soundcloud && scEl) {
+                    scEl.outerHTML = soundcloud;
+                } else if (scEl) {
+                    scEl.remove();
+                }
+            } catch(e) {
+                const scEl = document.querySelector('.soundcloud');
+                if (scEl) scEl.remove();
             }
-        });
-        if (debug) console.log(soundcloud);
-        if (soundcloud) {
-            $(".soundcloud").replaceWith(soundcloud);
-        }
-        else {
-            $(".soundcloud").remove();
         }
 
-        $("title").text(`BOS Philly :: <?= $dj["post_title"] ?>`);
+        document.title = `BOS Philly :: <?= $dj["post_title"] ?>`;
 
         particlesJS.load("particle-background", "css/dj-particles.json", function() {
-            $("#particle-background canvas").height($(".dj-content").height() + $(".button-container").height() + 100);
-            $("#particle-background").css("display", "inline");
+            const canvas = document.querySelector('#particle-background canvas');
+            const djContent = document.querySelector('.dj-content');
+            const btnContainer = document.querySelector('.button-container');
+            if (canvas && djContent) {
+                canvas.style.height = (djContent.offsetHeight + (btnContainer ? btnContainer.offsetHeight : 0) + 100) + 'px';
+            }
+            const particleBg = document.getElementById('particle-background');
+            if (particleBg) particleBg.style.display = 'inline';
         });
     });
     </script>
