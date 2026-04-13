@@ -36,7 +36,8 @@ function asset_version($relativePath) {
 
 function query() {
     $qs = [];
-    $components = explode("/", $_SERVER['REQUEST_URI']);
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $components = explode("/", $path);
     @[$root, $page, $name] = $components;
     $qs["page"] = sanitize_text_field($page);
     $qs["name"] = sanitize_text_field($name);
