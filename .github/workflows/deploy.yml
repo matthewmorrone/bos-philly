@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Setup SSH
         run: |
@@ -24,7 +26,5 @@ jobs:
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
           "set -e; \
            cd ~/public_html/bosphilly.org; \
-           if [ -f .htaccess ]; then cp .htaccess .htaccess.deploy-backup; fi; \
            git fetch origin main; \
-           git reset --hard origin/main; \
-           if [ -f .htaccess.deploy-backup ]; then mv .htaccess.deploy-backup .htaccess; fi"
+           git reset --hard origin/main"
